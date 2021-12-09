@@ -123,7 +123,7 @@ const Product_list = ({ store, setStore }) => {
                                     <Card.Title className="mt-3 ms-3" align="center">{item.product_name}</Card.Title>
                                     <hr />
                                     <Card.Img variant="top" src={item.image} style={{ height: "180px", width: "250px" }} className="mt-3 ms-3" />
-                                    <hr />
+                                    <hr /> 
                                     <Card.Body>
                                         <Card.Text>
                                             {item.categories}
