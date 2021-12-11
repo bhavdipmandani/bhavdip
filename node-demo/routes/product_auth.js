@@ -5,7 +5,7 @@ const multer = require("multer");
 const path = require("path");
 
 
-const product_Controller = require('../controllers/productcontroller');
+const {productcontroller : Controller} = require('../controllers');
 // routes for product api ...
 
 
@@ -23,19 +23,15 @@ const add_product_data = multer({
     },
 }); 
 
-router.use('/images', express.static('images'));
+router.use('/images' , express.static('images'));
 
-router.post("/add_product", add_product_data.single('image'), product_Controller.add_product);
+router.get("/" , Controller.list);
 
-router.get("/product_list", product_Controller.product_list);
+router.post("/" , add_product_data.single('image'), Controller.add);
 
+router.patch("/:_id" , Controller.update);
 
-router.patch("/product_list/:_id", product_Controller.update_product);
-
-router.delete("/product_list/:id", product_Controller.delete_product);
-
-
-
+router.delete("/:id" , Controller.destroy);
 
 
 module.exports = router

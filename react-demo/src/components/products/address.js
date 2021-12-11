@@ -3,7 +3,7 @@ import axios from 'axios';
 // import Product_list from './product_list';
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import CheckOut from "./checkout";
-
+// import AddStore from './store';
 
 export default class Address extends Component {
 
@@ -35,41 +35,9 @@ export default class Address extends Component {
             country: '',
             
 
-            // for Error
-
-            nameErr: "",
-            emailErr: "",
-            phoneErr: "",
-            streetErr: "",
-            cityErr: "",
-            stateErr: "",
-            zipErr: "",
-            countryErr: "",
-            error: "",
-
-           
+                  
         }
         
-    }
-
-
-    componentDidUpdate(prevProps) {
-        if(this.props.getTotalSum !== prevProps.getTotalSum){ //<---- see here
-           this.setState({ CheckOut: this.props.getTotalSum});//<---- see here
-        }
-     }
-
-
-     validate = () => {
-        const {name , email , password , reEnterPassword} = this.state;
-    
-        !name ? this.setState(error => ({...error , nameErr : "Name is Required*" })) : this.setState (error => ({...error , nameErr : null }))
-    
-        // !email ? this.setState(error => ({...error , emailErr : "Email is Required*" })) : setError (error => ({...error , emailErr : null }))
-    
-        // !password ? this.setState(error => ({...error , passwordErr : "password is Required*" })) : setError (error => ({...error , passwordErr : null }))
-    
-        // !reEnterPassword ? this.setState(error => ({...error , reEnterPasswordErr : "Confirm Password is Required*" })) : setError (error => ({...error , reEnterPasswordErr : null }))
     }
 
 
@@ -137,7 +105,6 @@ export default class Address extends Component {
             country: ''
         })
 
-        this.validate();
     }
 
     render() {
@@ -161,7 +128,6 @@ export default class Address extends Component {
                                 </div>
                             </div>
                         </div>
-                        {this.state.error.nameErr && <span className="error">{this.state.error.nameErr}</span>}
                         <div className="input-group mb-3">
                             {/* <label className="form-label">Email <strong>:</strong> </label> */}
                             <input type="email" value={this.state.email} onChange={this.onChangeEmail} className="form-control" placeholder="Enter Your Email" />
@@ -233,10 +199,10 @@ export default class Address extends Component {
                         ) : ( 
                             //  <Link to="/checkout" type="submit" value="Create User" className="btn btn-primary">Checkout</Link>
 
-                            <CheckOut price={totalPrice} product_name={"ddd"} >
+                            <CheckOut price={totalPrice} >
                                 <button type="submit" className="btn btn-primary mt-4"></button>
                             </CheckOut>
-                       )}
+                       )}   
                         {/* <div className="mb-3">
                         <button type="submit" className="btn btn-primary">CheckOut</button>
                     </div> */}

@@ -1,14 +1,13 @@
 const express = require('express')
 const router = express.Router()
 
-const product_store_Controller = require('../controllers/productStorecontroller');
+const {productStorecontroller : Controller} = require('../controllers');
 
+router.get("/", Controller.list);
 
-router.post("/storeporduct", product_store_Controller.storeporduct);
+router.post("/", Controller.add);
 
-router.get("/getstoredproduct", product_store_Controller.getstoredproduct);
-
-router.patch("/getstoredproduct/:_id", product_store_Controller.updatesotore);
+router.patch("/:_id", Controller.update);
 
  
 module.exports = router 

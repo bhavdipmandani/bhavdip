@@ -1,12 +1,12 @@
-const Admin = require('../models/admin_auth')
+const { admin_auth : Model } = require('../models')
 
 
 const jwt = require('jsonwebtoken')
 const tokenSecret = "my-token-secret"
 
-const login = (req, res) => {
+exports.login = (req, res) => {
     const { email, password } = req.body
-    Admin.findOne({ email: email }, (err, user) => {
+    Model.findOne({ email: email }, (err, user) => {
         if (user) {
             if (password === user.password) {
 
@@ -31,9 +31,9 @@ const login = (req, res) => {
 }
 
 
-    const register = (req, res) => {
+exports.register = (req, res) => {
     const { name, email, password } = req.body
-    Admin.findOne({ email: email }, (err, user) => {
+    Model.findOne({ email: email }, (err, user) => {
         if (user) {
             res.send({ message: "User already registerd" })
         } else {
@@ -68,9 +68,9 @@ function generateToken(user) {
 }
 
 
-const listdata = async (req, res) => {
+exports.list = async (req, res) => {
     try {
-        const userData = await Admin.find();
+        const userData = await Model.find();
         res.status(200).json({
             success: true,
             code: 200,
@@ -93,8 +93,3 @@ const listdata = async (req, res) => {
 
 };
 
-module.exports = {
-    login,
-    register,
-    listdata,
-}

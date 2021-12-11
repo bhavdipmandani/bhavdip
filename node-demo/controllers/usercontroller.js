@@ -1,12 +1,12 @@
-const User = require('../models/user')
+const { user : Model } = require('../models')
 
 
 const jwt = require('jsonwebtoken')
 const tokenSecret = "my-token-secret"
 
-const login = (req, res) => {
+exports.login = (req, res) => {
     const { email, password } = req.body
-    User.findOne({ email: email }, (err, user) => {
+    Model.findOne({ email: email }, (err, user) => {
         if (user) {
             if (password === user.password) {
 
@@ -31,13 +31,13 @@ const login = (req, res) => {
 }
 
 
-    const register = (req, res) => {
+exports.register = (req, res) => {
     const { name, email, password } = req.body
     User.findOne({ email: email }, (err, user) => {
         if (user) {
             res.send({ message: "User already registerd" })
         } else {
-            const user = new User({
+            const user = new Model({
                 name,
                 email,
                 password, 
@@ -68,9 +68,9 @@ function generateToken(user) {
 }
 
 
-const listdata = async (req, res) => {
+exports.list = async (req, res) => {
     try {
-        const userData = await User.find();
+        const userData = await Model.find();
         res.status(200).json({
             success: true,
             code: 200,
@@ -93,41 +93,4 @@ const listdata = async (req, res) => {
 
 };
 
-// const grantAccess = function(action, resource) {
-//     return async (req, res, next) => {
-//      try {
-//       const permission = roles.can(req.user.role)[action](resource);
-//       if (!permission.granted) {
-//        return res.status(401).json({
-//         error: "You don't have enough permission to perform this action"
-//        });
-//       }
-//       next()
-//      } catch (error) {
-//       next(error)
-//      }
-//     }
-//    }
 
-//    const allowIfLoggedin = async (req, res, next) => {
-//     try {
-//      const user = res.locals.loggedInUser;
-//      if (!user)
-//       return res.status(401).json({
-//        error: "You need to be logged in to access this route"
-//       });
-//       req.user = user;
-//       next();
-//      } catch (error) {
-//       next(error);
-//      }
-//    }
-
-
-module.exports = {
-    login,
-    register,
-    listdata,
-    // grantAccess,
-    // allowIfLoggedin
-}

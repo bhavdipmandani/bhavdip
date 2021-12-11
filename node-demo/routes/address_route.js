@@ -4,19 +4,18 @@ const router = express.Router()
 
 
 
-const address_Controller = require('../controllers/addresscontroller');
+const {addresscontroller : Controller} = require('../controllers');
 // routes for product api ...
 
 
+router.get("/", Controller.list);
 
-router.post("/add_address", address_Controller.add_address);
-
-router.get("/address_list", address_Controller.address_list);
+router.post("/", Controller.add);
 
 
-router.patch("/address_list/:_id", address_Controller.update_address);
+router.patch("/:id", Controller.update);
 
-router.delete("/address_list/:id", address_Controller.delete_address);
+router.delete("/:id", Controller.destroy);
 
 
 

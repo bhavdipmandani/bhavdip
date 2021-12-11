@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { Card, CardGroup, Navbar, Row, Nav, Container, Form, FormControl } from 'react-bootstrap';
 import './prolist.css';
 import Retailer_footer from './Retailer_footer';
+import Retailer_header from './Retailer_header';
 import axios from 'axios';
+import { apiUrl } from '../../config';
 // import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 
 const Product_list = ({ store, setStore }) => {
@@ -12,7 +14,7 @@ const Product_list = ({ store, setStore }) => {
     const [searchTerm, setSearchTerm] = useState('')
 
     // const [selectproduct , setSelectproduct] = useState('')
-    const fetchURL = "http://localhost:8000/product_list"
+    const fetchURL = `${apiUrl}/product`
     const getData = () =>
         fetch(`${fetchURL}`)
             .then((res) => res.json())
@@ -26,12 +28,12 @@ const Product_list = ({ store, setStore }) => {
 
     // For logout users
 
-    const logout = () => {
+    // const logout = () => {
 
-        localStorage.clear();
-        window.location.reload(false);
+    //     localStorage.clear();
+    //     window.location.reload(false);
 
-    }
+    // }
 
     // ------------------------------
 
@@ -40,15 +42,20 @@ const Product_list = ({ store, setStore }) => {
 
 
     const handleclick = (productInfo) => {
-
+        axios.post('http://localhost:8000/storeporduct')
+        .then((res) => {
+            console.log(res.data)
+        }).catch((error) => {
+            console.log(error)
+        });
         let newStore = [...store];
         console.log(newStore)
-        axios.post('http://localhost:8000/storeporduct')
-            .then((res) => {
-                console.log(res.data)
-            }).catch((error) => {
-                console.log(error)
-            });
+      
+
+        axios.patch('http://localhost:8000/getstoredproduct/:_id', newStore, {
+            new: true,
+        });
+
 
         // console.log(newStore)
         let itemInStore = newStore.find(
@@ -71,7 +78,7 @@ const Product_list = ({ store, setStore }) => {
 
         <div>
             {/* Navbar Start */}
-            <Navbar bg="light" expand="lg">
+            {/* <Navbar bg="light" expand="lg">
                 <Container fluid>
                     <Navbar.Brand href="#">Something Purchase</Navbar.Brand>
 
@@ -83,28 +90,32 @@ const Product_list = ({ store, setStore }) => {
                             style={{ maxHeight: '100px' }}
                             navbarScroll> </Nav>
 
-
-                        <div className="me-3">
-                            <Form>
-                                <FormControl type="text" placeholder="Search" className="mr-sm-2" onChange={event => setSearchTerm(event.target.value)} />
-                            </Form>
-                        </div>
-
-
-
                         <button onClick={logout} className="btn btn-primary">Logout</button>
                     </Navbar.Collapse>
                 </Container>
-            </Navbar>
+            </Navbar> */}
 
+
+            <Retailer_header />
             {/* End Nav Bar */}
 
 
             {/* Display Product in Card */}
-         
+
             {/* <Products /> */}
+
+            <div className='col-md-6'>
+                <h1>Product Data From-Api</h1>
+            </div>
+            <div className="d-flex justify-content-end">
+                <Form>
+                    <FormControl type="text" placeholder="Search" className="mr-sm-2" onChange={event => setSearchTerm(event.target.value)} />
+                </Form>
+
+            </div>
+
             <div className="container">
-                <h1 align="center">Product Data From-Api</h1>
+
                 <hr />
                 <div>
 
@@ -117,13 +128,13 @@ const Product_list = ({ store, setStore }) => {
                             }
                         }).map((item) =>
                             <Row className="ms-3">
-                                <Card style={{ margin: "10px", width: "21rem" }}>
+                                <Card style={{ margin: "10px", width: "24rem" }}>
                                     <div>
                                     </div>
                                     <Card.Title className="mt-3 ms-3" align="center">{item.product_name}</Card.Title>
                                     <hr />
-                                    <Card.Img variant="top" src={item.image} style={{ height: "180px", width: "250px" }} className="mt-3 ms-3" />
-                                    <hr /> 
+                                    <Card.Img variant="top" src={item.image} style={{ height: "180px", width: "310px" }} className="mt-3 ms-3" />
+                                    <hr />
                                     <Card.Body>
                                         <Card.Text>
                                             {item.categories}
@@ -134,12 +145,13 @@ const Product_list = ({ store, setStore }) => {
                                         <Card.Text>
                                             {item.price}
                                         </Card.Text>
+                                        <hr />
                                         <button type="submit" className="btn btn-primary mt-4 me-4" onClick={() => handleclick(item)}>
                                             {/* <Link to="/AddStore" type="submit" value="Create User" className="btn btn-primary" > */}
                                             Add to Store
                                             {/* </Link> */}
                                         </button>
-
+                                        <hr />
                                     </Card.Body>
 
                                 </Card>

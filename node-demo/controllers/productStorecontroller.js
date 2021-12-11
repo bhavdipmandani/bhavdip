@@ -1,8 +1,8 @@
-const Product_store = require('../models/product_store')
+const { product_store : Model } = require('../models')
 
-const storeporduct = async (req, res) => {
+exports.add = async (req, res) => {
 
-    const check = new Product_store()
+    const check = new Model()
     check.products = [];
     check.users = [];
     check.save(err => {
@@ -22,9 +22,9 @@ const storeporduct = async (req, res) => {
     })
 };
 
-const getstoredproduct = async (req, res) => {
+exports.list = async (req, res) => {
     try {
-        const product_data = await Product_store.find({}).populate('products').populate('users');
+        const product_data = await Model.find({}).populate('products').populate('users');
         res.status(200).json({
             success: true,
             code: 200,
@@ -48,10 +48,10 @@ const getstoredproduct = async (req, res) => {
 };
 
 
-const updatesotore = async (req , res) => {
+exports.update = async (req , res) => {
     try {
         const _id = req.params.id;
-        const productData = await Product_store.findOneAndUpdate(_id, {$push: {products :  req.body.productId , users :  req.body.userId}}, {
+        const productData = await Model.findOneAndUpdate(_id, {$push: {products :  req.body.productId , users :  req.body.userId}}, {
             new: true,
         });
 
@@ -79,11 +79,3 @@ const updatesotore = async (req , res) => {
         });
     }
 }
-
-
-
-module.exports = {
-    storeporduct,
-    getstoredproduct,
-    updatesotore,
-};

@@ -1,4 +1,4 @@
-const Product = require('../models/addproduct')
+const { addproduct : Model } = require('../models')
 
 
 
@@ -6,13 +6,13 @@ const Product = require('../models/addproduct')
 // add product api
  
 
-const add_product = (req, res) => {
+exports.add = (req, res) => {
     const { product_name, categories, image, description, price} = req.body
 
   
     // console.log(req.file.filename)
     // Product.findOne({ product_name: product_name }, (err) => {
-            const product = new Product({ 
+            const product = new Model({ 
                 product_name,
                 categories,
                 image: `http://localhost:8000/images/${req.file.filename}`,
@@ -43,9 +43,9 @@ const add_product = (req, res) => {
 // list of products api 
 
 
-const product_list = async (req, res) => {
+exports.list = async (req, res) => {
     try {
-        const product_data = await Product.find();
+        const product_data = await Model.find();
         res.status(200).json({
             success: true,
             code: 200,
@@ -71,10 +71,10 @@ const product_list = async (req, res) => {
 
 // update Demo Records By Id
 
-    const update_product = async (req, res) => {
+exports.update = async (req, res) => {
     try {
         const _id = req.params._id;
-        const productData = await Product.findOneAndUpdate(_id, req.body, {
+        const productData = await Model.findOneAndUpdate(_id, req.body, {
             new: true,
         });
 
@@ -106,10 +106,10 @@ const product_list = async (req, res) => {
 // Delete Demo Record By Id
 
 // router.delete("/api/demos/:id", async (req, res) => {
-    const delete_product = async (req, res) => {
+    exports.destroy = async (req, res) => {
     try {
         // const id = req.params.id;
-        const deleteProduct = await Product.findByIdAndDelete(req.params.id)
+        const deleteProduct = await Model.findByIdAndDelete(req.params.id)
         if (!req.params.id) {
             return res.status(404).send();
         } else {
@@ -118,11 +118,4 @@ const product_list = async (req, res) => {
     } catch (e) {
         res.status(500).send(e);
     }
-};
-
-module.exports = {
-    add_product,
-    product_list,
-    update_product,
-    delete_product
 };

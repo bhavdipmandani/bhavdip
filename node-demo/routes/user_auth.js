@@ -6,17 +6,17 @@ const upload = multer();
 const path = require("path");
 
 
-const userController = require('../controllers/usercontroller');
+const {usercontroller : Controller} = require('../controllers');
 
 
 
 const middleware = require('../middlewares')
 
-router.post('/login', userController.login);
+router.post('/login', Controller.login);
 
-router.post('/register' , userController.register);
+router.post('/register' , Controller.register);
 
-router.get("/listdata", middleware.verify, userController.listdata);
+router.get("/", middleware.verify, Controller.list);
 
 
 

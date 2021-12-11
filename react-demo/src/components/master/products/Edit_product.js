@@ -19,7 +19,7 @@ export default class Editproduct extends Component {
                               product_name: '',
                               categories: '',
                               description: '',
-                              price: ''
+                              price: '',
                     }
           }
           // componentDidMount() {  
