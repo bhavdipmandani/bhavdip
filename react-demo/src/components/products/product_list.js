@@ -15,6 +15,7 @@ const Product_list = ({ store, setStore }) => {
 
     // const [selectproduct , setSelectproduct] = useState('')
     const fetchURL = `${apiUrl}/product`
+    console.log(fetchURL)
     const getData = () =>
         fetch(`${fetchURL}`)
             .then((res) => res.json())

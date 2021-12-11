@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Products from "../products/products";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
-
+import { apiUrl } from '../../config';
 class Login extends Component {
     constructor() {
         super();
@@ -24,8 +24,8 @@ class Login extends Component {
 
 
     login() {
-
-        fetch("http://localhost:8000/login", {
+        console.log('--------------------------------' , apiUrl)
+        fetch(`${apiUrl}/auth/login`, {
             method: "POST",
             body: JSON.stringify(this.state)
         }).then((res) => {
