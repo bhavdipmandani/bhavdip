@@ -3,6 +3,7 @@ const { product_store : Model } = require('../models')
 exports.add = async (req, res) => {
 
     const check = new Model()
+
     check.products = [];
     check.users = [];
     check.save(err => {
@@ -29,7 +30,7 @@ exports.list = async (req, res) => {
             success: true,
             code: 200,
             data: {
-                Store_products: product_data    
+                product_data
             },
             error: null,
             mesage: 'Product Data found'

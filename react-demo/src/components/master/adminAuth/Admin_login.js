@@ -104,7 +104,7 @@ const Admin_login = ({ setLoginUser}) => {
     }
 
     const login = () => {
-        axios.post("http://localhost:8000/admin_login", user)
+        axios.post("http://localhost:8000/api/v1/adminauth/admin_login", user)
         .then(res => {
             // alert(res.data.message)
             setLoginUser(res.data.data.user)

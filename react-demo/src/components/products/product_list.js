@@ -2,13 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { Card, CardGroup, Navbar, Row, Nav, Container, Form, FormControl } from 'react-bootstrap';
 import './prolist.css';
 import Retailer_footer from './Retailer_footer';
-import Retailer_header from './Retailer_header';
 import axios from 'axios';
 import { apiUrl } from '../../config';
 // import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 
-const Product_list = ({ store, setStore }) => {
-
+const Product_list = ({ store, setStore , props}) => {
+    // console.log('----------------' , props)
     // For listing Data from api..
     const [data, setData] = useState(null)
     const [searchTerm, setSearchTerm] = useState('')
@@ -26,86 +25,37 @@ const Product_list = ({ store, setStore }) => {
     )
 
 
-    // For logout users
-
-    // const logout = () => {
-
-    //     localStorage.clear();
-    //     window.location.reload(false);
-
-    // }
-
-    // ------------------------------
+     // ------------------------------
 
 
     // -------------- send data to store ------------------
 
 
-    const handleclick = (productInfo) => {
-        axios.post('http://localhost:8000/storeporduct')
+    const handleclick = () => {
+        axios.post('http://localhost:8000/api/v1/store')
         .then((res) => {
             console.log(res.data)
         }).catch((error) => {
             console.log(error)
         });
-        let newStore = [...store];
-        console.log(newStore)
-      
-
-        axios.patch('http://localhost:8000/getstoredproduct/:_id', newStore, {
-            new: true,
-        });
 
 
-        // console.log(newStore)
-        let itemInStore = newStore.find(
-            (item) => item.product_name === productInfo.product_name
-        );
-        if (itemInStore) {
-            itemInStore.quantity++;
-        } else {
-            itemInStore = {
-                ...productInfo,
-                quantity: 1,
-            };
-            newStore.push(itemInStore);
-        }
-        setStore(newStore);
-        // console.log(...store)
+        // axios.patch('http://localhost:8000/api/v1/store/:_id',{
+        //     new: true,
+        // });
+
+
     };
 
     return (
 
         <div>
-            {/* Navbar Start */}
-            {/* <Navbar bg="light" expand="lg">
-                <Container fluid>
-                    <Navbar.Brand href="#">Something Purchase</Navbar.Brand>
-
-
-                    <Navbar.Toggle aria-controls="navbarScroll" />
-                    <Navbar.Collapse id="navbarScroll">
-                        <Nav
-                            className="me-auto my-2 my-lg-0"
-                            style={{ maxHeight: '100px' }}
-                            navbarScroll> </Nav>
-
-                        <button onClick={logout} className="btn btn-primary">Logout</button>
-                    </Navbar.Collapse>
-                </Container>
-            </Navbar> */}
-
-
-            <Retailer_header />
-            {/* End Nav Bar */}
-
 
             {/* Display Product in Card */}
 
-            {/* <Products /> */}
 
             <div className='col-md-6 ms-3'>
-                <h1>Product Data From-Api</h1>
+                <h1>Product Data</h1>
             </div>
             <div className="d-flex justify-content-end">
                 <Form className="me-3">
@@ -145,10 +95,11 @@ const Product_list = ({ store, setStore }) => {
                                             {item.price}
                                         </Card.Text>
                                         <hr />
-                                        <button type="submit" className="btn btn-primary mt-4 me-4" onClick={() => handleclick(item)}>
-                                            {/* <Link to="/AddStore" type="submit" value="Create User" className="btn btn-primary" > */}
-                                            Add to Store
-                                            {/* </Link> */}
+
+                                        <button className="btn btn-primary" onClick = {() => props.addToCartHandler(item)}>
+                                            <p onClick={handleclick} className="mt-3">
+                                            Add To Cart
+                                            </p>
                                         </button>
                                         <hr />
                                     </Card.Body>
@@ -159,7 +110,6 @@ const Product_list = ({ store, setStore }) => {
                         )}
 
                     </CardGroup>
-
 
                 </div>
             </div>

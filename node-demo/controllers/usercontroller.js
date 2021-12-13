@@ -33,7 +33,7 @@ exports.login = (req, res) => {
 
 exports.register = (req, res) => {
     const { name, email, password } = req.body
-    User.findOne({ email: email }, (err, user) => {
+    Model.findOne({ email: email }, (err, user) => {
         if (user) {
             res.send({ message: "User already registerd" })
         } else {
