@@ -25,7 +25,7 @@ class Login extends Component {
 
     login() {
         console.log('--------------------------------' , apiUrl)
-        fetch(`${apiUrl}/auth/login`, {
+        fetch(`http://localhost:8000/api/v1/auth/login`, {
             method: "POST",
             body: JSON.stringify(this.state)
         }).then((res) => {
@@ -47,21 +47,6 @@ class Login extends Component {
 
             <div>
                 {!this.state.login ?
-
-                    // <div className="container col-sm-6">
-                    //     <h1>Login Here....</h1>
-                    //     <label className="form-label">Email : </label>
-                    //     <input type="text" onChange={(event) => { this.setState({ email: event.target.value }) }} classNameName="form-control" />
-                    //     <br />
-                    //     <label className="form-label">Password : </label>
-                    //     <input type="password" onChange={(event) => { this.setState({ password: event.target.value }) }} classNameName="form-control" />
-                    //     <br />
-                    //     <button onClick={() => { this.login() }} className="btn btn-primary">Login</button>
-                    //     <div>or</div>
-                    //     <div className="mb-3">
-                    //     <Link to="/register" type="submit" value="Create User" className="btn btn-primary" >Register</Link>
-                    // </div>
-                    // </div>
 
                     <div className="hold-transition login-page">
                         <div className="login-box">

@@ -13,9 +13,8 @@ const Product_list = ({ store, setStore }) => {
     const [data, setData] = useState(null)
     const [searchTerm, setSearchTerm] = useState('')
 
-    // const [selectproduct , setSelectproduct] = useState('')
-    const fetchURL = `${apiUrl}/product`
-    console.log(fetchURL)
+    const fetchURL = `http://localhost:8000/api/v1/product`;
+    // console.log('---------------------------' , fetchURL);
     const getData = () =>
         fetch(`${fetchURL}`)
             .then((res) => res.json())
@@ -105,11 +104,11 @@ const Product_list = ({ store, setStore }) => {
 
             {/* <Products /> */}
 
-            <div className='col-md-6'>
+            <div className='col-md-6 ms-3'>
                 <h1>Product Data From-Api</h1>
             </div>
             <div className="d-flex justify-content-end">
-                <Form>
+                <Form className="me-3">
                     <FormControl type="text" placeholder="Search" className="mr-sm-2" onChange={event => setSearchTerm(event.target.value)} />
                 </Form>
 
@@ -119,7 +118,6 @@ const Product_list = ({ store, setStore }) => {
 
                 <hr />
                 <div>
-
                     <CardGroup>
                         {data?.filter((val) => {
                             if (searchTerm === "") {

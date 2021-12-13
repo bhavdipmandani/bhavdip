@@ -2,24 +2,15 @@ import React from "react";
 import './footer.css'
 export default function Retailer_footer() {
   return (
-    // <footer className="main-footer">
-    //   <strong>
-    //     Copyright © 2014-2019 <a href="#">React / Node Demo</a>.
-    //   </strong>
-    //   All rights reserved.
-    //   <div className="float-right d-none d-sm-inline-block">
-    //     <b>Version</b> 3.0.4
-    //   </div>
-    // </footer>
 
-    <footer class="footer-distributed">
+    <footer className="footer-distributed">
 
-			<div class="footer-left">
+			<div className="footer-left">
 
 				<h3>Company<span>logo</span></h3>
 
-				<p class="footer-links">
-					<a href="#" class="link-1">Home</a>
+				<p className="footer-links">
+					<a href="#" className="link-1">Home</a>
 					
 					<a href="#">Blog</a>
 				
@@ -32,41 +23,41 @@ export default function Retailer_footer() {
 					<a href="#">Contact</a>
 				</p>
 
-				<p class="footer-company-name">Company Name © 2015</p>
+				<p className="footer-company-name">Company Name © 2021</p>
 			</div>
 
-			<div class="footer-center">
+			<div className="footer-center">
 
 				<div>
-					<i class="fa fa-map-marker"></i>
+					<i className="fa fa-map-marker"></i>
 					<p><span>444 S. Cedros Ave</span> Solana Beach, California</p>
 				</div>
 
 				<div>
-					<i class="fa fa-phone"></i>
-					<p>+1.555.555.5555</p>
+					<i className="fa fa-phone"></i>
+					<p>+91 7874557806</p>
 				</div>
 
 				<div>
-					<i class="fa fa-envelope"></i>
-					<p><a href="mailto:support@company.com">support@company.com</a></p>
+					<i className="fa fa-envelope"></i>
+					<p><a href="#">support@company.com</a></p>
 				</div>
 
 			</div>
 
-			<div class="footer-right">
+			<div className="footer-right">
 
-				<p class="footer-company-about">
+				<p className="footer-company-about">
 					<span>About the company</span>
 					Lorem ipsum dolor sit amet, consectateur adispicing elit. Fusce euismod convallis velit, eu auctor lacus vehicula sit amet.
 				</p>
 
-				<div class="footer-icons">
+				<div className="footer-icons">
 
-					<a href="#"><i class="fa fa-facebook"></i></a>
-					<a href="#"><i class="fa fa-twitter"></i></a>
-					<a href="#"><i class="fa fa-linkedin"></i></a>
-					<a href="#"><i class="fa fa-github"></i></a>
+					<a href="#"><i className="fa fa-facebook"></i></a>
+					<a href="#"><i className="fa fa-twitter"></i></a>
+					<a href="#"><i className="fa fa-linkedin"></i></a>
+					<a href="#"><i className="fa fa-github"></i></a>
 
 				</div>
 
