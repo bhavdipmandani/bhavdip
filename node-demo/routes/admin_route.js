@@ -5,9 +5,9 @@ const {admincontroller : Controller} = require('../controllers');
 
 
 
-const middleware = require('../middlewares')
+// const middleware = require('../middlewares')
 
-router.get("/admin_data", middleware.verify, Controller.list);
+router.get("/admin_data", Controller.list);
 
 router.post('/admin_login', Controller.login);
 

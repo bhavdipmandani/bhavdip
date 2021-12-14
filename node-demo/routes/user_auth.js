@@ -10,13 +10,14 @@ const {usercontroller : Controller} = require('../controllers');
 
 
 
-const middleware = require('../middlewares')
+// const Authenticate = require('../middlewares')
 
 router.post('/login', Controller.login);
 
 router.post('/register' , Controller.register);
 
-router.get("/", middleware.verify, Controller.list);
+router.get("/", Controller.list);
+// router.get("/", middleware.verify, Controller.list);
 
 
 

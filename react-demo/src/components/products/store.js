@@ -166,82 +166,83 @@
 
 import {useSelector} from "react-redux";
 import React, {useState} from "react";
+import {IncreaseQuantity,DecreaseQuantity,DeleteCart} from '../../Redux/actions/productAction';
 import {Link} from "react-router-dom";
 
 const AddStore = (props) => {
-    console.log(props.storeProduct)
-    // const [searchTerm, setSearchTerm] = useState('')
+    console.log(props)
+   const removeFromCart = () => {
+
+       localStorage.removeItem('persist:root');
+       window.location.reload(false);
+   };
+
 
     return (
 
         // <h1>hello cart</h1>
 
-    <div className="container mt-4">
-        <h1 align="center" className="mb-4">Retailer's Store</h1>
-        {/*{props.length > 0 && (*/}
-        {/*    <button className="btn btn-danger mb-4" onClick={clearCart}>Clear Store</button>*/}
-        {/*)}*/}
-        <table className="table">
+        <div className="container mt-4">
+            <h1 align="center" className="mb-4">Retailer's Store</h1>
+            {/*{props.length > 0 && (*/}
+                <button className="btn btn-danger mb-4" onClick={removeFromCart}>Clear Store</button>
+            {/*)}*/}
+            <table className="table">
 
-            <thead>
-            <tr>
-                {/*<th>Delete Product</th>*/}
-                <th>Product_Name</th>
-                <th>Categories</th>
-                <th>Image</th>
-                <th>Description</th>
-                {/*<th>Quantity</th>*/}
-                <th>Price</th>
-            </tr>
-            </thead>
+                <thead>
+                <tr>
+                    {/*<th>Delete Product</th>*/}
+                    <th>Product_Name</th>
+                    <th>Categories</th>
+                    <th>Image</th>
+                    <th>Description</th>
+                    {/*<th>Quantity</th>*/}
+                    <th>Price</th>
+                </tr>
+                </thead>
 
-            <tbody>
-            {
-                props.storeProduct.map((item) => {
-                    return (
-                        <tr>
-                            {/*<td><i className="badge badge-danger" onClick={() => props.removeToCartHandler(item)}>X</i>*/}
-                            {/*</td>*/}
-                            <td>{item.products.product_name}</td>
-                            <td>{item.products.categories}</td>
-                            <td><img src={item.products.image} style={{width: '100px', height: '80px'}}/></td>
-                            <td>{item.products.description}</td>
-                            {/*<td>*/}
-                            {/*   <span className="btn btn-primary" style={{ margin: '2px' }} onClick={() => handleDecrement(item)}>-</span>*/}
-                            {/*   <span className="btn btn-info">{item.quantity}</span>*/}
-                            {/*   <span className="btn btn-primary" style={{ margin: '2px' }} onClick={() => handleIncrement(item)}>+</span>*/}
+                <tbody>
+                {
+                    props.storeProduct.map((item) => {
+                        return (
+                            <tr>
+                                <td>{item.products.product_name}</td>
+                                <td>{item.products.categories}</td>
+                                <td><img src={item.products.image} style={{width: '100px', height: '80px'}}/></td>
+                                <td>{item.products.description}</td>
+                                {/*<td>*/}
+                                {/*    <span className="btn btn-primary" style={{margin: '2px'}}*/}
+                                {/*          onClick={() => props.DecreaseQuantity(item)}>-</span>*/}
+                                {/*    <span className="btn btn-info">1</span>*/}
+                                {/*    <span className="btn btn-primary" style={{margin: '2px'}}*/}
+                                {/*          onClick={() => props.IncreaseQuantity(item)}>+</span>*/}
 
-                            {/*</td>*/}
-                            <td>{item.products.price}</td>
-                            {/*<td>{parseInt(item.products.price) * parseInt(item.quantity)}</td>*/}
+                                {/*</td>*/}
+                                <td>{item.products.price}</td>
+                                {/*<td>{ TotalPrice(item.price,item.quantity)} $</td>*/}
 
+                            </tr>
 
-                        </tr>
+                        )
+                    })
 
-                    )
-                })
+                }
+                {/*<tr>*/}
+                {/*    <td colSpan="5">Total Carts</td>*/}
+                {/*    <td>{Number(TotalCart).toLocaleString('en-US')} $</td>*/}
+                {/*</tr>*/}
+                </tbody>
+            </table>
 
-            }
-
-            {/*<tr>*/}
-            {/*   <div className="text-2xl">*/}
-            {/*      Total Price: ${getTotalSum()}*/}
-            {/*      <p className="mt-8">*/}
-            {/*      </p>*/}
-            {/*   </div>*/}
-            {/*</tr>*/}
-            </tbody>
-        </table>
-
-        <div className="d-flex justify-content-end">
-            <button type="submit" className="btn btn-primary mt-4 mb-4"><Link to="/Address" type="submit"
-                                                                              value="Create User"
-                                                                              className="btn btn-primary">
-                Add Address</Link></button>
-
+            <div className="d-flex justify-content-end">
+                <button type="submit" className="btn btn-primary mt-4 mb-4">
+                    <Link to="/Address" type="submit" value="Create User"className="btn btn-primary">
+                        Add Address
+                    </Link>
+                </button>
+            </div>
         </div>
-    </div>
-)
+    )
 };
 export default AddStore;
 

@@ -21,7 +21,7 @@ const add_product_data = multer({
     limits: {
         fileSize: 1 * 1024 * 1024,
     },
-}); 
+});
 
 router.use('/images' , express.static('images'));
 

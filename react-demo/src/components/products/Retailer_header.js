@@ -53,6 +53,8 @@ import './header.css';
 import Login from "../login/login";
 import Register from "../register/register";
 import Home from "./Home";
+import Address from "./address";
+import axios from "axios";
 
 
 const Retailer_header = (props) => {
@@ -60,11 +62,20 @@ const Retailer_header = (props) => {
 
     const logout = () => {
 
-        localStorage.clear();
+        localStorage.removeItem('login');
         window.location.reload(false);
 
         history.push("/login")
     }
+     // const userName = () => {
+     //     axios.post("http://localhost:8000/api/v1/auth/login")
+     //         .then(res => {
+     //             console.log(res.data.data.user.name)
+     //             // alert(res.data.message)
+     //         })
+     // }
+
+    // const fetchURL = `http://localhost:8000/api/v1/auth/login`;
     // console.log(props)
     const [user, setLoginUser] = useState({})
     return (
@@ -101,8 +112,9 @@ const Retailer_header = (props) => {
 
                                 <div className="dropdown">
                                     <button className="btn dropdown-toggle" type="button"
-                                            id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                       Bhvadip Mandani
+                                            id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"  >
+                                        Bhavdip Mandani
+
                                     </button>
                                     <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                         {/*<li><a className="dropdown-item" href="#">Action</a></li>*/}
@@ -138,11 +150,15 @@ const Retailer_header = (props) => {
                     </Route>
 
                     <Route path="/AddStore">
-                        <AddStore storeProduct={props.storeProduct}/>
+                        <AddStore props={props} storeProduct={props.storeProduct}/>
                     </Route>
 
                     <Route path="/product_list">
                         <Product_list props={props}/>
+                    </Route>
+
+                    <Route path="/address">
+                        <Address />
                     </Route>
                 </Switch>
             </Router>

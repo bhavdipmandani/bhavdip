@@ -19,7 +19,7 @@ export default class AddProduct extends Component {
         this.state = {
             product_name: '',
             categories: '',
-            image: null,
+            image: '',
             description: '',
             price: ''
         }
@@ -38,7 +38,7 @@ export default class AddProduct extends Component {
     onChangeProductImage(e , props){
         this.setState({ 
             image: e.target.value,
-            image: `http://localhost:5000/${props.image}`
+            // image: `http://localhost:5000/${props.image}`
          })
         // setImage(`http://localhost:5000/${props.detail.image}`)
     }
@@ -66,7 +66,13 @@ export default class AddProduct extends Component {
             price: this.state.price,
         };
 
-        axios.post('http://localhost:8000/add_product', ProductObject)
+        axios.post('http://localhost:8000/api/v1/product', ProductObject , {
+            headers: {
+                'authorization': '',
+                'Accept' : 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
             .then((res) => {
                 console.log(res.data)
             }).catch((error) => {

@@ -17,7 +17,7 @@ export default function Header() {
 
   const logout = () => {
     localStorage.clear();
-    window.location.href = './Admin_login';
+    window.location.href = './login';
 }
 
   return (

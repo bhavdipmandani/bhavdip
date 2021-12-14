@@ -1,21 +1,15 @@
 const { addproduct : Model } = require('../models')
 
-
-
-
 // add product api
  
 
 exports.add = (req, res) => {
     const { product_name, categories, image, description, price} = req.body
 
-  
-    // console.log(req.file.filename)
-    // Product.findOne({ product_name: product_name }, (err) => {
-            const product = new Model({ 
+            const product = new Model({
                 product_name,
                 categories,
-                image: `http://localhost:8000/images/${req.file.filename}`,
+                image: `images/${req.file.filename}`,
                 // image : req.file,
                 description,
                 price,
