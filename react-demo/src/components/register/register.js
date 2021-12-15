@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import "./register.css"
 import axios from "axios"
 import { useHistory } from "react-router-dom"
+import { apiUrl } from '../../config';
 
 const Register = () => {
 
@@ -43,7 +44,8 @@ const Register = () => {
     const register = () => {
         const { name, email, password, reEnterPassword } = user
         if (name && email && password && (password === reEnterPassword)) {
-            axios.post("http://localhost:8000/api/v1/auth/register", user)
+            axios.post("" +
+                `${apiUrl}/auth/register`, user)
                 .then(res => {
                     // alert(res.data.message)
                     history.push("/login")

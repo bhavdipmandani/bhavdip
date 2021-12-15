@@ -1,10 +1,10 @@
 const {ADD_TO_STORE} = require("../constants/constant")
 // const {REMOVE_TO_STORE} = require("../constants/constant")
-// const {INCREASE_QUANTITY} = require("../constants/constant")
-// const {DECREASE_QUANTITY} = require("../constants/constant")
+const {INCREASE_QUANTITY} = require("../constants/constant")
+const {DECREASE_QUANTITY} = require("../constants/constant")
 
-const addProduct = (product) => {
-    console.log("action",product)
+export const addProduct = (product) => {
+    // console.log("action",product)/
     return{
         type: ADD_TO_STORE,
         payload: product
@@ -18,7 +18,7 @@ const addProduct = (product) => {
 // };
 
 
-// const IncreaseQuantity = (product) =>{
+// export const IncreaseQuantity = (product) =>{
 //     // console.log("action",product)
 //
 //     return{
@@ -26,12 +26,12 @@ const addProduct = (product) => {
 //         payload:product
 //     }
 // }
-// const DecreaseQuantity = (product) => {
+// export const DecreaseQuantity = (product) => {
 //     return{
 //         type:DECREASE_QUANTITY,
 //         payload: product
 //     }
 // }
 
-export default (addProduct );
+// export default (addProduct );
 // export default (addProduct , removeProduct);

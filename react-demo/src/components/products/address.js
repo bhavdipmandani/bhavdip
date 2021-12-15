@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-// import Product_list from './product_list';
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
-import CheckOut from "./checkout";
-// import AddStore from './store';
+import Payment from "./payment";
+import { apiUrl } from '../../config';
+// import Retailer_footer from './Retailer_footer';
+import './address.css';
 
 export default class Address extends Component {
 
     constructor(props) {
+        // console.log(props.props.storeProduct[0].products.price)
         super(props)
 
         this.onChangeName = this.onChangeName.bind(this);
@@ -17,14 +18,14 @@ export default class Address extends Component {
         this.onChangeCity = this.onChangeCity.bind(this);
         this.onChangeState = this.onChangeState.bind(this);
         this.onChangeZip = this.onChangeZip.bind(this);
-        this.onChangeContry = this.onChangeContry.bind(this);
-
-
+        this.onChangeCountry = this.onChangeCountry.bind(this);
 
 
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
+
+            // product: [this.props.props.storeProduct],
             name: '',
             email: '',
             phone: '',
@@ -33,16 +34,14 @@ export default class Address extends Component {
             state: '',
             zip: '',
             country: '',
-            
 
-                  
         }
-        
+        // console.log(this.state.product)
     }
 
 
-    onChangeName(e) {
 
+    onChangeName(e) {
         this.setState({ name: e.target.value })
     }
 
@@ -71,7 +70,7 @@ export default class Address extends Component {
         this.setState({ zip: e.target.value })
     }
 
-    onChangeContry(e) {
+    onChangeCountry(e) {
         this.setState({ country: e.target.value })
     }
 
@@ -92,7 +91,8 @@ export default class Address extends Component {
 
         };
 
-        await axios.post('http://localhost:8000/add_address', address);
+        await axios.post(`${apiUrl}/address`, address);
+        // await axios.post(`${apiUrl}/store`, this.props.props.storeProduct);
 
         this.setState({
             name: '',
@@ -102,19 +102,26 @@ export default class Address extends Component {
             city: '',
             state: '',
             zip: '',
-            country: ''
+            country: '',
+
         })
 
     }
 
+
+    handleclick = async (e) => {
+        e.preventDefault()
+        console.log(this.props.props.storeProduct)
+        await axios.post(`${apiUrl}/store`, this.props.props.storeProduct);
+
+    }
+
+
     render() {
-        const totalPrice = `82000`;
+        // const totalPrice = `80000`;
         return (
-            <div className="hold-transition register-page">
+            <div className="register-page">
                 <div className="register-box">
-                    <div class="register-logo">
-                        <h2> Add your Address </h2>
-                    </div>
                     <div class="card">
                     <div class="card-body register-card-body"> 
                     <p class="login-box-msg">Add Your Address...</p>
@@ -139,7 +146,7 @@ export default class Address extends Component {
                         </div>
                         <div className="input-group mb-3">
                             {/* <label className="form-label">Phone <strong>:</strong> </label> */}
-                            <input type="number" value={this.state.phone} onChange={this.onChangePhone} className="form-control" placeholder="Enter Your Phone Number"/>
+                            <input type="text" value={this.state.phone} onChange={this.onChangePhone} className="form-control" placeholder="Enter Your Phone Number"/>
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <span class="fa fa-phone"></span>
@@ -176,7 +183,7 @@ export default class Address extends Component {
                         </div>
                         <div className="input-group mb-3">
                             {/* <label className="form-label">Zip <strong>:</strong> </label> fa fa-map-pin*/}
-                            <input type="number" value={this.state.zip} onChange={this.onChangeZip} className="form-control" placeholder="Enter Your Pin Code"/>
+                            <input type="text" value={this.state.zip} onChange={this.onChangeZip} className="form-control" placeholder="Enter Your Pin Code"/>
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <span class="fa fa-map-pin"></span>
@@ -185,7 +192,7 @@ export default class Address extends Component {
                         </div>
                         <div className="input-group mb-3">
                             {/* <label className="form-label">Country <strong>:</strong> </label> */}
-                            <input type="text" value={this.state.country} onChange={this.onChangeContry} className="form-control" placeholder="Enter Your Country Name" />
+                            <input type="text" value={this.state.country} onChange={this.onChangeCountry} className="form-control" placeholder="Enter Your Country Name" />
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <span class="fa fa-map-marker"></span>
@@ -196,12 +203,11 @@ export default class Address extends Component {
                             <div className="mb-3">
                                 <button type="submit" className="btn btn-primary">Add Address</button>
                             </div>
-                        ) : ( 
-                            //  <Link to="/checkout" type="submit" value="Create User" className="btn btn-primary">Checkout</Link>
-
-                            <CheckOut price={totalPrice} >
-                                <button type="submit" className="btn btn-primary mt-4"></button>
-                            </CheckOut>
+                        ) : (
+                            <button type="submit" onClick={this.handleclick} className="btnadd">
+                            <Payment price={this.props.props.storeProduct.map(items => items.products.price)
+                                .reduce((acc, next) => acc + next, 0)} />
+                            </button>
                        )}   
                         {/* <div className="mb-3">
                         <button type="submit" className="btn btn-primary">CheckOut</button>
@@ -210,7 +216,14 @@ export default class Address extends Component {
                     </div>
                     </div>
                 </div>
+                {/* Footer Part */}
+
+                {/*<Retailer_footer />*/}
+
+                {/* End Footer   */}
             </div>
+
+
         )
     }
 }

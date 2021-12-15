@@ -2,25 +2,24 @@ import React, { useEffect, useState } from 'react'
 import { Card, CardGroup, Navbar, Row, Nav, Container, Form, FormControl } from 'react-bootstrap';
 import './prolist.css';
 import Retailer_footer from './Retailer_footer';
-// import axios from 'axios';
+import axios from 'axios';
 import { apiUrl } from '../../config';
+import Helper from '../../helper';
 // import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 
 const Product_list = ({ store, setStore , props}) => {
-    // console.log('----------------' , props)
+    console.log(props)
     // For listing Data from api..
     const [data, setData] = useState(null)
     const [searchTerm, setSearchTerm] = useState('')
 
     const fetchURL = `${apiUrl}/public/product`;
-    console.log('---------------------------' , fetchURL);
     const getData = () =>
         fetch(`${fetchURL}`)
             .then((res) => res.json())
 
     useEffect(() => {
         getData().then((data) => setData(data.data.products))
-        // getData().then((data) => console.log(data.data.products))
 
     }, []
     )
@@ -83,7 +82,7 @@ const Product_list = ({ store, setStore , props}) => {
                                     </div>
                                     <Card.Title className="mt-3 ms-3" align="center">{item.product_name}</Card.Title>
                                     <hr />
-                                    <Card.Img variant="top" src={item.image} style={{ height: "180px", width: "310px" }} className="mt-3 ms-3" />
+                                    <Card.Img variant="top" src={Helper.getImageUrl(item.image)} style={{ height: "180px", width: "310px" }} className="mt-3 ms-3" />
                                     <hr />
                                     <Card.Body>
                                         <Card.Text>
@@ -99,7 +98,7 @@ const Product_list = ({ store, setStore , props}) => {
 
                                         <button className="btn btn-primary" onClick = {() => props.addToCartHandler(item)}>
                                             {/*<p onClick={handleclick} className="mt-3">*/}
-                                            Add To Cart
+                                            Add To Store
                                             {/*</p>*/}
                                         </button>
                                         <hr />

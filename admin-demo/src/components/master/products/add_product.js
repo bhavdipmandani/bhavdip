@@ -61,7 +61,7 @@ export default class AddProduct extends Component {
         const ProductObject = {
             product_name: this.state.product_name,
             categories: this.state.categories,
-            iamge: this.state.image,
+            image: this.state.image,
             description: this.state.description,
             price: this.state.price,
         };

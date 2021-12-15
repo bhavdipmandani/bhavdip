@@ -163,30 +163,27 @@
 //
 // export default AddStore;
 
+// import {useSelector} from "react-redux";
 
-import {useSelector} from "react-redux";
-import React, {useState} from "react";
-import {IncreaseQuantity,DecreaseQuantity,DeleteCart} from '../../Redux/actions/productAction';
-import {Link} from "react-router-dom";
+import React from "react";
+
+import {BrowserRouter as Router, Route, Switch, Link} from "react-router-dom";
 
 const AddStore = (props) => {
-    console.log(props)
-   const removeFromCart = () => {
-
-       localStorage.removeItem('persist:root');
-       window.location.reload(false);
-   };
-
+    // console.log(props)
+    const removeFromCart = () => {
+        localStorage.removeItem('persist:root');
+        window.location.reload(false);
+    };
+    // const removeByIndex = (index) => {
+    //       props.storeProduct.filter((id) => id !== index)
+    // };
 
     return (
-
-        // <h1>hello cart</h1>
-
         <div className="container mt-4">
             <h1 align="center" className="mb-4">Retailer's Store</h1>
-            {/*{props.length > 0 && (*/}
-                <button className="btn btn-danger mb-4" onClick={removeFromCart}>Clear Store</button>
-            {/*)}*/}
+
+
             <table className="table">
 
                 <thead>
@@ -196,47 +193,52 @@ const AddStore = (props) => {
                     <th>Categories</th>
                     <th>Image</th>
                     <th>Description</th>
-                    {/*<th>Quantity</th>*/}
                     <th>Price</th>
                 </tr>
                 </thead>
 
                 <tbody>
                 {
-                    props.storeProduct.map((item) => {
-                        return (
-                            <tr>
-                                <td>{item.products.product_name}</td>
-                                <td>{item.products.categories}</td>
-                                <td><img src={item.products.image} style={{width: '100px', height: '80px'}}/></td>
-                                <td>{item.products.description}</td>
-                                {/*<td>*/}
-                                {/*    <span className="btn btn-primary" style={{margin: '2px'}}*/}
-                                {/*          onClick={() => props.DecreaseQuantity(item)}>-</span>*/}
-                                {/*    <span className="btn btn-info">1</span>*/}
-                                {/*    <span className="btn btn-primary" style={{margin: '2px'}}*/}
-                                {/*          onClick={() => props.IncreaseQuantity(item)}>+</span>*/}
+                    props.storeProduct.length > 0 ?
+                        props.storeProduct.map((item) => {
+                            return (
+                                <tr>
+                                    {/*<td>*/}
+                                    {/*    <button className="badge badge-danger" onClick={() => removeByIndex(item)}>X</button>*/}
+                                    {/*</td>*/}
+                                    <td>{item.products.product_name}</td>
+                                    <td>{item.products.categories}</td>
+                                    <td><img src={item.products.image} style={{width: '100px', height: '80px'}}/></td>
+                                    <td>{item.products.description}</td>
+                                    <td>{item.products.price}</td>
 
-                                {/*</td>*/}
-                                <td>{item.products.price}</td>
-                                {/*<td>{ TotalPrice(item.price,item.quantity)} $</td>*/}
+                                </tr>
 
-                            </tr>
-
-                        )
-                    })
+                            )
+                        })
+                        :
+                        <div>
+                            <h1 className="text-danger">There are no item in store....</h1>
+                        </div>
 
                 }
-                {/*<tr>*/}
-                {/*    <td colSpan="5">Total Carts</td>*/}
-                {/*    <td>{Number(TotalCart).toLocaleString('en-US')} $</td>*/}
-                {/*</tr>*/}
+
                 </tbody>
             </table>
-
+            <div>
+                <p>Total Products In Store :{props.storeProduct.length}</p>
+            </div>
+            <div>
+                <p>Total Price : {props.storeProduct.map(items => items.products.price)
+                    .reduce((acc, next) => acc + next, 0)}
+                </p>
+            </div>
             <div className="d-flex justify-content-end">
-                <button type="submit" className="btn btn-primary mt-4 mb-4">
-                    <Link to="/Address" type="submit" value="Create User"className="btn btn-primary">
+                <button className="btn btn-danger mb-2" onClick={removeFromCart}>Clear Store</button>
+            </div>
+            <div className="d-flex justify-content-end">
+                <button type="submit" className="btn btn-primary mb-4">
+                    <Link to="/Address" type="submit" value="Create User" className="btn btn-primary">
                         Add Address
                     </Link>
                 </button>

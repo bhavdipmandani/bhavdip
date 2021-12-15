@@ -4,6 +4,7 @@ import { Modal, Button } from "react-bootstrap";
 import axios from 'axios';
 import Editproduct from './Edit_product';
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import { apiUrl } from '../../../config';
 class Admin_pro_list extends React.Component {
     // state = {
     //     products: []
@@ -20,9 +21,10 @@ class Admin_pro_list extends React.Component {
     closeModal = () => this.setState({ isOpen: false });
 
     componentDidMount() {
-        axios.get(`http://localhost:8000/product_list`)
+        axios.get(`${apiUrl}/public/product`)
             .then(res => {
                 const products = res.data.data.products;
+                console.log(products)
                 this.setState({ products });
             })
     }

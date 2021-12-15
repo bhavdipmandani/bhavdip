@@ -2,10 +2,15 @@ const { product_store : Model } = require('../models')
 
 exports.add = async (req, res) => {
 
-    const check = new Model()
+    const check = new Model({})
+    // const _id = req.params.id;
+    // const productData = await Model.findOneAndUpdate(_id, {$push: {products : req.body.productId}}, {
+    //     new: true,
+    // });
 
+    // const result = [check , productData];
     check.products = [];
-    check.users = [];
+
     check.save(err => {
         if (err) {
             res.send(err)
@@ -17,7 +22,7 @@ exports.add = async (req, res) => {
                     check
                 },
                 error: null,
-                message: "Product added to Store sucessfully.",
+                message: "Product Added To Store Successfully.",
             })
         }
     })
@@ -25,7 +30,7 @@ exports.add = async (req, res) => {
 
 exports.list = async (req, res) => {
     try {
-        const product_data = await Model.find({}).populate('products').populate('users');
+        const product_data = await Model.find({}).populate('products');
         res.status(200).json({
             success: true,
             code: 200,
@@ -33,7 +38,7 @@ exports.list = async (req, res) => {
                 product_data
             },
             error: null,
-            mesage: 'Product Data found'
+            message: 'Product Data found'
         });
     } catch (e) {
         res.status(400).json({
@@ -41,7 +46,7 @@ exports.list = async (req, res) => {
             code: 400,
             data: null,
             error: e,
-            mesage: e.mesage
+            message: e.message
         });
     }
 
@@ -52,7 +57,7 @@ exports.list = async (req, res) => {
 exports.update = async (req , res) => {
     try {
         const _id = req.params.id;
-        const productData = await Model.findOneAndUpdate(_id, {$push: {products :  req.body.productId , users :  req.body.userId}}, {
+        const productData = await Model.findOneAndUpdate(_id, {$push: {products :  req.body.productId}}, {
             new: true,
         });
 

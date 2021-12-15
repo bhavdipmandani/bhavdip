@@ -3,6 +3,8 @@ import React from 'react';
 import { Modal, Button } from "react-bootstrap";
 import axios from 'axios';
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import { apiUrl } from '../../../config';
+
 class Admin_Address_list extends React.Component {
     // state = {
     //     products: []
@@ -19,7 +21,7 @@ class Admin_Address_list extends React.Component {
 //     closeModal = () => this.setState({ isOpen: false });
 
     componentDidMount() {
-        axios.get(`http://localhost:8000/address_list`)
+        axios.get(`${apiUrl}/address`)
             .then(res => {
                 const address = res.data.data.address;
                 this.setState({ address });

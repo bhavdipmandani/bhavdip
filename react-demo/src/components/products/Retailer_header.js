@@ -67,16 +67,7 @@ const Retailer_header = (props) => {
 
         history.push("/login")
     }
-     // const userName = () => {
-     //     axios.post("http://localhost:8000/api/v1/auth/login")
-     //         .then(res => {
-     //             console.log(res.data.data.user.name)
-     //             // alert(res.data.message)
-     //         })
-     // }
 
-    // const fetchURL = `http://localhost:8000/api/v1/auth/login`;
-    // console.log(props)
     const [user, setLoginUser] = useState({})
     return (
         <>
@@ -84,7 +75,7 @@ const Retailer_header = (props) => {
                 <Navbar bg="light" expand="lg">
                     <Container fluid>
                         <Navbar.Brand href="#">
-                            <Link to="/" className="logo">
+                            <Link to="/" className="logo text-dark">
                                 Something Purchase
                             </Link>
                         </Navbar.Brand>
@@ -96,16 +87,16 @@ const Retailer_header = (props) => {
                             <Nav>
 
                                 {/*<div className="me-4">*/}
-                                    <Link to="/login" className="me-4">Login</Link>
+                                    <Link to="/login" className="me-4 text-dark">Login</Link>
                                 {/*</div>*/}
                                 {/*<div className="me-4">*/}
-                                    <Link to="/register" className="me-4">Register</Link>
+                                    <Link to="/register" className="me-4 text-dark">Register</Link>
                                 {/*</div>*/}
                                 {/*<div className="me-4">*/}
-                                    <Link to="/product_list" className="me-4">Products</Link>
+                                    <Link to="/product_list" className="me-4 text-dark">Products</Link>
                                 {/*</div>*/}
                                 {/*<div className="me-4">*/}
-                                <Link to="/AddStore" className="me-4"><i className="fas fa-store"></i><p className="productCount">{props.storeProduct.length}</p></Link>
+                                <Link to="/AddStore" className="me-4 text-dark"><i className="fas fa-store text-dark"></i><p className="productCount">{props.storeProduct.length}</p></Link>
                                 {/*</div>*/}
 
                                 {/*<button onClick={logout} className="btn btn-primary ms-4">Logout</button>*/}
@@ -150,7 +141,7 @@ const Retailer_header = (props) => {
                     </Route>
 
                     <Route path="/AddStore">
-                        <AddStore props={props} storeProduct={props.storeProduct}/>
+                        <AddStore storeProduct={props.storeProduct} props={props} />
                     </Route>
 
                     <Route path="/product_list">
@@ -158,7 +149,7 @@ const Retailer_header = (props) => {
                     </Route>
 
                     <Route path="/address">
-                        <Address />
+                        <Address props={props}/>
                     </Route>
                 </Switch>
             </Router>

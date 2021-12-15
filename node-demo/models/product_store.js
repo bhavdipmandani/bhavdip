@@ -8,11 +8,6 @@ const product_store = new mongoose.Schema({
             type: 'ObjectId',
             ref: 'Product',
         }],
-    
-    users: [{
-        type: 'ObjectId',
-        ref: 'User',
-    }]
 })
 
 module.exports = new mongoose.model("Product_store", product_store)

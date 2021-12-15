@@ -137,7 +137,7 @@ import React, {useState } from "react"
 
 import axios from "axios"
 import { useHistory} from "react-router-dom"
-
+import { apiUrl } from '../../config';
 const Login = ({ setLoginUser}) => {
 
     const history = useHistory()
@@ -159,7 +159,7 @@ const Login = ({ setLoginUser}) => {
     }
 
     const login = () => {
-        axios.post("http://localhost:8000/api/v1/auth/login", user)
+        axios.post(`${apiUrl}/auth/login`, user)
             .then(res => {
                 // console.log(res.data.data.user.name)
                 // alert(res.data.message)
