@@ -59,7 +59,7 @@ const Product_list = ({ store, setStore , props}) => {
             </div>
             <div className="d-flex justify-content-end">
                 <Form className="me-3">
-                    <FormControl type="text" placeholder="Search" className="mr-sm-2" onChange={event => setSearchTerm(event.target.value)} />
+                        <FormControl type="text" placeholder="Search" className="mr-sm-2" onChange={event => setSearchTerm(event.target.value)} />
                 </Form>
 
             </div>

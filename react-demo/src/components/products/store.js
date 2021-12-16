@@ -188,7 +188,7 @@ const AddStore = (props) => {
 
                 <thead>
                 <tr>
-                    {/*<th>Delete Product</th>*/}
+                    <th>Delete Product</th>
                     <th>Product_Name</th>
                     <th>Categories</th>
                     <th>Image</th>
@@ -206,6 +206,9 @@ const AddStore = (props) => {
                                     {/*<td>*/}
                                     {/*    <button className="badge badge-danger" onClick={() => removeByIndex(item)}>X</button>*/}
                                     {/*</td>*/}
+                                    <td className="cart-remove"
+                                        onClick = {() => props.props.removeToCartHandler(item.products._id)}
+                                    ><button className="badge badge-danger">X</button></td>
                                     <td>{item.products.product_name}</td>
                                     <td>{item.products.categories}</td>
                                     <td><img src={item.products.image} style={{width: '100px', height: '80px'}}/></td>

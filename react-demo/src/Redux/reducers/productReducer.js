@@ -1,5 +1,5 @@
 import {ADD_TO_STORE} from "../constants/constant";
-// import {REMOVE_TO_STORE} from "../constants/constant";
+import {REMOVE_TO_STORE} from "../constants/constant";
 // import {INCREASE_QUANTITY} from "../constants/constant";
 // import {DECREASE_QUANTITY} from "../constants/constant";
 
@@ -21,13 +21,10 @@ export const productReducer = (state = [],action) => {
 
 
             // break;
-        //     case REMOVE_TO_STORE:
-        //         console.log('remove reducers',action)
-        //         return [
-        //             state.pop(),
-        //             ...state
-        //
-        // ];
+        case REMOVE_TO_STORE:
+            console.log('remove reducers',state)
+            const index = state.filter(item => item.products._id !== action.payload);
+            return index;
 
         // case INCREASE_QUANTITY:
         //     state.numberStore++
