@@ -1,58 +1,36 @@
 import React, { useEffect, useState } from 'react'
-import { Card, CardGroup, Navbar, Row, Nav, Container, Form, FormControl } from 'react-bootstrap';
+import { Card, CardGroup, Row, Form, FormControl } from 'react-bootstrap';
 import './prolist.css';
 import Retailer_footer from './Retailer_footer';
-import axios from 'axios';
 import { apiUrl } from '../../config';
 import Helper from '../../helper';
-// import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 
-const Product_list = ({ store, setStore , props}) => {
-    console.log(props)
+const Product_list = (props) => {
     // For listing Data from api..
-    const [data, setData] = useState(null)
+
+    const [data, setData] = useState([])
     const [searchTerm, setSearchTerm] = useState('')
 
-    const fetchURL = `${apiUrl}/public/product`;
-    const getData = () =>
-        fetch(`${fetchURL}`)
-            .then((res) => res.json())
+    let Data = async () => {
 
-    useEffect(() => {
-        getData().then((data) => setData(data.data.products))
+        const response = await fetch(`${apiUrl}/public/product`);
+        let productData = await response.json();
+        return productData;
+    }
 
-    }, []
-    )
+    useEffect( () => {
+        Data().then(((data) => setData(data.data.ProductList) ));
+    },[]);
 
 
      // ------------------------------
 
-
-    // -------------- send data to store ------------------
-
-
-    // const handleclick = () => {
-    //     axios.post('http://localhost:8000/api/v1/store')
-    //     .then((res) => {
-    //         console.log(res.data)
-    //     }).catch((error) => {
-    //         console.log(error)
-    //     });
-    //
-    //
-    //     // axios.patch('http://localhost:8000/api/v1/store/:_id',{
-    //     //     new: true,
-    //     // });
-    //
-    //
-    // };
 
     return (
 
         <div>
 
             {/* Display Product in Card */}
-
 
             <div className='col-md-6 ms-3'>
                 <h1>Product Data</h1>
@@ -96,7 +74,7 @@ const Product_list = ({ store, setStore , props}) => {
                                         </Card.Text>
                                         <hr />
 
-                                        <button className="btn btn-primary" onClick = {() => props.addToCartHandler(item)}>
+                                        <button className="btn btn-primary" onClick = {() => props.props.addToCartHandler(item)}>
                                             {/*<p onClick={handleclick} className="mt-3">*/}
                                             Add To Store
                                             {/*</p>*/}

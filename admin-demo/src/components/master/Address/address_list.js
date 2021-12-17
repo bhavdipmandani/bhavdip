@@ -4,6 +4,9 @@ import { Modal, Button } from "react-bootstrap";
 import axios from 'axios';
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import { apiUrl } from '../../../config';
+import Footer from "../Footer";
+import Header from "../Header";
+import Menu from "../Menu";
 
 class Admin_Address_list extends React.Component {
     // state = {
@@ -56,15 +59,50 @@ class Admin_Address_list extends React.Component {
 
     render() {
         return (
-            <div className="container content">
-                <div className="d-flex justify-content-end">
-                    <button className="btn btn-primary mt-3">
-                     <Link to="/main" className="text-white" rel="manifest">
-                        back to Home
-                    </Link>
-                   </button>
-                </div>
-                <h1>Product Data From-Api</h1>
+            <div>
+                <Header />
+                <Menu />
+
+
+                <div className="content-wrapper">
+
+                    {/* Content Header (Page header) */}
+                    <div className="content-header">
+                        <div className="container-fluid">
+                            <div className="row mb-2">
+                                <div className="d-flex justify-content-end">
+                                    <button className="btn btn-primary mt-1 mb-3">
+                                        <Link to="/main" className="text-white" rel="manifest">
+                                            back to Home
+                                        </Link>
+                                    </button>
+                                </div>
+                                <div className="col-sm-6">
+                                    <h1 className="m-0 text-dark">Retailer's Address Data</h1>
+                                </div>
+                                {/* /.col */}
+                                {/*<div className="col-sm-6">*/}
+                                {/*    <ol className="breadcrumb float-sm-right">*/}
+                                {/*        <li className="breadcrumb-item">*/}
+                                {/*            <a href="#">Home</a>*/}
+                                {/*        </li>*/}
+                                {/*        <li className="breadcrumb-item active">Address_list</li>*/}
+                                {/*    </ol>*/}
+                                {/*</div>*/}
+                                {/* /.col */}
+                            </div>
+                            {/* /.row */}
+                        </div>
+                        {/* /.container-fluid */}
+                    </div>
+                    {/* /.content-header */}
+                    {/* Main content */}
+                    <div className="content">
+                        <div className="container-fluid">
+                            <div className="row">
+
+
+
                 <table className="table table-border table-striped mt-3">
                     <thead>
                         <tr>
@@ -108,7 +146,16 @@ class Admin_Address_list extends React.Component {
                     </tbody>
 
                 </table>
+
             </div>
+        {/* /.row */}
+    </div>
+        {/* /.container-fluid */}
+    </div>
+        {/* /.content */}
+    </div>
+    <Footer />
+    </div>
         )
     }
 }

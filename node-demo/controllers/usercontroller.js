@@ -63,7 +63,7 @@ exports.login = async (req, res) => {
                 throw customError;
 
             } else {
-                return res.send({User: userLogin});
+                return res.data({User: userLogin});
                 res.json({ message: "User Login successfully" });
             }
 
@@ -74,7 +74,7 @@ exports.login = async (req, res) => {
 
     } catch (err) {
         console.log(err);
-        return res.send(err);
+        return res.error(err);
     }
 }
 

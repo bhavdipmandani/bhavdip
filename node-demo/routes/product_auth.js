@@ -9,19 +9,46 @@ const {productcontroller : Controller} = require('../controllers');
 // routes for product api ...
 
 
+// const storage = multer.diskStorage({
+//     destination: './images',
+//     filename: (req, file, cb) => {
+//         return cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`)
+//     }
+// });
+//
+// const add_product_data = multer({
+//     storage: storage,
+//     limits: {
+//         fileSize: 1 * 1024 * 1024,
+//     },
+// });
+
+
 const storage = multer.diskStorage({
     destination: './images',
-    filename: (req, file, cb) => {
-        return cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`)
+    filename: function (req, file, cb) {
+        // let ext = path.extname(file.originalname)
+        cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`)
     }
 });
 
 const add_product_data = multer({
     storage: storage,
-    limits: {
-        fileSize: 1 * 1024 * 1024,
+    fileFilter: function (req, file, callback) {
+        if (
+            file.mimetype == "image/png" ||
+            file.mimetype == "image/jpg"
+        ) {
+            callback(null, true)
+        } else {
+            console.log('only jpg & png file supported');
+            callback(null, false)
+        }
     },
-});
+    limits: { fileSize: 2 * 1024 * 1024 }
+})
+
+
 
 router.use('/images' , express.static('images'));
 

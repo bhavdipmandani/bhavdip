@@ -1,51 +1,52 @@
-import {ADD_TO_STORE} from "../constants/constant";
-import {REMOVE_TO_STORE} from "../constants/constant";
-// import {INCREASE_QUANTITY} from "../constants/constant";
-// import {DECREASE_QUANTITY} from "../constants/constant";
+import {ADD_TO_STORE , DECREMENT, INCREMENT , REMOVE_TO_STORE , REMOVE_ALL} from "../constants/constant";
 
 const initialState = {
     numberStore:0,
     products : [],
     Store: [],
-    quantity: 1
+    qty: 1
 };
 
 export const productReducer = (state = [],action) => {
     switch (action.type) {
+        // case ADD_TO_STORE:
+        //     // console.log('add reducers',action)
+        //     return [
+        //         ...state,
+        //         { products: action.payload}
+        //     ];
+
         case ADD_TO_STORE:
-            console.log('add reducers',action)
-            return [
-                ...state,
-                { products: action.payload}
-            ];
+            console.log('add reducers',state)
+            const check = state.find((item) => item.products._id === action.payload._id );
+            if(check) {
+                // console.log("checkkkkkkkkkkkkk", action.payload ,"5555",)
+                state = state.map((item) => item.products._id === action.payload._id ? { ...item, qty : item.qty + 1 } : item )
+            }else{
+                return [
+                    ...state,
+                    {  products: action.payload,qty:1}
+                ]};
 
-
-            // break;
-        case REMOVE_TO_STORE:
-            console.log('remove reducers',state)
+            case REMOVE_TO_STORE:
+            // console.log('remove reducers',state)
             const index = state.filter(item => item.products._id !== action.payload);
             return index;
 
-        // case INCREASE_QUANTITY:
-        //     state.numberStore++
-        //     state.Store[action.payload].quantity++;
-        //
-        //     return [
-        //         ...state
-        //     ]
-        //
-        //     // break;
-        //
-        // case DECREASE_QUANTITY:
-        //     let quantity = state.Store[action.payload].quantity;
-        //     if(quantity > 1){
-        //         state.numberStore--;
-        //         state.Store[action.payload].quantity--;
-        //     }
-        //
-        //     return [
-        //         ...state
-        //     ]
+        case REMOVE_ALL:
+            console.log(state)
+            return state = [];
+
+        case DECREMENT:
+            console.log("====================")
+            return state.map((item) => item.products._id === action.payload.products._id ? { ...item, qty : item.qty - 1 } : item );
+
+        case INCREMENT:
+            // console.log("====================",state[0].products._id)
+            return state.map((item) => item.products._id === action.payload.products._id ? { ...item, qty : item.qty + 1 } : item );
+
+
+
 
         default:
             return state;

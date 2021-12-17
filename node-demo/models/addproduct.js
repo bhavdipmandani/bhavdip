@@ -25,18 +25,6 @@ const productSchema = new mongoose.Schema({
         required: true
     },
 })
-const storage = multer.diskStorage({
-    destination: './images',
-     filename: ( file, cb) => {
-        return cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`)
-    }
-});
 
-const add_product_data = multer({  
-    storage: storage, 
-    limits: {
-        fileSize: 1 * 1024 * 1024,
-    },
-}); 
 
 module.exports = new mongoose.model("Product", productSchema) 

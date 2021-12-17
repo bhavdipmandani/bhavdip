@@ -41,7 +41,7 @@ function App(props) {
             </Route>
 
 
-            <Route path="/main">
+            <Route path="/">
               <Main />
             </Route>
 

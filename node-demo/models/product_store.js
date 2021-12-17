@@ -3,11 +3,29 @@ const mongoose = require("mongoose")
 
 const product_store = new mongoose.Schema({
 
-    products: [{
-            // type: mongoose.Schema.Types.ObjectId,
-            type: 'ObjectId',
+    // product_data: {
+    //       products:[{  type: mongoose.Schema.Types.ObjectId,
+    //         // type: 'ObjectId',
+    //         ref: 'Product',
+    //       }],
+    //     users: [{
+    //         type: mongoose.Schema.Types.ObjectId,
+    //         // type: 'ObjectId', sddd
+    //         ref: 'User',
+    //     }],
+    //     },
+    // productData: {
+        products: [{
+            type: mongoose.Schema.Types.ObjectId,
+            // type: 'ObjectId',
             ref: 'Product',
         }],
+        users: [{
+            type: mongoose.Schema.Types.ObjectId,
+            // type: 'ObjectId',
+            ref: 'User',
+        }],
+    // }
 })
 
 module.exports = new mongoose.model("Product_store", product_store)

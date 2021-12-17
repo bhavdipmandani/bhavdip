@@ -6,5 +6,6 @@
 
 export const ADD_TO_STORE = "ADD_TO_STORE";
 export const REMOVE_TO_STORE = "REMOVE_TO_STORE";
-// export const INCREASE_QUANTITY = "INCREASE_QUANTITY";
-// export const DECREASE_QUANTITY = "DECREASE_QUANTITY";
+export const REMOVE_ALL = "REMOVE_ALL";
+export const DECREMENT = "DECREMENT";
+export const INCREMENT = "INCREMENT";

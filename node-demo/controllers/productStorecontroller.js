@@ -2,14 +2,16 @@ const { product_store : Model } = require('../models')
 
 exports.add = async (req, res) => {
 
-    const check = new Model({})
+    const check = new Model()
     // const _id = req.params.id;
-    // const productData = await Model.findOneAndUpdate(_id, {$push: {products : req.body.productId}}, {
+    // const productData = await Model.findOneAndUpdate(_id, {$push: {products :  req.body.productId , users :  req.body.userId}} , {
     //     new: true,
     // });
-
-    // const result = [check , productData];
+    //
+    // const result = [check + productData];
+    // console.log(check)
     check.products = [];
+    check.users = [];
 
     check.save(err => {
         if (err) {
@@ -30,7 +32,8 @@ exports.add = async (req, res) => {
 
 exports.list = async (req, res) => {
     try {
-        const product_data = await Model.find({}).populate('products');
+        const product_data = await Model.find({}).populate('products').populate('users');
+        // const product_data = await Model.find({}).populate({path: 'products' , select:['product_name' , 'price']}).populate('users');
         res.status(200).json({
             success: true,
             code: 200,
@@ -50,17 +53,15 @@ exports.list = async (req, res) => {
         });
     }
 
-
 };
 
 
 exports.update = async (req , res) => {
     try {
         const _id = req.params.id;
-        const productData = await Model.findOneAndUpdate(_id, {$push: {products :  req.body.productId}}, {
+        const productData = await Model.findOneAndUpdate(_id, {$push: {products :  req.body.productId , users :  req.body.userId}} , {
             new: true,
         });
-
         if (!productData) {
             return res.status(404).send();
         } else {
@@ -68,10 +69,10 @@ exports.update = async (req , res) => {
                 success: true,
                 code: 200,
                 data: {
-                    products: productData
+                    productData
                 },
                 error: null,
-                mesage: 'Product Data found'
+                message: 'Product Data found'
             });
         }
 
@@ -81,7 +82,7 @@ exports.update = async (req , res) => {
             code: 400,
             data: null,
             error: e,
-            mesage: e.mesage
+            message: e.message
         });
     }
 }

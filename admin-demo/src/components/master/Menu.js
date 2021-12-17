@@ -1,7 +1,9 @@
 import React from 'react'
 
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+
 export default function Menu() {
+    const userName = localStorage.getItem('Name');
   return (
     <aside className="main-sidebar sidebar-dark-primary elevation-4">
       {/* Brand Logo */}
@@ -27,7 +29,7 @@ export default function Menu() {
           </div>
           <div className="info">
             <a href="#" className="d-block">
-              Bhavdip Mandani
+                {userName}
             </a>
           </div>
         </div>
@@ -46,21 +48,20 @@ export default function Menu() {
               <a href="#" className="nav-link">
                 <i className="nav-icon fas fa-chart-pie" />
                 <p>
-                  Add_Product
+                  Products
                   <i className="right fas fa-angle-left" />
                 </p>
               </a>
               <ul className="nav nav-treeview">
-                {/* <li className="nav-item">
+                 <li className="nav-item">
                 <Link to="/add_product" type="submit" value="Create Product"  className="nav-link">
-                    <i className="far fa-circle nav-icon" />
+                    <i className="fa fa-plus nav-icon" aria-hidden="true" />
                     <p>Add_Product</p>
                     </Link>
-                </li> */}
-                
+                </li>
                 <li className="nav-item">
                 <Link to="/admin_pro_list" type="submit" value="Create Product"  className="nav-link">
-                    <i className="far fa-circle nav-icon" />
+                    <i className="fa fa-list nav-icon" />
                     <p>Product_list</p>
                  </Link>
                 </li>
@@ -72,7 +73,7 @@ export default function Menu() {
               <a href="#" className="nav-link">
                 <i className="nav-icon fas fa-chart-pie" />
                 <p>
-                  Add_Address
+                  Addresses
                   <i className="right fas fa-angle-left" />
                 </p>
               </a>
@@ -86,8 +87,8 @@ export default function Menu() {
                 
                 <li className="nav-item">
                 <Link to="/Admin_Address_list" type="submit" value="Create Product"  className="nav-link">
-                    <i className="far fa-circle nav-icon" />
-                    <p>address_list</p>
+                    <i className="fa fa-list nav-icon" />
+                    <p>Address_list</p>
                  </Link>
                 </li>
               </ul>

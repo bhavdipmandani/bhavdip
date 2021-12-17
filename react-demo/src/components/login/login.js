@@ -1,243 +1,308 @@
-// import React, { Component } from "react";
-// import Products from "../products/products";
-// import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
-// import Home from "../products/Home";
-// // import { apiUrl } from '../../config';
-// // import { useHistory } from "react-router-dom"
-// class Login extends Component {
-//     constructor() {
-//         super();
-//         this.state = {
-//             email: null,
-//             password: null,
-//             login: false,
-//             token: null,
-//             store: null,
-//         }
-//     }
+// import React, {useState } from "react"
 //
-//     componentDidMount() {
-//         let store = JSON.parse(localStorage.getItem('login'));
-//         this.setState({ store: store })
-//         if (store && store.login) {
-//             this.setState({ login: true })
-//         }
-//     }
+// import axios from "axios"
+// import { useHistory} from "react-router-dom"
+// import { apiUrl } from '../../config';
+// const Login = ({ setLoginUser}) => {
+//
+//     const history = useHistory()
 //
 //
-//     login() {
-//         // console.log('--------------------------------' , apiUrl)
-//         fetch(`http://localhost:8000/api/v1/auth/login`,{
-//             method: "POST",
-//             body: JSON.stringify(this.state)
-//         }).then((res) => {
-//             res.json().then((result) => {
-//                 console.log(result)
-//                 localStorage.setItem('login', JSON.stringify({
-//                     login: true,
-//                     token: result.token
-//                 }));
-//                 // console.log(localStorage.login)
-//                 // console.log('-------------------' , res.data.data.user)
+//     const [ user , setUser] = useState({
+//         email:"",
+//         password:"",
+//     })
 //
-//                 this.setState({
 //
-//                     login: true
-//                 })
-//             })
+//
+//     const handleChange = e => {
+//         const { name, value } = e.target
+//         setUser({
+//             ...user,
+//             [name]: value
 //         })
 //     }
 //
-//     render() {
-//         return (
+//     const login = () => {
+//         axios.post(`${apiUrl}/auth/login`, user)
+//             .then(res => {
+//                 // console.log(res.data.data.user.name)
+//                 // alert(res.data.message)
+//                 setLoginUser(res.data)
+//                 history.push("/")
+//             })
 //
-//             <div>
-//                 {!this.state.login ?
+//     }
 //
-//                     <div className="hold-transition login-page">
-//                         <div className="login-box">
-//                             <div className="login-logo">
-//                                 <a href="#"><b>Login</b>Here...</a>
-//                             </div>
-//                             {/* <!-- /.login-logo --> */}
-//                             <div className="card">
-//                                 <div className="card-body login-card-body">
-//                                     <p className="login-box-msg">Sign in to start your session</p>
 //
-//                                     <div className="input-group mb-3">
-//                                         <input type="email" className="form-control" onChange={(event) => { this.setState({ email: event.target.value }) }} placeholder="Email" />
-//                                         <div className="input-group-append">
-//                                             <div className="input-group-text">
-//                                                 <span className="fas fa-envelope"></span>
-//                                             </div>
-//                                         </div>
-//                                     </div>
-//                                     <div className="input-group mb-3">
-//                                         <input type="password" className="form-control" placeholder="Password" onChange={(event) => { this.setState({ password: event.target.value }) }} />
-//                                         <div className="input-group-append">
-//                                             <div className="input-group-text">
-//                                                 <span className="fas fa-lock"></span>
-//                                             </div>
-//                                         </div>
-//                                     </div>
-//                                     <div className="row">
-//                                         <div className="col-8">
-//                                             <div className="icheck-primary">
-//                                                 <input type="checkbox"  className="me-2" id="remember" />
-//                                                 <label for="remember">
-//                                                     Remember Me
-//                                                 </label>
-//                                             </div>
-//                                         </div>
-//                                         {/* <!-- /.col --> */}
-//                                         <div className="col-4">
-//                                             <button type="submit" className="btn btn-primary btn-block" onClick={() => { this.login() }}>Sign In</button>
-//                                         </div>
-//                                         {/* <!-- /.col --> */}
-//                                     </div>
+//     return (
 //
-//                                     <div className="social-auth-links text-center mb-3">
-//                                         <p>- OR -</p>
-//                                         <a href="#" className="btn btn-block btn-primary">
-//                                             <i className="fab fa-facebook mr-2"></i> Sign in using Facebook
-//                                         </a>
-//                                         <a href="#" className="btn btn-block btn-danger">
-//                                             <i className="fab fa-google-plus mr-2"></i> Sign in using Google+
-//                                         </a>
-//                                     </div>
-//                                     {/* <!-- /.social-auth-links --> */}
+//         <div className="hold-transition login-page">
+//             <div className="login-box">
+//                 <div className="login-logo">
+//                     <a href="#"><b>Login</b>Hear...</a>
+//                 </div>
+//                 {/* <!-- /.login-logo --> */}
+//                 <div className="card">
+//                     <div className="card-body login-card-body">
+//                         <p className="login-box-msg">Sign in to start your session</p>
 //
-//                                     <p className="mb-1">
-//                                         <a href="#">I forgot my password</a>
-//                                     </p>
-//                                     <p className="mb-0">
-//                                         <Link to="/register" type="submit" value="Create User" className="text-center" >Register a new membership</Link>
-//                                     </p>
+//                         <div className="input-group mb-3">
+//                             <input type="email" className="form-control" name="email" value={user.email}  placeholder="Email" onChange={handleChange} />
+//                             <div className="input-group-append">
+//                                 <div className="input-group-text">
+//                                     <span className="fas fa-envelope"></span>
 //                                 </div>
-//                                 {/* <!-- /.login-card-body --> */}
 //                             </div>
 //                         </div>
+//                         <div className="input-group mb-3">
+//                             <input type="password" className="form-control" name="password" placeholder="Password" onChange={handleChange}  />
+//                             <div className="input-group-append">
+//                                 <div className="input-group-text">
+//                                     <span className="fas fa-lock"></span>
+//                                 </div>
+//                             </div>
+//                         </div>
+//                         <div className="row">
+//                             <div className="col-8">
+//                                 <div className="icheck-primary">
+//                                     <input type="checkbox"  className="me-2" id="remember" />
+//                                     <label for="remember">
+//                                         Remember Me
+//                                     </label>
+//                                 </div>
+//                             </div>
+//                             {/* <!-- /.col --> */}
+//                             <div className="col-4">
+//                                 <button type="submit" className="btn btn-primary btn-block"  onClick={login}>Sign In</button>
+//                             </div>
+//                             {/* <!-- /.col --> */}
+//                         </div>
 //
+//                         <div className="social-auth-links text-center mb-3">
+//                             <p>- OR -</p>
+//                             <a href="#" className="btn btn-block btn-primary">
+//                                 <i className="fab fa-facebook mr-2"></i> Sign in using Facebook
+//                             </a>
+//                             <a href="#" className="btn btn-block btn-danger">
+//                                 <i className="fab fa-google-plus mr-2"></i> Sign in using Google+
+//                             </a>
+//                         </div>
+//                         {/* <!-- /.social-auth-links --> */}
 //
+//                         <p className="mb-1">
+//                             <a href="#">I forgot my password</a>
+//                         </p>
+//                          <p className="mb-0">
+//                                     <button className="btn btn-primary" onClick={() => history.push("/register")}>Register</button>
+//                                     </p>
 //                     </div>
-//
-//                     :
-//                     <Home />
-//                 }
+//                     {/* <!-- /.login-card-body --> */}
+//                 </div>
 //             </div>
-//         );
-//     }
+//
+//
+//         </div>
+//     )
 // }
 //
-// export default Login;
+// export default Login
 
 
+import React, {useState} from "react";
+import {apiUrl} from '../../config';
+import {Link} from "react-router-dom";
+import {useHistory} from "react-router-dom"
+import {Modal} from "react-bootstrap";
 
-import React, {useState } from "react"
 
-import axios from "axios"
-import { useHistory} from "react-router-dom"
-import { apiUrl } from '../../config';
-const Login = ({ setLoginUser}) => {
+export default function Login() {
+
+
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    // const handleShow = () => setShow(true);
+
 
     const history = useHistory()
+    const [success, setSuccess] = useState(false)
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
-
-    const [ user , setUser] = useState({
-        email:"",
-        password:"",
+    const [error, setError] = useState({
+        emailErr: "",
+        passwordErr: "",
+        // invalidErr:""
     })
 
 
+    const validate = () => {
 
-    const handleChange = e => {
-        const { name, value } = e.target
-        setUser({
-            ...user,
-            [name]: value
-        })
+        !email ? setError(error => ({...error, emailErr: "Email ID is Required*"})) : setError(error => ({
+            ...error,
+            emailErr: null
+        }));
+        !password ? setError(error => ({
+            ...error,
+            passwordErr: "Password is Required*"
+        })) : setError(error => ({...error, passwordErr: null}))
+        console.log(!loginUSer)
+
+
+        return !Object.values(error).find(x => x)
     }
 
-    const login = () => {
-        axios.post(`${apiUrl}/auth/login`, user)
-            .then(res => {
-                // console.log(res.data.data.user.name)
-                // alert(res.data.message)
-                setLoginUser(res.data)
-                history.push("/")
-            })
+    const loginUSer = async (e) => {
+        if (!validate()) {
+            return
+        }
+        // e.preventDefault();
 
-    }
+        const res = await fetch(`${apiUrl}/auth/login`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                email,
+                password,
+            }),
+        });
+
+        const data = await res.json();
+        // data.error.message === "Invalid credientials pass*" ? setError(error => ({...error,invalidErr: `${data.error.message}`})) : setError(error => ({...error,invalidErr: null}))
+
+
+        // console.log(Error)
+        if (data.error || !data) {
+            // window.alert(data.error);
+            console.log(data.error)
+
+            console.log("Invalid Login");
+        } else {
+            setSuccess(true);
+            // window.alert("Login successfully");
+            console.log("Login successfully");
+            console.log(data.data.User._id)
+            let token = data.data.User.authToken;
+            let name = data.data.User.name;
+            let id = data.data.User._id;
+
+            localStorage.setItem('Token', token);
+            localStorage.setItem('Name', name);
+            localStorage.setItem('Id', id);
+
+            // history.push("/")
+        }
+
+        setShow(true)
+    };
 
     return (
+        <div>
 
-        <div className="hold-transition login-page">
-            <div className="login-box">
-                <div className="login-logo">
-                    <a href="#"><b>Login</b>Hear...</a>
-                </div>
-                {/* <!-- /.login-logo --> */}
-                <div className="card">
-                    <div className="card-body login-card-body">
-                        <p className="login-box-msg">Sign in to start your session</p>
 
-                        <div className="input-group mb-3">
-                            <input type="email" className="form-control" name="email" value={user.email}  placeholder="Email" onChange={handleChange} />
-                            <div className="input-group-append">
-                                <div className="input-group-text">
-                                    <span className="fas fa-envelope"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="input-group mb-3">
-                            <input type="password" className="form-control" name="password" placeholder="Password" onChange={handleChange}  />
-                            <div className="input-group-append">
-                                <div className="input-group-text">
-                                    <span className="fas fa-lock"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-8">
-                                <div className="icheck-primary">
-                                    <input type="checkbox"  className="me-2" id="remember" />
-                                    <label for="remember">
-                                        Remember Me
-                                    </label>
-                                </div>
-                            </div>
-                            {/* <!-- /.col --> */}
-                            <div className="col-4">
-                                <button type="submit" className="btn btn-primary btn-block"  onClick={login}>Sign In</button>
-                            </div>
-                            {/* <!-- /.col --> */}
-                        </div>
-
-                        <div className="social-auth-links text-center mb-3">
-                            <p>- OR -</p>
-                            <a href="#" className="btn btn-block btn-primary">
-                                <i className="fab fa-facebook mr-2"></i> Sign in using Facebook
-                            </a>
-                            <a href="#" className="btn btn-block btn-danger">
-                                <i className="fab fa-google-plus mr-2"></i> Sign in using Google+
-                            </a>
-                        </div>
-                        {/* <!-- /.social-auth-links --> */}
-
-                        <p className="mb-1">
-                            <a href="#">I forgot my password</a>
-                        </p>
-                         <p className="mb-0">
-                                    <button className="btn btn-primary" onClick={() => history.push("/register")}>Register</button>
-                                    </p>
+            <div className="hold-transition login-page">
+                <div className="login-box">
+                    <div className="login-logo">
+                        <a href="#"><b>Login</b>Hear...</a>
                     </div>
-                    {/* <!-- /.login-card-body --> */}
+                    {/* <!-- /.login-logo --> */}
+                    <div className="card">
+                        <div className="image">
+                            {/*<img*/}
+                            {/*    style={{ border: 0 }}*/}
+                            {/*    src={signin}*/}
+                            {/*    alt=""*/}
+                            {/*    className="register-img"*/}
+                            {/*/>*/}
+                        </div>
+
+                        <form>
+                            <div className="card-body login-card-body">
+                                <p className="login-box-msg">Sign in to start your session</p>
+                                {/* register components here */}
+                                {/*{data.error.message === "Invalid credientials pass*" &&  <span className="error">{data.error.message}</span>}*/}
+                                <div className="input-group mb-3">
+
+                                    <input type="email" name="email" value={email}
+                                           onChange={(e) => setEmail(e.target.value)}
+                                           placeholder="Your Email" className="form-control"/>
+                                    {error.emailErr && <span className="error">{error.emailErr}</span>}
+                                    <div className="input-group-append">
+                                        <div className="input-group-text">
+                                            <span className="fas fa-envelope"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="input-group mb-3">
+                                    <input type="password" name="password" onChange={(e) => setPassword(e.target.value)}
+                                           placeholder="Password" id="pswd" className="form-control"/>
+                                    {error.passwordErr && <span className="error">{error.passwordErr}</span>}
+                                    <div className="input-group-append">
+                                        <div className="input-group-text">
+                                            <span className="fas fa-lock"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="row">
+                                    <div className="col-8">
+                                        <div className="icheck-primary">
+                                            <input type="checkbox" className="me-2" id="remember"/>
+                                            <label htmlFor="remember">
+                                                Remember Me
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div className="col-4">
+                                        {/*<Button variant="primary" onClick={handleShow}>*/}
+                                            <button type='button' className="btn btn-primary"
+                                                    onClick={loginUSer}>Login
+                                            </button>
+                                        {/*</Button>*/}
+                                    </div>
+                                </div>
+
+                                <div className="social-auth-links text-center mb-3">
+                                    <p>- OR -</p>
+                                    <a href="#" className="btn btn-block btn-primary">
+                                        <i className="fab fa-facebook mr-2"></i> Sign in using Facebook
+                                    </a>
+                                    <a href="#" className="btn btn-block btn-danger">
+                                        <i className="fab fa-google-plus mr-2"></i> Sign in using Google+
+                                    </a>
+                                </div>
+                                <p className="mb-1">
+                                    <a href="#">I forgot my password</a>
+                                </p>
+                                <p className="mb-0">
+                                    <button className="btn btn-primary"
+                                            onClick={() => history.push("/register")}>Register
+                                    </button>
+                                </p>
+                                {/* <Link to="/Register" variant="body2">
+            <input type="submit" value="Register" className="btn  cansal-btn" />{" "}
+          </Link> */}
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
 
-
+            <Modal show={show} onHide={handleClose} centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>Congretulation</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Login successfully</Modal.Body>
+                <Modal.Footer>
+                    <Link to="/" className="btn btn-primary" style={{ textDecoration: 'none' }}>
+                        <button className="btn link-btn text-white">Go To Home</button>
+                    </Link>
+                </Modal.Footer>
+            </Modal>
         </div>
-    )
+    );
 }
-
-export default Login

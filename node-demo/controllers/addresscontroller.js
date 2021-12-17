@@ -3,13 +3,13 @@ const { address_model : Model } = require('../models')
 
 
 exports.add = (req, res) => {
-    const { name, email, phone, street, city, state, zip, country } = req.body
+    const { name, email, phone, street, city, state, zip, country , userId} = req.body
 
 
     // console.log(req.file.filename)
     // Product.findOne({ product_name: product_name }, (err) => {
     const address = new Model({
-        name, email, phone, street, city, state, zip, country
+        name, email, phone, street, city, state, zip, country, userId
     })
     address.save(err => {
         if (err) {
@@ -36,7 +36,7 @@ exports.add = (req, res) => {
 
 exports.list = async (req, res) => {
     try {
-        const address_data = await Model.find();
+        const address_data = await Model.find().populate('userId');
         res.status(200).json({
             success: true,
             code: 200,
@@ -44,7 +44,7 @@ exports.list = async (req, res) => {
                 address: address_data
             },
             error: null,
-            mesage: 'Product Data found'
+            message: 'Product Data found'
         });
     } catch (e) {
         res.status(400).json({
@@ -52,7 +52,7 @@ exports.list = async (req, res) => {
             code: 400,
             data: null,
             error: e,
-            mesage: e.mesage
+            message: e.message
         });
     }
 
@@ -65,21 +65,21 @@ exports.list = async (req, res) => {
 exports.update = async (req, res) => {
     try {
         const _id = req.params._id;
-        const changeaddress = await Model.findOneAndUpdate(_id, req.body, {
+        const changeAddress = await Model.findOneAndUpdateid(_id, {$push: {userId :  req.body.userId}} , {
             new: true,
         });
 
-        if (!changeaddress) {
+        if (!changeAddress) {
             return res.status(404).send();
         } else {
             res.status(200).json({
                 success: true,
                 code: 200,
                 data: {
-                    address: changeaddress
+                    address: changeAddress
                 },
                 error: null,
-                mesage: 'Product Data found'
+                message: 'Product Data found'
             });
         }
 
@@ -89,7 +89,7 @@ exports.update = async (req, res) => {
             code: 400,
             data: null,
             error: e,
-            mesage: e.mesage
+            message: e.message
         });
     }
 };
