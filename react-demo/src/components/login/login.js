@@ -206,7 +206,7 @@ export default function Login() {
             <div className="hold-transition login-page">
                 <div className="login-box">
                     <div className="login-logo">
-                        <a href="#"><b>Login</b>Hear...</a>
+                        <a href="#"><b>Login...</b></a>
                     </div>
                     {/* <!-- /.login-logo --> */}
                     <div className="card">
@@ -293,7 +293,7 @@ export default function Login() {
             </div>
 
             <Modal show={show} onHide={handleClose} centered>
-                <Modal.Header closeButton>
+                <Modal.Header>
                     <Modal.Title>Congretulation</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>Login successfully</Modal.Body>

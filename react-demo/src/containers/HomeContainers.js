@@ -1,4 +1,4 @@
-import Retailer_Header from "../components/products/Retailer_header";
+import Retailer_Header from "../components/header/Retailer_header";
 import {connect} from "react-redux";
 import {addProduct} from "../Redux/actions/productAction";
 import {removeProduct} from "../Redux/actions/productAction";

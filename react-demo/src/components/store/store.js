@@ -1,13 +1,11 @@
-
 import React from "react";
-
-import {BrowserRouter as Router, Route, Switch, Link} from "react-router-dom";
+import {Link} from "react-router-dom";
 import Helper from '../../helper';
+
 const AddStore = (props) => {
     return (
         <div className="container mt-4">
             <h1 align="center" className="mb-4">Retailer's Store</h1>
-
 
             <table className="table">
 
@@ -29,18 +27,13 @@ const AddStore = (props) => {
                         props.storeProduct.map((item) => {
                             return (
                                 <tr>
-                                    {/*<td>*/}
-                                    {/*    <button className="badge badge-danger" onClick={() => removeByIndex(item)}>X</button>*/}
-                                    {/*</td>*/}
-                                    <td className="cart-remove"
-                                        onClick = {() => props.props.removeToStoreHandler(item.products._id)}
+                                    <td className="cart-remove" onClick = {() => props.props.removeToStoreHandler(item.products._id)}
                                     ><button className="badge badge-danger">X</button></td>
                                     <td>{item.products.product_name}</td>
                                     <td>{item.products.categories}</td>
                                     <td><img src={Helper.getImageUrl(item.products.image)} style={{width: '100px', height: '80px'}}/></td>
                                     <td>
-                                        {`${item.products.description.substring(0, 50)}...`}
-                                        {/*{item.products.description}*/}
+                                        {`${item.products.description.substring(0, 30)}...`}
                                     </td>
                                     <td>
                                         <span className="btn btn-primary" style={{margin:'2px'}} onClick={() => props.props.incrementQty(item)} >+</span>

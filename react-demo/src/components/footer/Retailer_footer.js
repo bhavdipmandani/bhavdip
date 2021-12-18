@@ -1,5 +1,5 @@
 import React from "react";
-import './footer.css'
+import '../../assets/css/footer.css'
 export default function Retailer_footer() {
   return (
 

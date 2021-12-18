@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Card, CardGroup, Row, Form, FormControl } from 'react-bootstrap';
-import './prolist.css';
-import Retailer_footer from './Retailer_footer';
+import '../../assets/css/prolist.css';
+import Retailer_footer from '../footer/Retailer_footer';
 import { apiUrl } from '../../config';
 import Helper from '../../helper';
 
@@ -32,8 +32,8 @@ const Product_list = (props) => {
 
             {/* Display Product in Card */}
 
-            <div className='col-md-6 ms-3'>
-                <h1>Product Data</h1>
+            <div className='mt-4 ms-3'>
+                <h1 align="center">Product Data</h1>
             </div>
             <div className="d-flex justify-content-end">
                 <Form className="me-3">
@@ -73,12 +73,13 @@ const Product_list = (props) => {
                                             {item.price}
                                         </Card.Text>
                                         <hr />
-
-                                        <button className="btn btn-primary" onClick = {() => props.props.addToCartHandler(item)}>
-                                            {/*<p onClick={handleclick} className="mt-3">*/}
+                                        <div className="sub-main">
+                                        <button className="store" type="submit" onClick = {() => props.props.addToCartHandler(item)}>
+                                            <span>
                                             Add To Store
-                                            {/*</p>*/}
+                                           </span>
                                         </button>
+                                        </div>
                                         <hr />
                                     </Card.Body>
 

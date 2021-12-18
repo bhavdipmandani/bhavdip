@@ -1,0 +1,40 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic,700italic);
+
+.info {
+    text-align: center;
+    cursor: pointer;
+    font-size:20px;
+    margin: 0 0 0 76px;
+    border-radius: 4px;
+    background-color:#d4e1e7;
+    border: none;
+    padding: 20px;
+    width: 200px;
+    transition: all 0.5s;
+}
+
+
+.info span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+.info span:after {
+    content: '»';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+
+.info:hover span {
+    padding-right: 25px;
+}
+
+.info:hover span:after {
+    opacity: 1;
+    right: 0;
+}

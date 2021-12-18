@@ -9,8 +9,9 @@ exports.add = (req, res) => {
     // console.log(req.file.filename)
     // Product.findOne({ product_name: product_name }, (err) => {
     const address = new Model({
-        name, email, phone, street, city, state, zip, country, userId
+        name, email, phone, street, city, state, zip, country
     })
+    address.userIds = [];
     address.save(err => {
         if (err) {
             res.send(err)
@@ -36,7 +37,7 @@ exports.add = (req, res) => {
 
 exports.list = async (req, res) => {
     try {
-        const address_data = await Model.find().populate('userId');
+        const address_data = await Model.find().populate('userIds');
         res.status(200).json({
             success: true,
             code: 200,
@@ -65,7 +66,7 @@ exports.list = async (req, res) => {
 exports.update = async (req, res) => {
     try {
         const _id = req.params._id;
-        const changeAddress = await Model.findOneAndUpdateid(_id, {$push: {userId :  req.body.userId}} , {
+        const changeAddress = await Model.findOneAndUpdate(_id, {$push: {userIds :  req.body.userIds}} , {
             new: true,
         });
 
