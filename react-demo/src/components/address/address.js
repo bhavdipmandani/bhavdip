@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import Payment from "../checkout/payment";
+// import Payment from "../checkout/payment";
 import {apiUrl} from '../../config';
 import '../../assets/css/address.css';
 import {Link} from "react-router-dom";
@@ -10,9 +10,7 @@ export default class Address extends Component {
     constructor(props) {
         super(props)
 
-        this.onChangeName = this.onChangeName.bind(this);
-        this.onChangeEmail = this.onChangeEmail.bind(this);
-        this.onChangePhone = this.onChangePhone.bind(this);
+
         this.onChangeStreet = this.onChangeStreet.bind(this);
         this.onChangeCity = this.onChangeCity.bind(this);
         this.onChangeState = this.onChangeState.bind(this);
@@ -24,9 +22,6 @@ export default class Address extends Component {
 
         this.state = {
 
-            name: '',
-            email: '',
-            phone: '',
             street: '',
             city: '',
             state: '',
@@ -34,18 +29,6 @@ export default class Address extends Component {
             country: '',
             productDatas: ''
         }
-    }
-
-    onChangeName(e) {
-        this.setState({name: e.target.value})
-    }
-
-    onChangeEmail(e) {
-        this.setState({email: e.target.value})
-    }
-
-    onChangePhone(e) {
-        this.setState({phone: e.target.value})
     }
 
 
@@ -73,9 +56,6 @@ export default class Address extends Component {
     addressStore = async (e) => {
         // e.preventDefault()
         const address = {
-            name: this.state.name,
-            email: this.state.email,
-            phone: this.state.phone,
             street: this.state.street,
             city: this.state.city,
             state: this.state.state,
@@ -86,15 +66,11 @@ export default class Address extends Component {
         const add = await axios.post(`${apiUrl}/address`, address);
 
         this.setState({
-            name: '',
-            email: '',
-            phone: '',
             street: '',
             city: '',
             state: '',
             zip: '',
             country: '',
-
         })
 
         console.log('-----------------------------', add)
@@ -103,22 +79,23 @@ export default class Address extends Component {
     componentDidMount() {
         axios.get(`${apiUrl}/address`)
             .then(res => {
-                const storeIds = res.data.data.address;
-                this.setState({storeIds});
-                console.log(storeIds)
+                const addressId = res.data.data.address;
+                this.setState({addressId});
+                console.log(addressId)
             })
     }
 
     addressUpdate = async (e, _id) => {
 
-        const userIds = localStorage.getItem('Id');
-        console.log('-------------------userId', userIds)
+        const userId = localStorage.getItem('Id');
+        console.log('-------------------userId', userId)
 
-        const addressId = this.state.storeIds.map(items => items._id);
-        console.log('-----------------------storeData', addressId)
+        const addressIds = this.state.addressId[this.state.addressId.length - 1]._id
+        //         // const addressId = this.state.addressId.map(items => items._id);
+        console.log('-----------------------addressId', addressIds)
 
-        const res = await axios.patch(`${apiUrl}/address/${addressId}`, {
-            userIds: userIds
+        const res = await axios.patch(`${apiUrl}/address/${addressIds}`, {
+            userId: userId
         });
         console.log('-------------------res', res)
     }
@@ -128,7 +105,7 @@ export default class Address extends Component {
         e.preventDefault()
 
         this.addressStore();
-        this.addressUpdate();
+        // this.addressUpdate();
 
         await axios.post(`${apiUrl}/store`);
         console.log('---------------------------------success')
@@ -145,33 +122,6 @@ export default class Address extends Component {
                                 <p className="register-box-msg">Add Your Address...</p>
 
                                 <form onSubmit={this.addressStore}>
-                                    <div className="input-group mb-3">
-                                        <input type="text" value={this.state.name} onChange={this.onChangeName}
-                                               className="form-control" placeholder="Enter Your Name"/>
-                                        <div className="input-group-append">
-                                            <div className="input-group-text">
-                                                <span className="fas fa-user"> </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="input-group mb-3">
-                                        <input type="email" value={this.state.email} onChange={this.onChangeEmail}
-                                               className="form-control" placeholder="Enter Your Email"/>
-                                        <div className="input-group-append">
-                                            <div className="input-group-text">
-                                                <span className="fas fa-envelope"> </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="input-group mb-3">
-                                        <input type="text" value={this.state.phone} onChange={this.onChangePhone}
-                                               className="form-control" placeholder="Enter Your Phone Number"/>
-                                        <div className="input-group-append">
-                                            <div className="input-group-text">
-                                                <span className="fa fa-phone"> </span>
-                                            </div>
-                                        </div>
-                                    </div>
 
                                     <div className="input-group mb-3">
                                         <input type="text" value={this.state.street} onChange={this.onChangeStreet}
@@ -236,9 +186,12 @@ export default class Address extends Component {
 
                                 </form>
                                 <div className="d-flex justify-content-end">
-                                    <button className="btn btn-primary"><Link to='/checkout' className="text-dark"
+                                    <button className="btn btn-primary" type="submit" onClick={this.addressUpdate}><Link to='/checkout' className="text-dark"
                                                                               style={{textDecoration: 'none'}}> Checkout </Link>
                                     </button>
+
+                                    {/*<button className="btn btn-primary" type="submit" onClick={this.addressUpdate}>dddd*/}
+                                    {/*</button>*/}
                                 </div>
                             </div>
                         </div>

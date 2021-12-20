@@ -3,15 +3,15 @@ const { address_model : Model } = require('../models')
 
 
 exports.add = (req, res) => {
-    const { name, email, phone, street, city, state, zip, country , userId} = req.body
+    const { street, city, state, zip, country} = req.body
 
 
     // console.log(req.file.filename)
     // Product.findOne({ product_name: product_name }, (err) => {
     const address = new Model({
-        name, email, phone, street, city, state, zip, country
+        street, city, state, zip, country
     })
-    address.userIds = [];
+    address.userId = [];
     address.save(err => {
         if (err) {
             res.send(err)
@@ -23,21 +23,23 @@ exports.add = (req, res) => {
                     address: address
                 },
                 error: null,
-                message: "Product added sucessfully.",
+                message: "Address added successfully.",
             })
         }
     })
 
-    // }) 
+    // })
 
 };
 
-// list of products api 
+// list of products api
 
 
 exports.list = async (req, res) => {
     try {
-        const address_data = await Model.find().populate('userIds');
+        // const _id = req.params._id;
+        const address_data = await Model.find().populate('userId');
+        // const address_data = await Model.find().sort({_id: -1}).limit(1).populate('userIds');
         res.status(200).json({
             success: true,
             code: 200,
@@ -45,7 +47,7 @@ exports.list = async (req, res) => {
                 address: address_data
             },
             error: null,
-            message: 'Product Data found'
+            message: 'Address Data found'
         });
     } catch (e) {
         res.status(400).json({
@@ -56,17 +58,50 @@ exports.list = async (req, res) => {
             message: e.message
         });
     }
-
-
 };
 
+
+exports.listbyId = async (req, res) => {
+    try {
+        // const _id = req.params._id;
+        // const address_data = await Model.findById(_id).populate('userId');
+        const address_data = await Model.find().sort({_id: -1}).limit(1).populate('userIds');
+        res.status(200).json({
+            success: true,
+            code: 200,
+            data: {
+                address: address_data
+            },
+            error: null,
+            message: 'Address Data found'
+        });
+    } catch (e) {
+        res.status(400).json({
+            success: false,
+            code: 400,
+            data: null,
+            error: e,
+            message: e.message
+        });
+    }
+};
+
+
+
+
+// {
+//     "addressId" : "61bd7de10be1ea210c308e17",
+//     "productStoreId" : "61bd6fcd96261d11fcf970b5",
+//     "totalAmount" : "11111"
+//
+// }
 
 // update Demo Records By Id
 
 exports.update = async (req, res) => {
     try {
         const _id = req.params._id;
-        const changeAddress = await Model.findOneAndUpdate(_id, {$push: {userIds :  req.body.userIds}} , {
+        const changeAddress = await Model.findByIdAndUpdate(_id, {$push: {userId :  req.body.userId}} , {
             new: true,
         });
 
@@ -80,7 +115,7 @@ exports.update = async (req, res) => {
                     address: changeAddress
                 },
                 error: null,
-                message: 'Product Data found'
+                message: 'Address Data found'
             });
         }
 
@@ -101,7 +136,7 @@ exports.update = async (req, res) => {
 exports.destroy = async (req, res) => {
     try {
         // const id = req.params.id;
-        const deleteAddresst = await Model.findByIdAndDelete(req.params.id)
+        const deleteAddresst = await Model.findByIdAndDelete(req.params._id)
         if (!req.params.id) {
             return res.status(404).send();
         } else {

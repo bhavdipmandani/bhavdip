@@ -17,6 +17,7 @@ const Checkout = (props) => {
 
         const response = await fetch(`${apiUrl}/address`);
         let addressData = await response.json();
+        console.log(addressData)
         return addressData;
     }
 
@@ -28,8 +29,7 @@ const Checkout = (props) => {
     }
     useEffect( () => {
         Data().then(((data) => setData(data.data.address) ));
-        Store().then(((data) => setStore(data.data.product_data) ));
-
+        Store().then(((data) => setStore(data.product_data) ));
 
         setInterval(() => {
             const userString = localStorage.getItem('Token');
@@ -37,6 +37,10 @@ const Checkout = (props) => {
             setUser(userString)
         },[])
     },5000);
+
+
+
+
     const getMenu =  () => {
         return (
 
@@ -73,13 +77,14 @@ const Checkout = (props) => {
 
     const productStoreUpdate = async (e) => {
         e.preventDefault()
-        const productStore = this.props.props.storeProduct.map(items => items.products._id);
+        const productStore = props.props.storeProduct.map(items => items.products._id);
         console.log('-------------------productData', productStore)
 
         const userId = localStorage.getItem('Id');
         console.log('-------------------userId', userId)
 
-        const storeData = store[0]._id;
+        // const addressIds = this.state.addressId[this.state.addressId.length - 1]._id
+        const storeData = store[store.length - 1]._id;
         console.log(storeData)
         const res = await axios.patch(`${apiUrl}/store/${storeData}`, {
             productId: productStore,
@@ -91,6 +96,7 @@ const Checkout = (props) => {
 
 
         return (
+
             <div>
             <div>
                 { getMenu() }
@@ -106,9 +112,7 @@ const Checkout = (props) => {
                                 <thead>
                                 <tr>
                                     <th>Select Any One</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Phone</th>
+                                    <th>UserName</th>
                                     <th>Street</th>
                                     <th>City</th>
                                     <th>State</th>
@@ -122,10 +126,10 @@ const Checkout = (props) => {
                                     address ?
                                         address.map((item) =>
                                             <tr>
-                                                <td align="center"><input type="radio" name="address"/></td>
-                                                <td>{item.name}</td>
-                                                <td>{item.email}</td>
-                                                <td>{item.phone}</td>
+                                                <td><input type="radio" name="address"/></td>
+                                                <td>{item.userId.map((data1) =>{
+                                                    return <p>{data1.name}</p>
+                                                })}</td>
                                                 <td>{item.street}</td>
                                                 <td>{item.city}</td>
                                                 <td>{item.state}</td>
@@ -136,6 +140,7 @@ const Checkout = (props) => {
                                         :
                                         null
                                 }
+
                                 </tbody>
 
                             </table>

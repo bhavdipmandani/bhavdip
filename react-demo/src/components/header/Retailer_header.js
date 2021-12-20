@@ -32,7 +32,6 @@ const Retailer_header = (props) => {
         localStorage.removeItem("Id");
 
         window.location.reload(false);
-
         window.location.href = './login';
     }
 

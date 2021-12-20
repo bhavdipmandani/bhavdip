@@ -9,6 +9,7 @@ const Admin_Route = require('./admin_route')
 const Store_Route = require('./store_route')
 const Address_Route = require('./address_route')
 const Public_Route = require('./public_route')
+const Order_Route = require('./order_route')
 
 
 
@@ -17,6 +18,7 @@ router.use('/adminauth', Admin_Route)
 router.use('/store', Store_Route)
 router.use('/address', Address_Route)
 router.use('/public', Public_Route)
+router.use('/order', Order_Route)
 
 
 router.use(Authenticate)

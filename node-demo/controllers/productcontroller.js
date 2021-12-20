@@ -69,6 +69,36 @@ exports.list = async (req, res) => {
         return res.error(e)
     }
 }
+//
+// router.get("/api/demos/:name", async (req, res) => {
+exports.productList1 = async (req, res) => {
+    try {
+        const _id = req.params._id;
+        const ProductList = await Model.findOne({ _id });
+
+        if (!ProductList) {
+            return res.status(404).send();
+        } else {
+            res.status(200).json({
+                success: true,
+                code: 200,
+                data: {
+                    ProductList
+                },
+                error: null,
+                message: 'data found'
+            });
+        }
+    } catch (e) {
+        res.status(400).json({
+            success: false,
+            code: 400,
+            data: null,
+            error: e,
+            message: e.message
+        });
+    }
+};
 
 
 

@@ -1,8 +1,9 @@
-const { product_store : Model } = require('../models')
+const { ordermodel : Model } = require('../models')
+
 
 exports.add = async (req, res) => {
 
-    const check = new Model()
+    const order = new Model()
     // const _id = req.params.id;
     // const productData = await Model.findOneAndUpdate(_id, {$push: {products :  req.body.productId , users :  req.body.userId}} , {
     //     new: true,
@@ -10,10 +11,10 @@ exports.add = async (req, res) => {
     //
     // const result = [check + productData];
     // console.log(check)
-    check.productStoreData = [];
+    order.orderData = [];
     // check.users = [];
 
-    check.save(err => {
+    order.save(err => {
         if (err) {
             res.send(err)
         } else {
@@ -21,7 +22,7 @@ exports.add = async (req, res) => {
                 success: true,
                 code: 200,
                 data: {
-                    check
+                    order
                 },
                 error: null,
                 message: "Product Added To Store Successfully.",
@@ -32,13 +33,13 @@ exports.add = async (req, res) => {
 
 exports.list = async (req, res) => {
     try {
-        const product_data = await Model.find({}).populate('productStoreData.productId').populate('productStoreData.userId');
+        const order = await Model.find({}).populate('orderData.addressId').populate('orderData.productStoreId');
         // const product_data = await Model.find({}).populate({path: 'products' , select:['product_name' , 'price']}).populate('users');
         res.status(200).json({
             success: true,
             code: 200,
             data: {
-                product_data
+                order
             },
             error: null,
             message: 'Product Data found'
@@ -59,20 +60,20 @@ exports.list = async (req, res) => {
 exports.update = async (req , res) => {
     try {
         const _id = req.params._id;
-        const productDatas = await Model.findByIdAndUpdate(_id, {$push: {productStoreData : { productId:  req.body.productId , userId :  req.body.userId}}} , {
+        const order = await Model.findByIdAndUpdate(_id, {$push: {orderData : { addressId:  req.body.addressId , productStoreId :  req.body.productStoreId , totalAmount :  req.body.totalAmount}}} , {
             new: true,
         });
-        if (!productDatas) {
+        if (!order) {
             return res.status(404).send();
         } else {
             res.status(200).json({
                 success: true,
                 code: 200,
                 data: {
-                    productDatas
+                    order
                 },
                 error: null,
-                message: 'Product Data found'
+                message: 'Order Data found'
             });
         }
 
@@ -86,3 +87,4 @@ exports.update = async (req , res) => {
         });
     }
 }
+

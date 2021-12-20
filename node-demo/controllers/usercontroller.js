@@ -83,7 +83,7 @@ exports.login = async (req, res) => {
 
 
 exports.register = (req, res) => {
-    const { name, email, password } = req.body
+    const { name, email,phone, password } = req.body
     Model.findOne({ email: email }, (err, user) => {
         if (user) {
             res.send({ message: "User already registerd" })
@@ -91,6 +91,7 @@ exports.register = (req, res) => {
             const user = new Model({
                 name,
                 email,
+                phone,
                 password, 
             })
             user.save(err => {

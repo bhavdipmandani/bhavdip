@@ -11,6 +11,7 @@ const Register = () => {
     const [user, setUser] = useState({
         name: "",
         email: "",
+        phone: "",
         password: "",
         reEnterPassword: ""
     })
@@ -18,16 +19,19 @@ const Register = () => {
     const [error , setError] = useState({
         nameErr: "",
         emailErr: "",
+        phoneErr: "",
         passwordErr: "",
         reEnterPasswordErr: "" 
     })
 
     const validate = () => {
-    const {name , email , password , reEnterPassword} = user;
+    const {name , email, phone , password , reEnterPassword} = user;
 
     !name ? setError(error => ({...error , nameErr : "Name is Required*" })) : setError (error => ({...error , nameErr : null }))
 
     !email ? setError(error => ({...error , emailErr : "Email is Required*" })) : setError (error => ({...error , emailErr : null }))
+
+    !phone ? setError(error => ({...error , phoneErr : "Phone is Required*" })) : setError (error => ({...error , phoneErr : null }))
 
     !password ? setError(error => ({...error , passwordErr : "password is Required*" })) : setError (error => ({...error , passwordErr : null }))
 
@@ -42,8 +46,8 @@ const Register = () => {
     }
 
     const register = () => {
-        const { name, email, password, reEnterPassword } = user
-        if (name && email && password && (password === reEnterPassword)) {
+        const { name, email , phone, password, reEnterPassword } = user
+        if (name && email && phone && password && (password === reEnterPassword)) {
             axios.post("" +
                 `${apiUrl}/auth/register`, user)
                 .then(res => {
@@ -104,6 +108,19 @@ const Register = () => {
                             </div>
                         </div>
                         {error.emailErr && <span className="error">{error.emailErr}</span>}
+
+
+                        <div className="input-group mb-3">
+                            <input type="text" className="form-control" name="phone" value={user.phone} placeholder="Enter your PhoneNumber" onChange={handleChange} />
+                            <div className="input-group-append">
+                                <div className="input-group-text">
+                                    <span className="fas fa-phone"></span>
+                                </div>
+                            </div>
+                        </div>
+                        {error.nameErr && <span className="error">{error.nameErr}</span>}
+
+
                         <div className="input-group mb-3">
                             <input type="password" className="form-control" placeholder="Password" name="password" value={user.password} onChange={handleChange} />
                             <div className="input-group-append">

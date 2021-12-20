@@ -4,14 +4,12 @@ const mongoose = require("mongoose")
 const product_store = new mongoose.Schema({
 
     productStoreData: {
-        products: [{
+        productId: [{
             type: mongoose.Schema.Types.ObjectId,
-            // type: 'ObjectId',
             ref: 'Product',
         }],
-        users: [{
+        UserId: [{
             type: mongoose.Schema.Types.ObjectId,
-            // type: 'ObjectId',
             ref: 'User',
         }],
     }

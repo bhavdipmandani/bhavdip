@@ -33,6 +33,7 @@ const AddStore = (props) => {
                                     <td>{item.products.categories}</td>
                                     <td><img src={Helper.getImageUrl(item.products.image)} style={{width: '100px', height: '80px'}}/></td>
                                     <td>
+                                        {/*{item.products.description}*/}
                                         {`${item.products.description.substring(0, 30)}...`}
                                     </td>
                                     <td>

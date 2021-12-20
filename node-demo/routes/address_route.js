@@ -10,15 +10,14 @@ const {addresscontroller : Controller} = require('../controllers');
 
 router.get("/", Controller.list);
 
+router.get("/listbyId/:_id", Controller.listbyId);
+
 router.post("/", Controller.add);
 
 
-router.patch("/:id", Controller.update);
+router.patch("/:_id", Controller.update);
 
 router.delete("/:id", Controller.destroy);
-
-
-
 
 
 module.exports = router
