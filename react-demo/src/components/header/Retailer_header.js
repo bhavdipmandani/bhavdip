@@ -11,6 +11,7 @@ import Register from "../register/register";
 import Home from "../home/Home";
 import Checkout from "../checkout/checkout"
 import Address from "../address/address";
+import Payment from "../checkout/payment";
 
 
 const Retailer_header = (props) => {
@@ -141,6 +142,10 @@ const Retailer_header = (props) => {
 
                     <Route path="/singleProduct">
                         <SingleProduct props={props}/>
+                    </Route>
+
+                    <Route path="/payment">
+                        <Payment props={props}/>
                     </Route>
                 </Switch>
             </Router>

@@ -32,8 +32,8 @@ exports.add = async (req, res) => {
 
 exports.list = async (req, res) => {
     try {
-        const product_data = await Model.find({}).populate('productStoreData.productId').populate('productStoreData.userId');
-        // const product_data = await Model.find({}).populate({path: 'products' , select:['product_name' , 'price']}).populate('users');
+        // const product_data = await Model.find().populate({ select: 'productStoreData.productId, productStoreData.userId' });
+        const product_data = await Model.find().populate('productStoreData.productId').populate('productStoreData.userId');
         res.status(200).json({
             success: true,
             code: 200,
@@ -59,17 +59,18 @@ exports.list = async (req, res) => {
 exports.update = async (req , res) => {
     try {
         const _id = req.params._id;
-        const productDatas = await Model.findByIdAndUpdate(_id, {$push: {productStoreData : { productId:  req.body.productId , userId :  req.body.userId}}} , {
+        const productData = await Model.findByIdAndUpdate(_id, {$push: {productStoreData : {$each :[{productId:  req.body.productId} , {userId :  req.body.userId}]}}} , {
+        // const productData = await Model.findByIdAndUpdate(_id, {$push: {productStoreData : { productId:  req.body.productId , userId :  req.body.userId}}} , {
             new: true,
         });
-        if (!productDatas) {
+        if (!productData) {
             return res.status(404).send();
         } else {
             res.status(200).json({
                 success: true,
                 code: 200,
                 data: {
-                    productDatas
+                    productData
                 },
                 error: null,
                 message: 'Product Data found'

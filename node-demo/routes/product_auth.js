@@ -32,22 +32,34 @@ const storage = multer.diskStorage({
     }
 });
 
+// const add_product_data = multer({
+//     storage: storage,
+//     fileFilter: function (req, file, callback) {
+//         if (
+//             file.mimetype == "image/jpg" ||
+//             file.mimetype == "image/png"
+//         ) {
+//             callback(null, true)
+//         } else {
+//             console.log('only jpg & png file supported');
+//             callback(null, false)
+//         }
+//     },
+//     limits: { fileSize: 2 * 1024 * 1024 }
+// })
+
+
 const add_product_data = multer({
     storage: storage,
-    fileFilter: function (req, file, callback) {
-        if (
-            file.mimetype == "image/png" ||
-            file.mimetype == "image/jpg"
-        ) {
-            callback(null, true)
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
+            cb(null, true);
         } else {
-            console.log('only jpg & png file supported');
-            callback(null, false)
+            cb(null, false);
+            return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
         }
-    },
-    limits: { fileSize: 2 * 1024 * 1024 }
-})
-
+    }
+});
 
 
 router.use('/images' , express.static('images'));

@@ -34,7 +34,6 @@ const entityName = 'Product'
 // };
 exports.add = async (req, res) => {
     req.body.image = req.file.path;
-
     try {
         let single = new Model(req.body);
 
@@ -47,7 +46,7 @@ exports.add = async (req, res) => {
 
 
 
-// list of products api 
+// list of products api
 
 exports.list = async (req, res) => {
     try {
@@ -132,37 +131,22 @@ exports.productList1 = async (req, res) => {
 // update Demo Records By Id
 
 exports.update = async (req, res) => {
+    req.body.image = req.file.path;
+
     try {
-        const _id = req.params._id;
-        const productData = await Model.findOneAndUpdate(_id, req.body, {
-            new: true,
+        const _id = req.params.id;
+        const single = await Model.findByIdAndUpdate(_id, req.body, {
+            new: true
         });
-
-        if (!productData) {
-            return res.status(404).send();
-        } else {
-            res.status(200).json({
-                success: true,
-                code: 200,
-                data: {
-                    products: productData
-                },
-                error: null,
-                message: 'Product Data found'
-            });
+        if (!single) {
+            return res.message('Can not update', 409);
         }
-
+        return res.data({[entityName]: single});
     } catch (e) {
-        res.status(400).json({
-            success: false,
-            code: 400,
-            data: null,
-            error: e,
-            mesage: e.mesage
-        });
+        return res.error(e)
     }
-};
 
+}
 // Delete Demo Record By Id
 
 // router.delete("/api/demos/:id", async (req, res) => {

@@ -7,14 +7,14 @@ export default function Menu() {
   return (
     <aside className="main-sidebar sidebar-dark-primary elevation-4">
       {/* Brand Logo */}
-      <a href="#" className="brand-link">
+      <a href="#" className="brand-link" style={{ textDecoration: 'none' }}>
         <img
           src="dist/img/AdminLTELogo.png"
           alt="AdminLTE Logo"
           className="brand-image img-circle elevation-3"
           style={{ opacity: ".8" }}
         />
-        <span className="brand-text font-weight-light">Product Demo</span>
+        <span className="brand-text font-weight-light" style={{ textDecoration: 'none' }}>Product Demo</span>
       </a>
       {/* Sidebar */}
       <div className="sidebar">
@@ -28,7 +28,7 @@ export default function Menu() {
             />
           </div>
           <div className="info">
-            <a href="#" className="d-block">
+            <a href="#" className="d-block" style={{ textDecoration: 'none' }}>
                 {userName}
             </a>
           </div>

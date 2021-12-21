@@ -130,7 +130,7 @@ exports.list = async (req, res) => {
                 users: userData
             },
             error: null,
-            mesage: 'data found'
+            message: 'data found'
         });
     } catch (e) {
         res.status(400).json({
@@ -138,7 +138,7 @@ exports.list = async (req, res) => {
             code: 400,
             data: null,
             error: e,
-            mesage: e.mesage
+            message: e.message
         });
     }
 

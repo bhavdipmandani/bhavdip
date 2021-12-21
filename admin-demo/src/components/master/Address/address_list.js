@@ -106,9 +106,6 @@ class Admin_Address_list extends React.Component {
                 <table className="table table-border table-striped mt-3">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
                             <th>Street</th>
                             <th>City</th>
                             <th>State</th>
@@ -123,9 +120,6 @@ class Admin_Address_list extends React.Component {
                             this.state.address ?
                                 this.state.address.map((item) =>
                                     <tr>
-                                        <td>{item.name}</td>
-                                        <td>{item.email}</td>
-                                        <td>{item.phone}</td>
                                         <td>{item.street}</td>
                                         <td>{item.city}</td>
                                         <td>{item.state}</td>

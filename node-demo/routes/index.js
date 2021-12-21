@@ -14,7 +14,7 @@ const Order_Route = require('./order_route')
 
 
 router.use('/auth', user_Route)
-router.use('/adminauth', Admin_Route)
+router.use('/auth', Admin_Route)
 router.use('/store', Store_Route)
 router.use('/address', Address_Route)
 router.use('/public', Public_Route)

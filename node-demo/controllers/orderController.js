@@ -33,8 +33,8 @@ exports.add = async (req, res) => {
 
 exports.list = async (req, res) => {
     try {
-        const order = await Model.find({}).populate('orderData.addressId').populate('orderData.productStoreId');
-        // const product_data = await Model.find({}).populate({path: 'products' , select:['product_name' , 'price']}).populate('users');
+        const order = await Model.find({}).populate('orderData');
+        // const order = await Model.find({}).populate({path: 'orderData' , select:['addressId']});
         res.status(200).json({
             success: true,
             code: 200,

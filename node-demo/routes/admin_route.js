@@ -7,19 +7,11 @@ const {admincontroller : Controller} = require('../controllers');
 
 // const middleware = require('../middlewares')
 
-router.get("/admin_data", Controller.list);
+router.post('/register', Controller.insertData);
+// router.post('/update/:id', Controller.updateData);
 
-router.post('/admin_login', Controller.login);
-
-router.post('/admin_register' , Controller.register);
-
-
-
-
-
-
-
-
+// router.post('/login',Controller.checkData);
+router.post('/admin/login',Controller.checkAdmin);
 
 
 module.exports = router

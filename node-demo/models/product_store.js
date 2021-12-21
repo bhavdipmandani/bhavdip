@@ -5,10 +5,12 @@ const product_store = new mongoose.Schema({
 
     productStoreData: {
         productId: [{
+            // type: 'ObjectId',
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Product',
         }],
         UserId: [{
+            // type: 'ObjectId',
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User',
         }],

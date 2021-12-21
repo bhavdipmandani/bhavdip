@@ -27,7 +27,7 @@ export default class Address extends Component {
             state: '',
             zip: '',
             country: '',
-            productDatas: ''
+            // productDatas: ''
         }
     }
 
@@ -63,7 +63,7 @@ export default class Address extends Component {
             country: this.state.country,
         };
 
-        const add = await axios.post(`${apiUrl}/address`, address);
+        await axios.post(`${apiUrl}/address`, address);
 
         this.setState({
             street: '',
@@ -72,8 +72,6 @@ export default class Address extends Component {
             zip: '',
             country: '',
         })
-
-        console.log('-----------------------------', add)
     }
 
     componentDidMount() {
@@ -81,23 +79,19 @@ export default class Address extends Component {
             .then(res => {
                 const addressId = res.data.data.address;
                 this.setState({addressId});
-                console.log(addressId)
             })
     }
 
     addressUpdate = async (e, _id) => {
 
         const userId = localStorage.getItem('Id');
-        console.log('-------------------userId', userId)
 
         const addressIds = this.state.addressId[this.state.addressId.length - 1]._id
-        //         // const addressId = this.state.addressId.map(items => items._id);
-        console.log('-----------------------addressId', addressIds)
 
-        const res = await axios.patch(`${apiUrl}/address/${addressIds}`, {
+      await axios.patch(`${apiUrl}/address/${addressIds}`, {
             userId: userId
         });
-        console.log('-------------------res', res)
+
     }
 
 
@@ -108,7 +102,7 @@ export default class Address extends Component {
         // this.addressUpdate();
 
         await axios.post(`${apiUrl}/store`);
-        console.log('---------------------------------success')
+        window.location.reload(false);
     }
 
     render() {

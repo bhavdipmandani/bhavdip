@@ -2,7 +2,6 @@
 import React, {useState} from "react";
 import {apiUrl} from '../../../config';
 import {Link} from "react-router-dom";
-import {useHistory} from "react-router-dom"
 import {Modal} from "react-bootstrap";
 
 
@@ -14,8 +13,7 @@ export default function Login() {
     const handleClose = () => setShow(false);
     // const handleShow = () => setShow(true);
 
-
-    const history = useHistory()
+    const [serverErr,setServerErr] = useState('')
     const [success, setSuccess] = useState(false)
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -35,23 +33,57 @@ export default function Login() {
             ...error,
             passwordErr: "Password is Required*"
         })) : setError(error => ({...error, passwordErr: null}))
-        console.log(!loginUSer)
+        console.log(!loginUser)
 
 
         return !Object.values(error).find(x => x)
     }
 
-    const loginUSer = async (e) => {
-        if (!validate()) {
+    // const loginUser = async (e) => {
+    //     if (!validate()) {
+    //         return
+    //     }
+    //
+    //     const res = await fetch(`${apiUrl}/auth/admin/login`, {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //         },
+    //         body: JSON.stringify({
+    //             email,
+    //             password,
+    //         }),
+    //     });
+    //
+    //     const data = await res.json();
+    //
+    //
+    //     if (data.error || !data) {
+    //         console.log(data.error)
+    //         setServerErr(data.error.message)
+    //         console.log("Invalid Login");
+    //     } else {
+    //         setSuccess(true);
+    //
+    //         let token = data.data.User.authToken;
+    //         let name = data.data.User.name;
+    //
+    //         localStorage.setItem('Token', token);
+    //         localStorage.setItem('Name', name);
+    //
+    //     }
+    //
+    //     setShow(true)
+    // };
+    const loginUser = async (e) => {
+        if(!validate()){
             return
         }
-
-
-
-        const res = await fetch(`${apiUrl}/auth/login`, {
+        const res = await fetch(`${apiUrl}/auth/admin/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+
             },
             body: JSON.stringify({
                 email,
@@ -60,23 +92,26 @@ export default function Login() {
         });
 
         const data = await res.json();
+        // data.error.message === "Invalid credientials pass*" ? setError(error => ({...error,invalidErr: `${data.error.message}`})) : setError(error => ({...error,invalidErr: null}))
 
 
-        if (data.error || !data) {
+        // console.log(Error)
+        if (data.error  || !data) {
+            // window.alert(data.error);
             console.log(data.error)
-
+            setServerErr(data.error.message)
             console.log("Invalid Login");
         } else {
             setSuccess(true);
-
+            // window.alert("Login successfully");
+            console.log("Login successfully");
+            console.log(data.data)
             let token = data.data.User.authToken;
-            let name = data.data.User.name;
+            localStorage.setItem('Token',token);
+            console.log(success)
 
-            localStorage.setItem('Token', token);
-            localStorage.setItem('Name', name);
-
+            // history.push("/");
         }
-
         setShow(true)
     };
 
@@ -128,11 +163,10 @@ export default function Login() {
                                         </div>
                                     </div>
                                     <div className="col-4">
-                                        {/*<Button variant="primary" onClick={handleShow}>*/}
                                         <button type='button' className="btn btn-primary"
-                                                onClick={loginUSer}>Login
+                                                onClick={() => loginUser()}>Login
                                         </button>
-                                        {/*</Button>*/}
+                                        {serverErr && <span className="error">{serverErr}</span>}
                                     </div>
                                 </div>
 
@@ -148,11 +182,11 @@ export default function Login() {
                                 <p className="mb-1">
                                     <a href="#">I forgot my password</a>
                                 </p>
-                                <p className="mb-0">
-                                    <button className="btn btn-primary"
-                                            onClick={() => history.push("/register")}>Register
-                                    </button>
-                                </p>
+                                {/*<p className="mb-0">*/}
+                                {/*    <button className="btn btn-primary"*/}
+                                {/*            onClick={() => history.push("/register")}>Register*/}
+                                {/*    </button>*/}
+                                {/*</p>*/}
                                 {/* <Link to="/Register" variant="body2">
             <input type="submit" value="Register" className="btn  cansal-btn" />{" "}
           </Link> */}
@@ -161,18 +195,22 @@ export default function Login() {
                     </div>
                 </div>
             </div>
-
-            <Modal show={show} onHide={handleClose} centered>
-                <Modal.Header closeButton>
-                    <Modal.Title>Congretulation</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>Admin Login successfully</Modal.Body>
-                <Modal.Footer>
-                    <Link to="/" className="btn btn-primary">
-                        <button className="btn link-btn text-white">Go To Home</button>
-                    </Link>
-                </Modal.Footer>
-            </Modal>
+            {
+                success ?
+                <Modal show={show} onHide={handleClose} centered>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Congretulation</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>Admin Login successfully</Modal.Body>
+                    <Modal.Footer>
+                        <Link to="/" className="btn btn-primary">
+                            <button className="btn link-btn text-white">Go To Home</button>
+                        </Link>
+                    </Modal.Footer>
+                </Modal>
+                    :
+                    null
+            }
         </div>
     );
 }

@@ -219,7 +219,12 @@ const Admin_pro_list = () => {
         setSuccess(false)
         Data().then(((data) => setProducts(data.data.ProductList) ));
 
+        window.location.reload(false);
+
         return console.log(deleteData)
+
+
+
     }
 
     // ------------------------------
@@ -228,8 +233,8 @@ const Admin_pro_list = () => {
     return (
 
         <div>
-            <Header/>
-            <Menu/>
+            <Header />
+            <Menu />
 
 
             <div className="content-wrapper">
@@ -240,7 +245,7 @@ const Admin_pro_list = () => {
                         <div className="row mb-2">
                             <div className="d-flex justify-content-end">
                                 <button className="btn btn-primary mt-3">
-                                    <Link to="/main" className="text-white" rel="manifest">
+                                    <Link to="/main" className="text-white" rel="manifest" style={{textDecoration: 'none'}}>
                                         back to Home
                                     </Link>
                                 </button>
@@ -251,18 +256,8 @@ const Admin_pro_list = () => {
                                 </Form>
                             </div>
                             <div className="col-sm-6">
-                                <h1 className="m-0 text-dark">Show Product Data...</h1>
+                                <h1 className="m-0 text-dark" align="center">Show Product Data...</h1>
                             </div>
-                            {/* /.col */}
-                            {/*<div className="col-sm-6">*/}
-                            {/*    <ol className="breadcrumb float-sm-right">*/}
-                            {/*        <li className="breadcrumb-item">*/}
-                            {/*            <a href="#">Home</a>*/}
-                            {/*        </li>*/}
-                            {/*        <li className="breadcrumb-item active">product_list</li>*/}
-                            {/*    </ol>*/}
-                            {/*</div>*/}
-                            {/* /.col */}
                         </div>
                         {/* /.row */}
                     </div>
@@ -276,7 +271,8 @@ const Admin_pro_list = () => {
 
                             <table className="table table-border table-striped mt-3">
                                 <thead>
-                                <tr>
+                                <tr align="center">
+                                    {/*<th>No.</th>*/}
                                     <th>product_name</th>
                                     <th>Categories</th>
                                     <th>Image</th>
@@ -296,12 +292,15 @@ const Admin_pro_list = () => {
                                                 return val
                                             }
                                         }).map((item) =>
-                                            <tr>
+                                            <tr align="center">
+                                                {/*<td>{Array.from(Array(item), (e, i) => {*/}
+                                                {/*    return <p key={i}>{i}</p>*/}
+                                                {/*})}</td>*/}
                                                 <td>{item.product_name}</td>
                                                 <td>{item.categories}</td>
                                                 <td><img src={Helper.getImageUrl(item.image)} height="50px"
                                                          width="70px"/></td>
-                                                <td>{item.description}</td>
+                                                <td>{`${item.description.substring(0, 40)}...`}</td>
                                                 <td>{item.price}</td>
                                                 <td>
                                                     <Button className="btn btn-success me-3" onClick={openModal}
@@ -315,24 +314,7 @@ const Admin_pro_list = () => {
                                                             </svg>
                                                         </i>
                                                     </Button>
-                                                    <Modal  show={show} onHide={closeModal}
-                                                           id="exampleModal">
-                                                        <Modal.Header closeButton>
-                                                            <Modal.Title>Edit Here....</Modal.Title>
-                                                        </Modal.Header>
-                                                        <Modal.Body>
 
-                                                            {/* Edit Form */}
-
-                                                            <Editproduct/>
-
-                                                        </Modal.Body>
-                                                        <Modal.Footer>
-                                                            <Button variant="secondary" onClick={closeModal}>
-                                                                Close
-                                                            </Button>
-                                                        </Modal.Footer>
-                                                    </Modal>
                                                     <button className="btn btn-danger"
                                                             onClick={(e) => deleteProduct(item._id, e)}>
                                                         <i className="bi bi-trash-fill">
@@ -344,6 +326,8 @@ const Admin_pro_list = () => {
                                                             </svg>
                                                         </i>
                                                     </button>
+
+
                                                 </td>
                                             </tr>
                                         )
@@ -353,7 +337,24 @@ const Admin_pro_list = () => {
                                 </tbody>
 
                             </table>
+                            <Modal  show={show} onHide={closeModal}
+                                    id="exampleModal">
+                                <Modal.Header closeButton>
+                                    <Modal.Title>Edit Here....</Modal.Title>
+                                </Modal.Header>
+                                <Modal.Body>
 
+                                    {/* Edit Form */}
+
+                                    <Editproduct />
+
+                                </Modal.Body>
+                                <Modal.Footer>
+                                    <Button variant="secondary" onClick={closeModal}>
+                                        Close
+                                    </Button>
+                                </Modal.Footer>
+                            </Modal>
                         </div>
                         {/* /.row */}
                     </div>

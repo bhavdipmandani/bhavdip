@@ -12,7 +12,6 @@ export default class Editproduct extends Component {
                     this.onChangeProductDescription = this.onChangeProductDescription.bind(this);
                     this.onChangeProductPrice = this.onChangeProductPrice.bind(this);
 
-
                     this.onSubmit = this.onSubmit.bind(this);
 
                     this.state = {
@@ -21,26 +20,9 @@ export default class Editproduct extends Component {
                               description: '',
                               price: '',
                     }
-          }
-          // componentDidMount() {  
-                   
 
-          //           const productId = this.state.id;
-          //           axios.patch(`http://localhost:8000/product_list:/${productId}`)  
-          //               .then(response => {  
-          //                   this.setState({   
-          //                     product_name: response.data.product_name,   
-          //                     categories: response.data.categories,  
-          //                     description: response.data.description,  
-          //                     price: response.data.price });  
-                
-          //               })  
-          //               .catch(function (error) {  
-          //                   console.log(error);  
-          //               })  
-          //           }
-               
-              
+          }
+
           onChangeProductName(e) {
 
                     this.setState({ product_name: e.target.value })
