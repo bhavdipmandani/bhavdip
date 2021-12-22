@@ -18,10 +18,12 @@ router.use('/auth', Admin_Route)
 router.use('/store', Store_Route)
 router.use('/address', Address_Route)
 router.use('/public', Public_Route)
-router.use('/order', Order_Route)
+
 
 
 router.use(Authenticate)
 router.use('/product', product_Route)
+router.use('/order', Order_Route)
+
 module.exports = router;
 

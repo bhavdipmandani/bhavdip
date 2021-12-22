@@ -1,6 +1,6 @@
-import React, {Component, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import Retailer_footer from "../footer/Retailer_footer";
-import axios from "axios";
+import StripeCheckout from 'react-stripe-checkout';
 import {apiUrl} from "../../config";
 import Payment from "./payment";
 import Helper from "../../helper";
@@ -8,12 +8,11 @@ import '../../assets/css/checkout.css'
 import {Link} from "react-router-dom";
 
 const Checkout = (props) => {
-
     const [data, setData] = useState('')
     const [address, setAddress] = useState([])
+    const [addressId, setAddressId] = useState(null)
     const [store, setStore] = useState([])
     const [user, setUser] = useState({});
-
     let Data = async () => {
 
         const response = await fetch(`${apiUrl}/address`);
@@ -35,8 +34,8 @@ const Checkout = (props) => {
 
         setInterval(() => {
             const userString = localStorage.getItem('Token');
-            // const user = JSON.parse(userString);
             setUser(userString)
+
         }, [])
     }, 5000);
 
@@ -60,14 +59,84 @@ const Checkout = (props) => {
     }
 
 
+    // const addOrder = async (e) => {
+    //     // const addressId = address[address.length - 1]._id;
+    //
+    // }
+
+    const totalPrice = props.props.storeProduct.map(items => parseInt(items.products.price) * parseInt(items.qty)).reduce((acc, next) => acc + next, 0);
+
+
+    const publishableKey = 'pk_test_51K3wdKSCD8AaqSEyaOviwA6W2Tk4u3Icy80NIbiPyUvwEmsb12rPZMPILtygdP6jpXu0Nx9wM6IbK7FPxabB4dDm00ts89ornF';
+    const priceForStripe = totalPrice * 100;
+    const onToken = async (token) => {
+
+
+        let userId = localStorage.getItem('Id');
+
+        let myheader = {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem('Token')}`
+        }
+        let totalAmounts = () => {
+            return props.props.storeProduct.map((item) => item.products.price * item.qty).reduce((amout, next) => amout + next, 0);
+        }
+        let totalPrice = totalAmounts();
+
+
+        let productsData = props.props.storeProduct.map((item) => ({
+            "productId": item.products._id,
+            "quantity": item.qty,
+        }))
+
+
+        fetch(`${apiUrl}/order`, {
+            method: "POST",
+            headers: myheader,
+            body: JSON.stringify({
+                userId: userId,
+                productData: productsData,
+                totalPrice: totalPrice,
+                addressId: addressId
+            })
+        }).then((res) => console.log(res))
+            .catch((e) => console.log(e))
+
+
+        console.log('order entered success')
+        // console.log('-------------------res', res)
+
+
+
+
+
+        console.log(token);
+        alert('Payment Succesful!');
+    };
+
+
     const paymentButton = () => {
         return (
 
             user ? <>
                 <div>
-                    <button onClick={productStoreUpdate} className="btnAdd"><Payment
-                        TotalAmount={props.props.storeProduct.map(items => parseInt(items.products.price) * parseInt(items.qty))
-                            .reduce((acc, next) => acc + next, 0)}/></button>
+                    {/*<div onClick={() => addOrder()}>*/}
+                    {/*    <Payment TotalAmount={props.props.storeProduct.map(items => parseInt(items.products.price) * parseInt(items.qty))*/}
+                    {/*        .reduce((acc, next) => acc + next, 0)}/></div>*/}
+                    <div className="paymentbtn">
+                        <StripeCheckout
+                            label='Pay Now'
+                            name='For Demo Payment'
+                            // billingAddress
+                            // shippingAddress
+                            amount={priceForStripe}
+                            panelLabel='Pay Now'
+                            description={`Your total is ${totalPrice}`}
+                            token={onToken}
+                            stripeKey={publishableKey}
+
+                        />
+                    </div>
                 </div>
             </> : <>
                 <strong className="loginmsg">Please login our website..... </strong>
@@ -76,30 +145,8 @@ const Checkout = (props) => {
     }
 
 
-    const productStoreUpdate = async (e) => {
-        e.preventDefault()
-        const productId = props.props.storeProduct.map(items => items.products._id);
-        // console.log('-------------------productData', productId)
+    const name = localStorage.getItem('Name')
 
-        const userId = localStorage.getItem('Id');
-        // console.log('-------------------userId', userId)
-
-        // const addressIds = this.state.addressId[this.state.addressId.length - 1]._id
-        const storeData = store[store.length - 1]._id;
-        // console.log(storeData)
-        await axios.patch(`${apiUrl}/store/${storeData}`, {
-            productId: productId,
-            userId: userId
-        });
-        // console.log('-------------------res', res)
-    }
-
-    const onAddressChanged = (e) => {
-        setData({
-            data: e.currentTarget.value,
-        });
-    }
-    console.log('------------------------' , data)
     return (
 
         <div>
@@ -120,6 +167,7 @@ const Checkout = (props) => {
                                         <th>Select Any One</th>
                                         <th>UserName</th>
                                         <th>Street</th>
+                                        <th>LandMark</th>
                                         <th>City</th>
                                         <th>State</th>
                                         <th>Zip</th>
@@ -132,19 +180,23 @@ const Checkout = (props) => {
                                         address ?
                                             address.map((item) =>
                                                 <tr>
+                                                    {
+                                                        item.userId.name == name ?
+                                                            <>
+                                                                <td><input type="radio" name="address"
+                                                                           onClick={() => setAddressId(item)}/></td>
+                                                                <td>{item.userId.name}</td>
+                                                                <td>{item.street}</td>
+                                                                <td>{item.landmark}</td>
+                                                                <td>{item.city}</td>
+                                                                <td>{item.state}</td>
+                                                                <td>{item.zip}</td>
+                                                                <td>{item.country}</td>
+                                                            </>
+                                                            :
 
-                                                    <td><input type="radio" name="address" value={item.address}
-                                                               checked={data.address === item.address}
-                                                               onChange={onAddressChanged}/></td>
-                                                    {item.address}
-                                                    <td>{item.userId.map((userData) => {
-                                                        return <p>{userData.name}</p>
-                                                    })}</td>
-                                                    <td>{item.street}</td>
-                                                    <td>{item.city}</td>
-                                                    <td>{item.state}</td>
-                                                    <td>{item.zip}</td>
-                                                    <td>{item.country}</td>
+                                                            null
+                                                    }
                                                 </tr>
                                             )
                                             :
@@ -207,7 +259,7 @@ const Checkout = (props) => {
                                                         <small className="text-muted">{item.qty}</small>
                                                     </div>
                                                     <span
-                                                        className="text-muted">{'\u20B9'}{parseInt(item.products.price) * parseInt(item.qty)}</span>
+                                                        className="text-muted">{'\u20B9'}   {parseInt(item.products.price) * parseInt(item.qty)}</span>
                                                 </li>
                                             </ul>
 

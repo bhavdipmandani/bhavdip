@@ -1,38 +1,17 @@
 const { address_model : Model } = require('../models')
+const entityName = 'Address';
 // add product api
 
+exports.add = async (req,res) => {
+    try {
+        let single = new Model(req.body);
 
-exports.add = (req, res) => {
-    const { street, city, state, zip, country} = req.body
-
-
-    // console.log(req.file.filename)
-    // Product.findOne({ product_name: product_name }, (err) => {
-    const address = new Model({
-        street, city, state, zip, country
-    })
-    address.userId = [];
-    address.save(err => {
-        if (err) {
-            res.send(err)
-        } else {
-            res.status(200).json({
-                success: true,
-                code: 200,
-                data: {
-                    address: address
-                },
-                error: null,
-                message: "Address added successfully.",
-            })
-        }
-    })
-
-    // })
-
-};
-
-// list of products api
+        single = await single.save();
+        return res.data({[entityName]: single});
+    } catch (e) {
+        return res.error(e);
+    }
+}
 
 
 exports.list = async (req, res) => {
@@ -86,16 +65,6 @@ exports.listbyId = async (req, res) => {
     }
 };
 
-
-
-
-// {
-//     "addressId" : "61bd7de10be1ea210c308e17",
-//     "productStoreId" : "61bd6fcd96261d11fcf970b5",
-//     "totalAmount" : "11111"
-//
-// }
-
 // update Demo Records By Id
 
 exports.update = async (req, res) => {
@@ -135,12 +104,11 @@ exports.update = async (req, res) => {
 // router.delete("/api/demos/:id", async (req, res) => {
 exports.destroy = async (req, res) => {
     try {
-        // const id = req.params.id;
-        const deleteAddresst = await Model.findByIdAndDelete(req.params._id)
+        const deleteAddress = await Model.findByIdAndDelete(req.params._id)
         if (!req.params.id) {
             return res.status(404).send();
         } else {
-            res.send(deleteAddresst);
+            res.send(deleteAddress);
         }
     } catch (e) {
         res.status(500).send(e);

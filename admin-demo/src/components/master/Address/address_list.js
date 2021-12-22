@@ -72,7 +72,7 @@ class Admin_Address_list extends React.Component {
                             <div className="row mb-2">
                                 <div className="d-flex justify-content-end">
                                     <button className="btn btn-primary mt-1 mb-3">
-                                        <Link to="/main" className="text-white" rel="manifest">
+                                        <Link to="/main" className="text-white" rel="manifest" style={{ textDecoration: 'none' }}>
                                             back to Home
                                         </Link>
                                     </button>
@@ -106,6 +106,7 @@ class Admin_Address_list extends React.Component {
                 <table className="table table-border table-striped mt-3">
                     <thead>
                         <tr>
+                            {/*<th>User Name</th>*/}
                             <th>Street</th>
                             <th>City</th>
                             <th>State</th>
@@ -120,6 +121,7 @@ class Admin_Address_list extends React.Component {
                             this.state.address ?
                                 this.state.address.map((item) =>
                                     <tr>
+                                        {/*<td>{item.userId.name}</td>*/}
                                         <td>{item.street}</td>
                                         <td>{item.city}</td>
                                         <td>{item.state}</td>

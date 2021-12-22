@@ -1,6 +1,8 @@
 import React from 'react'
 
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import '../../assets/css/menu.css'
+
 
 export default function Menu() {
     const userName = localStorage.getItem('Name');
@@ -41,12 +43,11 @@ export default function Menu() {
             role="menu"
             data-accordion="false"
           >
-            {/* Add icons to the links using the .nav-icon class
-         with font-awesome or any other icon font library */}
+            {/* ---------------------- Add / list Product --------------------------- */}
 
             <li className="nav-item has-treeview">
               <a href="#" className="nav-link">
-                <i className="nav-icon fas fa-chart-pie" />
+                <i className="nav-icon fa fa-product-hunt" />
                 <p>
                   Products
                   <i className="right fas fa-angle-left" />
@@ -69,22 +70,18 @@ export default function Menu() {
             </li>
 
 
+              {/* ------------------------ Address Menu ----------------- */}
+
             <li className="nav-item has-treeview">
               <a href="#" className="nav-link">
-                <i className="nav-icon fas fa-chart-pie" />
+                <i className="nav-icon fas fa-address-card" />
                 <p>
                   Addresses
                   <i className="right fas fa-angle-left" />
                 </p>
               </a>
               <ul className="nav nav-treeview">
-                {/* <li className="nav-item">
-                <Link to="/add_product" type="submit" value="Create Product"  className="nav-link">
-                    <i className="far fa-circle nav-icon" />
-                    <p>Add_Product</p>
-                    </Link>
-                </li> */}
-                
+
                 <li className="nav-item">
                 <Link to="/Admin_Address_list" type="submit" value="Create Product"  className="nav-link">
                     <i className="fa fa-list nav-icon" />
@@ -93,6 +90,28 @@ export default function Menu() {
                 </li>
               </ul>
             </li>
+
+              {/* ------------------------ Retailer's Order List ----------------- */}
+
+              <li className="nav-item has-treeview">
+                  <a href="#" className="nav-link">
+                      <i className="nav-icon fas fa-shopping-cart" />
+                      <p>
+                          Orders
+                          <i className="right fas fa-angle-left" />
+                      </p>
+                  </a>
+                  <ul className="nav nav-treeview">
+
+                      <li className="nav-item">
+                          <Link to="/orderList" type="submit" value="Create Product"  className="nav-link">
+                              <i className="fa fa-list nav-icon" />
+                              <p>Order List</p>
+                          </Link>
+                      </li>
+                  </ul>
+              </li>
+
 
           </ul>
         </nav>

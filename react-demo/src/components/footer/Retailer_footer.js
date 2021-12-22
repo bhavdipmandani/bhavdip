@@ -7,7 +7,7 @@ export default function Retailer_footer() {
 
 			<div className="footer-left">
 
-				<h3>Company<span>logo</span></h3>
+				<h3>Online<span>Shopping</span></h3>
 
 				<p className="footer-links">
 					<a href="#" className="link-1">Home</a>
@@ -19,7 +19,7 @@ export default function Retailer_footer() {
 					<a href="#">Contact</a>
 				</p>
 
-				<p className="footer-company-name">Company Name © 2021</p>
+				<p className="footer-company-name">Online Shopping © 2021-2022</p>
 			</div>
 
 			<div className="footer-center">

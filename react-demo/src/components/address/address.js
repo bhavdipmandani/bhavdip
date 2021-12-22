@@ -12,28 +12,32 @@ export default class Address extends Component {
 
 
         this.onChangeStreet = this.onChangeStreet.bind(this);
+        this.onChangeLandmark = this.onChangeLandmark.bind(this);
         this.onChangeCity = this.onChangeCity.bind(this);
         this.onChangeState = this.onChangeState.bind(this);
         this.onChangeZip = this.onChangeZip.bind(this);
         this.onChangeCountry = this.onChangeCountry.bind(this);
-
+        // this.onChangeUserId = this.onChangeUserId.bind(this);
 
         this.addressStore = this.addressStore.bind(this);
 
         this.state = {
-
             street: '',
+            landmark: '',
             city: '',
             state: '',
             zip: '',
             country: '',
-            // productDatas: ''
+            userId: localStorage.getItem('Id')
         }
     }
 
 
     onChangeStreet(e) {
         this.setState({street: e.target.value})
+    }
+    onChangeLandmark(e) {
+        this.setState({landmark: e.target.value})
     }
 
     onChangeCity(e) {
@@ -52,57 +56,30 @@ export default class Address extends Component {
         this.setState({country: e.target.value})
     }
 
+    // onChangeUserId(e) {
+    //     this.setState({userId: e.target.userId})
+    // }
+
 
     addressStore = async (e) => {
-        // e.preventDefault()
-        const address = {
-            street: this.state.street,
-            city: this.state.city,
-            state: this.state.state,
-            zip: this.state.zip,
-            country: this.state.country,
-        };
+        e.preventDefault()
 
-        await axios.post(`${apiUrl}/address`, address);
 
+
+       const res = await axios.post(`${apiUrl}/address`, this.state)
+console.log(res);
         this.setState({
             street: '',
+            landmark: '',
             city: '',
             state: '',
             zip: '',
             country: '',
+            userId: ''
         })
-    }
 
-    componentDidMount() {
-        axios.get(`${apiUrl}/address`)
-            .then(res => {
-                const addressId = res.data.data.address;
-                this.setState({addressId});
-            })
-    }
-
-    addressUpdate = async (e, _id) => {
-
-        const userId = localStorage.getItem('Id');
-
-        const addressIds = this.state.addressId[this.state.addressId.length - 1]._id
-
-      await axios.patch(`${apiUrl}/address/${addressIds}`, {
-            userId: userId
-        });
-
-    }
-
-
-    productStore = async (e) => {
-        e.preventDefault()
-
-        this.addressStore();
-        // this.addressUpdate();
-
-        await axios.post(`${apiUrl}/store`);
-        window.location.reload(false);
+        const id = res.data.data.Address._id;
+        localStorage.setItem('addressId', id);
     }
 
     render() {
@@ -117,9 +94,26 @@ export default class Address extends Component {
 
                                 <form onSubmit={this.addressStore}>
 
+                                    {/*<div className="input-group mb-3">*/}
+                                    {/*    <input type="hidden" value={this.state.userId} onChange={this.onChangeUserId}*/}
+                                    {/*           className="form-control" placeholder="Enter Your Street" name="userId"/>*/}
+                                    {/*    <div className="input-group-append">*/}
+                                    {/*    </div>*/}
+                                    {/*</div>*/}
+
                                     <div className="input-group mb-3">
                                         <input type="text" value={this.state.street} onChange={this.onChangeStreet}
                                                className="form-control" placeholder="Enter Your Street"/>
+                                        <div className="input-group-append">
+                                            <div className="input-group-text">
+                                                <span className="fa fa-map-marker"> </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="input-group mb-3">
+                                        <input type="text" value={this.state.landmark} onChange={this.onChangeLandmark}
+                                               className="form-control" placeholder="Enter Your LandMark"/>
                                         <div className="input-group-append">
                                             <div className="input-group-text">
                                                 <span className="fa fa-map-marker"> </span>
@@ -173,14 +167,14 @@ export default class Address extends Component {
                                     {/*    </div>*/}
                                     {/*) : (*/}
                                     {/*<button type="submit" className="btn btn-primary">Add Address</button>*/}
-                                    <button type="submit" onClick={this.productStore}
+                                    <button type="submit" onClick={this.addressStore}
                                             className="btnAdd mt-2 mb-2"> Address
                                         {/*<button type="submit" onClick={this.addressUpdate}  className="btnAdd">Address</button>*/}
                                     </button>
 
                                 </form>
                                 <div className="d-flex justify-content-end">
-                                    <button className="btn btn-primary" type="submit" onClick={this.addressUpdate}><Link to='/checkout' className="text-dark"
+                                    <button className="btn btn-primary" type="submit"><Link to='/checkout' className="text-white"
                                                                               style={{textDecoration: 'none'}}> Checkout </Link>
                                     </button>
 

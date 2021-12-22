@@ -10,8 +10,7 @@ import React, { useState } from 'react';
 import Main from "./components/master/Main";
 import AddProduct from "./components/master/products/add_product";
 import Admin_Address_list from './components/master/Address/address_list'
-
-
+import OrderList from './components/master/order/orderList'
 
 function App(props) {
 
@@ -40,6 +39,9 @@ function App(props) {
               <Admin_Address_list />
             </Route>
 
+            <Route path='/orderList'>
+              <OrderList />
+            </Route>
 
             <Route path="/">
               <Main />

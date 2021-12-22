@@ -188,7 +188,7 @@ export default function Login() {
             let token = data.data.User.authToken;
             let name = data.data.User.name;
             let id = data.data.User._id;
-
+            // console.log(id)
             localStorage.setItem('Token', token);
             localStorage.setItem('Name', name);
             localStorage.setItem('Id', id);

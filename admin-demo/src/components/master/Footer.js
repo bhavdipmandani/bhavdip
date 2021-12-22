@@ -4,11 +4,11 @@ export default function Footer() {
   return (
     <footer className="main-footer">
       <strong>
-        Copyright © 2014-2019 <a href="http://adminlte.io">Demo Project</a>.
+        Copyright © 2014-2021 <a href="http://adminlte.io">Demo Project</a>.
       </strong>
       All rights reserved.
       <div className="float-right d-none d-sm-inline-block">
-        <b>Version</b> 3.0.4
+        {/*<b>Version</b> 3.0.4*/}
       </div>
     </footer>
   );
