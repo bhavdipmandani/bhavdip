@@ -2,13 +2,16 @@ import React, {useEffect, useState} from "react";
 import Retailer_footer from "../footer/Retailer_footer";
 import StripeCheckout from 'react-stripe-checkout';
 import {apiUrl} from "../../config";
-import Payment from "./payment";
 import Helper from "../../helper";
 import '../../assets/css/checkout.css'
 import {Link} from "react-router-dom";
+import { useHistory } from "react-router-dom"
 
 const Checkout = (props) => {
-    const [data, setData] = useState('')
+
+    const history = useHistory()
+
+
     const [address, setAddress] = useState([])
     const [addressId, setAddressId] = useState(null)
     const [store, setStore] = useState([])
@@ -99,7 +102,12 @@ const Checkout = (props) => {
                 totalPrice: totalPrice,
                 addressId: addressId
             })
-        }).then((res) => console.log(res))
+        }).then((res) => {
+            props.props.removeAllToStore(props.props.storeProduct)
+            history.push("/")
+            return console.log(res)
+        }
+        )
             .catch((e) => console.log(e))
 
 
@@ -107,18 +115,14 @@ const Checkout = (props) => {
         // console.log('-------------------res', res)
 
 
-
-
-
         console.log(token);
-        alert('Payment Succesful!');
+        // alert('Payment Succesful!');
     };
 
 
     const paymentButton = () => {
         return (
-
-            user ? <>
+            user && addressId ? <>
                 <div>
                     {/*<div onClick={() => addOrder()}>*/}
                     {/*    <Payment TotalAmount={props.props.storeProduct.map(items => parseInt(items.products.price) * parseInt(items.qty))*/}
@@ -139,7 +143,7 @@ const Checkout = (props) => {
                     </div>
                 </div>
             </> : <>
-                <strong className="loginmsg">Please login our website..... </strong>
+                <p className="loginmsg">Select Delivery Address....</p>
             </>
         )
     }
@@ -183,8 +187,7 @@ const Checkout = (props) => {
                                                     {
                                                         item.userId.name == name ?
                                                             <>
-                                                                <td><input type="radio" name="address"
-                                                                           onClick={() => setAddressId(item)}/></td>
+                                                                <td><input type="radio" name="address" onClick={() => setAddressId(item)}/></td>
                                                                 <td>{item.userId.name}</td>
                                                                 <td>{item.street}</td>
                                                                 <td>{item.landmark}</td>
@@ -259,7 +262,7 @@ const Checkout = (props) => {
                                                         <small className="text-muted">{item.qty}</small>
                                                     </div>
                                                     <span
-                                                        className="text-muted">{'\u20B9'}   {parseInt(item.products.price) * parseInt(item.qty)}</span>
+                                                        className="text-muted">{'\u20B9'} {parseInt(item.products.price) * parseInt(item.qty)}</span>
                                                 </li>
                                             </ul>
 

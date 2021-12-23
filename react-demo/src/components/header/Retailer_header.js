@@ -12,6 +12,7 @@ import Home from "../home/Home";
 import Checkout from "../checkout/checkout"
 import Address from "../address/address";
 import Payment from "../checkout/payment";
+import Profile from "../profile/profile";
 
 
 const Retailer_header = (props) => {
@@ -31,6 +32,7 @@ const Retailer_header = (props) => {
         localStorage.removeItem('Token');
         localStorage.removeItem("Name");
         localStorage.removeItem("Id");
+        localStorage.removeItem("addressId");
 
         window.location.reload(false);
         window.location.href = './login';
@@ -41,7 +43,7 @@ const Retailer_header = (props) => {
 
             user ? <>
                 <Link to="/product_list" className="me-4 text-dark" style={{ textDecoration: 'none' }}>Products</Link>
-                <Link to="/AddStore" className="me-4 text-dark" style={{ textDecoration: 'none' }}><i className="fas fa-store text-dark"></i><p
+                <Link to="/AddStore" className="me-3 text-dark" style={{ textDecoration: 'none' }}><i className="fas fa-store text-dark"></i><p
                     className="productCount">{props.storeProduct.length}</p></Link>
                 <div className="dropdown">
                     <button className="btn dropdown-toggle" type="button"
@@ -50,9 +52,11 @@ const Retailer_header = (props) => {
                         {userName}
 
                     </button>
-
-                    <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a className="dropdown-item" href="#" onClick={logout}>Logout</a></li>
+                    {/*className="dropdown-item"*/}
+                    <ul className="dropdown-menu drpmenu" aria-labelledby="dropdownMenuButton1">
+                        <li><Link to="/profile" className="me-3 dropdown-item text-dark" style={{ textDecoration: 'none' }}><i className="fa fa-user me-2" aria-hidden="true"></i>User Profile</Link></li>
+                        <li><a className="dropdown-item" href="#" onClick={logout}><i
+                            className="fas fa-sign-out-alt me-2"></i>Logout</a></li>
                     </ul>
                 </div>
             </> : <>
@@ -147,6 +151,10 @@ const Retailer_header = (props) => {
                     <Route path="/payment">
                         <Payment props={props}/>
                     </Route>
+                    <Route path="/profile">
+                        <Profile props={props}/>
+                    </Route>
+
                 </Switch>
             </Router>
         </>

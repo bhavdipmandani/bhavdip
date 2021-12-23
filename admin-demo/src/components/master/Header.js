@@ -1,5 +1,6 @@
 import React , { useEffect, useState }  from "react";
-import { BrowserRouter as Link } from "react-router-dom";
+import { Link } from "react-router-dom";
+import '../../assets/css/header.css'
 
 export default function Header() {
   const [isLogged, setisLogged] = useState(false);
@@ -20,6 +21,7 @@ export default function Header() {
     window.location.href = './login';
 }
 
+  const userName = localStorage.getItem('Name');
   return (
     <nav className="main-header navbar navbar-expand navbar-white navbar-light">
       {/* Left navbar links */}
@@ -30,9 +32,9 @@ export default function Header() {
           </a>
         </li>
         <li className="nav-item d-none d-sm-inline-block">
-          <a href="#" className="nav-link">
+          <Link to='/' className="nav-link">
             Home
-          </a>
+          </Link>
         </li>
         <li className="nav-item d-none d-sm-inline-block">
           <a href="#" className="nav-link">
@@ -45,7 +47,21 @@ export default function Header() {
       <ul className="navbar-nav ml-auto">
         
       {!isLogged ? (
-          <button onClick={logout} className="btn btn-primary ms-4">Logout</button>
+          // <button onClick={logout} className="btn btn-primary ms-4">Logout</button>
+
+          <div className="dropdown me-5">
+            <button className="btn dropdown-toggle" type="button"
+                    id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+              {userName}
+
+            </button>
+
+            <ul className="dropdown-menu drpmenu" aria-labelledby="dropdownMenuButton1">
+              <li className="profile"><Link to="/profile" className="me-3 dropdown-item text-dark" style={{ textDecoration: 'none' }}><i className="fa fa-user me-2" aria-hidden="true"></i>User Profile</Link></li>
+              <li><a className="dropdown-item" href="#" onClick={logout}><i className="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+            </ul>
+          </div>
         ) : (
           <Link to="/Admin_login" type="submit" value="Create User" className="btn btn-primary btn-block">Login</Link>
         )}

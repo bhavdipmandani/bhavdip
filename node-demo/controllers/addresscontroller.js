@@ -105,7 +105,7 @@ exports.update = async (req, res) => {
 exports.destroy = async (req, res) => {
     try {
         const deleteAddress = await Model.findByIdAndDelete(req.params._id)
-        if (!req.params.id) {
+        if (!req.params._id) {
             return res.status(404).send();
         } else {
             res.send(deleteAddress);

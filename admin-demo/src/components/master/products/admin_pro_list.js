@@ -168,11 +168,11 @@
 // export default Admin_pro_list;
 
 
-import React, { useEffect, useState } from 'react'
-import { Modal, Button } from "react-bootstrap";
+import React, {useEffect, useState} from 'react'
+import {Modal, Button} from "react-bootstrap";
 import Editproduct from './Edit_product';
-import { Form, FormControl } from 'react-bootstrap';
-import { apiUrl } from '../../../config';
+import {Form, FormControl} from 'react-bootstrap';
+import {apiUrl} from '../../../config';
 import Helper from '../../../helper';
 import Header from "../Header";
 import Menu from '../Menu';
@@ -190,8 +190,8 @@ const Admin_pro_list = () => {
     const [searchTerm, setSearchTerm] = useState('')
 
     const [data, setData] = useState([])
-    const [success,setSuccess] = useState(false)
-    const [products,setProducts] = useState([])
+    const [success, setSuccess] = useState(false)
+    const [products, setProducts] = useState([])
 
     let Data = async () => {
 
@@ -200,29 +200,23 @@ const Admin_pro_list = () => {
         return productData;
     }
 
-    useEffect( () => {
-        Data().then(((data) => setData(data.data.ProductList) ));
-    },[]);
+    useEffect(() => {
+        Data().then(((data) => setData(data.data.ProductList)));
+    }, []);
 
 
     const deleteProduct = async (id) => {
-        console.log(id);
-        const res = await fetch(`${apiUrl}/product/${id}`,{
-            method:'DELETE',
-            headers: new Headers({
-                "Authorization":`Bearer ${localStorage.getItem('Token')}`,
-                // "Content-Type": "application/json",
-            }),
+        const res = await fetch(`${apiUrl}/address/${id}`, {
+            method: 'DELETE',
         });
         let deleteData = await res.json();
         // Data().then(((data) => console.log(data.data.ProductList) ));
         setSuccess(false)
-        Data().then(((data) => setProducts(data.data.ProductList) ));
+        Data().then(((data) => setProducts(data.data.address)));
 
         window.location.reload(false);
 
         return console.log(deleteData)
-
 
 
     }
@@ -233,8 +227,8 @@ const Admin_pro_list = () => {
     return (
 
         <div>
-            <Header />
-            <Menu />
+            <Header/>
+            <Menu/>
 
 
             <div className="content-wrapper">
@@ -245,19 +239,20 @@ const Admin_pro_list = () => {
                         <div className="row mb-2">
                             <div className="d-flex justify-content-end">
                                 <button className="btn btn-primary mt-3">
-                                    <Link to="/main" className="text-white" rel="manifest" style={{textDecoration: 'none'}}>
+                                    <Link to="/main" className="text-white" rel="manifest"
+                                          style={{textDecoration: 'none'}}>
                                         back to Home
                                     </Link>
                                 </button>
                             </div>
                             <div className="d-flex justify-content-end">
                                 <Form className="mt-3">
-                                    <FormControl type="text" placeholder="Search" className="mr-sm-2" onChange={event => setSearchTerm(event.target.value)} />
+                                    <FormControl type="text" placeholder="Search" className="mr-sm-2"
+                                                 onChange={event => setSearchTerm(event.target.value)}/>
                                 </Form>
                             </div>
-                            <div className="col-sm-6">
-                                <h1 className="m-0 text-dark" align="center">Show Product Data...</h1>
-                            </div>
+
+                            <h1 className="text-dark" align="center">Show Product Data...</h1>
                         </div>
                         {/* /.row */}
                     </div>
@@ -301,20 +296,25 @@ const Admin_pro_list = () => {
                                                 <td><img src={Helper.getImageUrl(item.image)} height="50px"
                                                          width="70px"/></td>
                                                 <td>{`${item.description.substring(0, 40)}...`}</td>
-                                                <td>{item.price}</td>
+                                                <td>{'\u20B9'} {item.price}</td>
                                                 <td>
-                                                    <Button className="btn btn-success me-3" onClick={openModal}
-                                                            data-toggle="modal" data-target="#exampleModal">
-                                                        <i className="bi bi-pencil-fill">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                                 height="16" fill="currentColor"
-                                                                 className="bi bi-pencil-fill" viewBox="0 0 16 16">
-                                                                <path
-                                                                    d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
-                                                            </svg>
-                                                        </i>
-                                                    </Button>
+                                                    <Link to={{pathname: '/editProduct', state: {item}}}
+                                                          style={{textDecoration: 'none', color: 'black'}}
+                                                          onClick={openModal}>
+                                                        <Button className="btn btn-success me-3"
+                                                                data-toggle="modal" data-target="#exampleModal">
 
+                                                            <i className="bi bi-pencil-fill">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                                     height="16" fill="currentColor"
+                                                                     className="bi bi-pencil-fill" viewBox="0 0 16 16">
+                                                                    <path
+                                                                        d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
+                                                                </svg>
+                                                            </i>
+
+                                                        </Button>
+                                                    </Link>
                                                     <button className="btn btn-danger"
                                                             onClick={(e) => deleteProduct(item._id, e)}>
                                                         <i className="bi bi-trash-fill">
@@ -337,8 +337,8 @@ const Admin_pro_list = () => {
                                 </tbody>
 
                             </table>
-                            <Modal  show={show} onHide={closeModal}
-                                    id="exampleModal">
+                            <Modal show={show} onHide={closeModal}
+                                   id="exampleModal">
                                 <Modal.Header closeButton>
                                     <Modal.Title>Edit Here....</Modal.Title>
                                 </Modal.Header>
@@ -346,7 +346,7 @@ const Admin_pro_list = () => {
 
                                     {/* Edit Form */}
 
-                                    <Editproduct />
+                                    <Editproduct/>
 
                                 </Modal.Body>
                                 <Modal.Footer>

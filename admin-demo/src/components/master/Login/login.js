@@ -107,7 +107,9 @@ export default function Login() {
             console.log("Login successfully");
             console.log(data.data)
             let token = data.data.User.authToken;
+            let name = data.data.User.name;
             localStorage.setItem('Token',token);
+            localStorage.setItem('Name',name);
             console.log(success)
 
             // history.push("/");

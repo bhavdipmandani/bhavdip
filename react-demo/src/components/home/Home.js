@@ -19,7 +19,7 @@ import {Link, useHistory} from 'react-router-dom';
 //
 // }
 
-const Home = () => {
+const Home = (props) => {
     const history = useHistory();
 
     const [data, setData] = useState([])
@@ -92,6 +92,14 @@ const Home = () => {
                                                     {item.price}
                                                 </Link>
                                             </Card.Text>
+                                            <hr />
+                                            <div className="sub-main">
+                                                <button className="store" type="submit" onClick = {() => props.props.addToCartHandler(item)}>
+                                            <span>
+                                            Add To Store
+                                           </span>
+                                                </button>
+                                            </div>
                                         </Card.Body>
 
                                     </Card>

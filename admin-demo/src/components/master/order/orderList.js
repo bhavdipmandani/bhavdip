@@ -6,10 +6,11 @@ import Header from "../Header";
 import Menu from "../Menu";
 import Helper from "../../../helper";
 import '../../../assets/css/order.css'
+import {Form, FormControl} from "react-bootstrap";
 
 
 const OrderList = () => {
-
+    const [searchTerm, setSearchTerm] = useState('')
     const [order, setOrder] = useState()
     console.log(order)
     let orderData = async () => {
@@ -44,16 +45,22 @@ const OrderList = () => {
                 <div className="content-header">
                     <div className="container-fluid">
                         <div className="row mb-2">
-                            <div className="d-flex justify-content-end">
-                                <button className="btn btn-primary mt-1 mb-3">
-                                    <Link to="/main" className="text-white" rel="manifest"
-                                          style={{textDecoration: 'none'}}>
-                                        back to Home
-                                    </Link>
-                                </button>
-                            </div>
+                            {/*<div className="d-flex justify-content-end">*/}
+                            {/*    <button className="btn btn-primary mt-1 mb-3">*/}
+                            {/*        <Link to="/main" className="text-white" rel="manifest"*/}
+                            {/*              style={{textDecoration: 'none'}}>*/}
+                            {/*            back to Home*/}
+                            {/*        </Link>*/}
+                            {/*    </button>*/}
+                            {/*</div>*/}
                             <div className="col-sm-6">
                                 <h1 className="m-0 text-dark">Retailer's Ordered Data</h1>
+                            </div>
+
+                            <div className="d-flex justify-content-end">
+                                <Form className="mt-3">
+                                    <FormControl type="text" placeholder="Search" className="mr-sm-2" onChange={event => setSearchTerm(event.target.value)} />
+                                </Form>
                             </div>
                         </div>
                         {/* /.row */}
@@ -78,16 +85,21 @@ const OrderList = () => {
                                     <th>Quantity</th>
                                     <th>TotalPrice</th>
                                     <th>Address</th>
-                                    <th>Status</th>
                                 </tr>
                                 </thead>
 
                                 <tbody>
                                 {
                                     order ?
-                                        order.map((item) =>
+                                        order.filter((val) => {
+                                            if (searchTerm === "") {
+                                                return val;
+                                            } else if (val.userId.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                                                return val
+                                            }
+                                        }).map((item) =>
                                             <tr align="center">
-                                                <td>1</td>
+                                                <td className="count mt-5"></td>
                                                 <td><p className="mt-5">{item.userId.name}</p></td>
                                                 <td><p className="mt-5">{item.userId.phone}</p></td>
                                                 <td>{item.productData.map((result) => <tr><p
@@ -104,25 +116,11 @@ const OrderList = () => {
                                                     <br/>
                                                     {item.addressId.landmark} ,
                                                     <br/>
-                                                    {item.addressId.city} ,
+                                                    {item.addressId.city} {item.addressId.zip} ,
                                                     <br/>
-                                                    {item.addressId.state} {item.addressId.zip} ,
+                                                    {item.addressId.state},
                                                     <br/>
                                                     {item.addressId.country}</td>
-                                                <td><button className="btn btn-success"><i className="bi bi-check-lg">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                         fill="currentColor" className="bi bi-check-lg"
-                                                         viewBox="0 0 16 16">
-                                                        <path
-                                                            d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
-                                                    </svg></i></button>
-                                                    <button className="btn btn-danger ms-4"><i className="bi bi-x">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                             fill="currentColor" className="bi bi-x"
-                                                             viewBox="0 0 16 16">
-                                                            <path
-                                                                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                                                        </svg></i></button></td>
                                             </tr>
                                         )
                                         :

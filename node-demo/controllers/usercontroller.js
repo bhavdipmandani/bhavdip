@@ -4,31 +4,6 @@ const { User : Model } = require('../models')
 const jwt = require('jsonwebtoken')
 const tokenSecret = "my-token-secret"
 
-// exports.login = (req, res) => {
-//     const { email, password } = req.body
-//     Model.findOne({ email: email }, (err, user) => {
-//         if (user) {
-//             if (password === user.password) {
-//
-//                 res.status(200).json({
-//                     success: true,
-//                     code: 200,
-//                     data: {
-//                         user: user
-//                     },
-//                     token: generateToken(user),
-//                     error: null,
-//                     message: "Login Successfull",
-//                 })
-//             } else {
-//                 res.send({ message: "Password didn't match" })
-//             }
-//         } else {
-//             res.send({ message: "User not registered" })
-//         }
-//     })
-// }
-
 exports.login = async (req, res) => {
     const { email, password } = req.body;
     try {
@@ -49,10 +24,6 @@ exports.login = async (req, res) => {
 
             const token = await userLogin.generateAuthToken();
             console.log(token);
-            // res.cookie("jwtoken", token, {
-            //     expires: new Date(Date.now() + 25892000000),
-            //     httpOnly: true
-            //
 
             userLogin = userLogin.toObject();
             userLogin.authToken = token;
@@ -116,7 +87,8 @@ exports.register = (req, res) => {
 };
 
 function generateToken(user) {
-    return jwt.sign({ data: user }, tokenSecret, { expiresIn: '24h' })
+    return jwt.sign({ data: user }, tokenSecret)
+    // return jwt.sign({ data: user }, tokenSecret, { expiresIn: '24h' })
 }
 
 

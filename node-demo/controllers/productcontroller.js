@@ -134,7 +134,7 @@ exports.update = async (req, res) => {
     req.body.image = req.file.path;
 
     try {
-        const _id = req.params.id;
+        const _id = req.params._id;
         const single = await Model.findByIdAndUpdate(_id, req.body, {
             new: true
         });

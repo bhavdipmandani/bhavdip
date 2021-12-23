@@ -68,7 +68,7 @@ router.get("/" , Controller.list);
 
 router.post("/" , add_product_data.single('image'), Controller.add);
 
-router.patch("/:_id" , Controller.update);
+router.patch("/:_id" , add_product_data.single('image') , Controller.update);
 
 router.delete("/:id" , Controller.destroy);
 

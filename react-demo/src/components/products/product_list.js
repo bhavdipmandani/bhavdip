@@ -70,7 +70,7 @@ const Product_list = (props) => {
                                             {item.description}
                                         </Card.Text>
                                         <Card.Text>
-                                            {item.price}
+                                            {'\u20B9'} {item.price}
                                         </Card.Text>
                                         <hr />
                                         <div className="sub-main">

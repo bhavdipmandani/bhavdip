@@ -16,6 +16,7 @@ table {
 .alertmsg {
     font-size: 20px;
 }
-.overlayView>a.testMode{
-    display: none !important;
-}
+
+/*.overlayView>a.testMode{*/
+/*    display: none !important;*/
+/*}*/

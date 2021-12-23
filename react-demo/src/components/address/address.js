@@ -36,6 +36,7 @@ export default class Address extends Component {
     onChangeStreet(e) {
         this.setState({street: e.target.value})
     }
+
     onChangeLandmark(e) {
         this.setState({landmark: e.target.value})
     }
@@ -56,18 +57,12 @@ export default class Address extends Component {
         this.setState({country: e.target.value})
     }
 
-    // onChangeUserId(e) {
-    //     this.setState({userId: e.target.userId})
-    // }
-
-
     addressStore = async (e) => {
         e.preventDefault()
 
 
-
-       const res = await axios.post(`${apiUrl}/address`, this.state)
-console.log(res);
+        const res = await axios.post(`${apiUrl}/address`, this.state)
+        console.log(res);
         this.setState({
             street: '',
             landmark: '',
@@ -173,21 +168,19 @@ console.log(res);
                                     </button>
 
                                 </form>
-                                <div className="d-flex justify-content-end">
-                                    <button className="btn btn-primary" type="submit"><Link to='/checkout' className="text-white"
-                                                                              style={{textDecoration: 'none'}}> Checkout </Link>
-                                    </button>
+                                        <div className="d-flex justify-content-end">
+                                            <button className="btn btn-primary" type="submit"><Link to='/checkout'
+                                                                                                    className="text-white"
+                                                                                                    style={{textDecoration: 'none'}}> Checkout </Link>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    </div>
 
-                                    {/*<button className="btn btn-primary" type="submit" onClick={this.addressUpdate}>dddd*/}
-                                    {/*</button>*/}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                                    </div>
+                                    </div>
 
-                </div>
-            </div>
-
-        )
-    }
-}
+                                    )
+                                    }
+                                    }

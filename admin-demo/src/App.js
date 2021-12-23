@@ -11,6 +11,8 @@ import Main from "./components/master/Main";
 import AddProduct from "./components/master/products/add_product";
 import Admin_Address_list from './components/master/Address/address_list'
 import OrderList from './components/master/order/orderList'
+import Profile from "./components/master/profile/profile";
+import Edit_product from "./components/master/products/Edit_product";
 
 function App(props) {
 
@@ -33,20 +35,25 @@ function App(props) {
               <AddProduct />
             </Route>
 
-
-
             <Route path="/Admin_Address_list">
               <Admin_Address_list />
+            </Route>
+
+            <Route path="/editProduct">
+              <Edit_product />
             </Route>
 
             <Route path='/orderList'>
               <OrderList />
             </Route>
 
+            <Route path="/profile">
+              <Profile />
+            </Route>
+
             <Route path="/">
               <Main />
             </Route>
-
 
           </Switch>
         </Router>

@@ -147,7 +147,6 @@ export default function Login() {
             ...error,
             passwordErr: "Password is Required*"
         })) : setError(error => ({...error, passwordErr: null}))
-        console.log(!loginUSer)
 
 
         return !Object.values(error).find(x => x)
@@ -182,9 +181,6 @@ export default function Login() {
             console.log("Invalid Login");
         } else {
             setSuccess(true);
-            // window.alert("Login successfully");
-            console.log("Login successfully");
-            console.log(data.data.User._id)
             let token = data.data.User.authToken;
             let name = data.data.User.name;
             let id = data.data.User._id;
@@ -211,19 +207,11 @@ export default function Login() {
                     {/* <!-- /.login-logo --> */}
                     <div className="card">
                         <div className="image">
-                            {/*<img*/}
-                            {/*    style={{ border: 0 }}*/}
-                            {/*    src={signin}*/}
-                            {/*    alt=""*/}
-                            {/*    className="register-img"*/}
-                            {/*/>*/}
                         </div>
 
                         <form>
                             <div className="card-body login-card-body">
                                 <p className="login-box-msg">Sign in to start your session</p>
-                                {/* register components here */}
-                                {/*{data.error.message === "Invalid credientials pass*" &&  <span className="error">{data.error.message}</span>}*/}
                                 <div className="input-group mb-3">
 
                                     <input type="email" name="email" value={email}
@@ -258,11 +246,9 @@ export default function Login() {
                                         </div>
                                     </div>
                                     <div className="col-4">
-                                        {/*<Button variant="primary" onClick={handleShow}>*/}
                                             <button type='button' className="btn btn-primary"
                                                     onClick={loginUSer}>Login
                                             </button>
-                                        {/*</Button>*/}
                                     </div>
                                 </div>
 
@@ -283,9 +269,6 @@ export default function Login() {
                                             onClick={() => history.push("/register")}>Register
                                     </button>
                                 </p>
-                                {/* <Link to="/Register" variant="body2">
-            <input type="submit" value="Register" className="btn  cansal-btn" />{" "}
-          </Link> */}
                             </div>
                         </form>
                     </div>
