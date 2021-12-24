@@ -21,3 +21,16 @@ exports.list = async (req,res) => {
         return res.error(e);
     }
 }
+
+
+exports.userOrder = async (req,res) => {
+    try {
+        const {params: {id}} = req;
+        console.log(id)
+        const orderList = await Model.find({userId: id}).populate('addressId').populate('userId').populate('productData.productId');
+
+        return res.data(orderList);
+    }catch (e){
+        return console.log(e)
+    }
+}

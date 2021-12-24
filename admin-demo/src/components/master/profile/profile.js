@@ -12,7 +12,6 @@ import {Form, FormControl, Badge} from "react-bootstrap";
 const Profile = () => {
     const [searchTerm, setSearchTerm] = useState('')
     const [user, setUser] = useState()
-    console.log(user)
     let orderData = async () => {
         try {
             const response = await fetch(`${apiUrl}/auth`, {

@@ -184,10 +184,14 @@ export default function Login() {
             let token = data.data.User.authToken;
             let name = data.data.User.name;
             let id = data.data.User._id;
+            let email = data.data.User.email;
+            let phone = data.data.User.phone;
             // console.log(id)
             localStorage.setItem('Token', token);
             localStorage.setItem('Name', name);
             localStorage.setItem('Id', id);
+            localStorage.setItem('Email', email);
+            localStorage.setItem('Phone', phone);
 
             // history.push("/")
         }

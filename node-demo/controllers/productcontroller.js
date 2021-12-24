@@ -131,7 +131,10 @@ exports.productList1 = async (req, res) => {
 // update Demo Records By Id
 
 exports.update = async (req, res) => {
-    req.body.image = req.file.path;
+    if (req.file?.path) {
+        req.body.image = req.file.path;
+    }
+    console.log(req.body)
 
     try {
         const _id = req.params._id;

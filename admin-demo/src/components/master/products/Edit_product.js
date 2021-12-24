@@ -5,25 +5,26 @@ import Header from "../Header";
 import Menu from "../Menu";
 import Footer from "../Footer";
 import Helper from "../../../helper";
+import '../../../assets/css/edit.css'
 
 const EditProduct = () => {
     const history = useHistory();
     const location = useLocation();
 
-    const [inputs,setInputs] = useState({
-        product_name:location.state.item.product_name,
-        categories:location.state.item.categories,
-        image:location.state.item.image,
-        description:location.state.item.description,
-        price:location.state.item.price
+    const [inputs, setInputs] = useState({
+        product_name: location.state.item.product_name,
+        categories: location.state.item.categories,
+        image: location.state.item.image,
+        description: location.state.item.description,
+        price: location.state.item.price
     });
 
-    const [error,setError] = useState({
-        product_nameErr:"",
-        categoriesErr:"",
-        imageErr:"",
-        descriptionErr:"",
-        priceErr:""
+    const [error, setError] = useState({
+        product_nameErr: "",
+        categoriesErr: "",
+        imageErr: "",
+        descriptionErr: "",
+        priceErr: ""
     });
 
     const handleChange = (e) => {
@@ -36,78 +37,92 @@ const EditProduct = () => {
         })
 
     }
-    // console.log(JSON.stringify(inputs))
+
     const handleImage = (e) => {
-        setInputs({...inputs,image:e.target.files[0]})
+        setInputs({...inputs, image: e.target.files[0]})
+        document.getElementById('files').src = URL.createObjectURL(e.target.files[0]);
     }
 
 
-    const validate = () =>{
-        const { product_name, categories, price, description , image} = inputs;
-        !product_name ? setError(error => ({ ...error, product_nameErr: "product_name is Required*" })) : setError(error => ({ ...error, product_nameErr: null }));
-        !categories ? setError(error => ({ ...error, categoriesErr: "categories is Required*" })) : setError(error => ({ ...error, categoriesErr: null }));
-        !image ? setError(error => ({ ...error,imageErr: "image is Required*" })) : setError(error => ({ ...error, imageErr: null }));
-        !price ? setError(error => ({ ...error, priceErr: "price is Required*" })) : setError(error => ({ ...error, priceErr: null }));
-        !description ? setError(error => ({ ...error, descriptionErr: "description is Required*" })) : setError(error => ({ ...error, descriptionErr: null }));
+
+    const validate = () => {
+        const {product_name, categories, price, description, image} = inputs;
+        !product_name ? setError(error => ({
+            ...error,
+            product_nameErr: "product_name is Required*"
+        })) : setError(error => ({...error, product_nameErr: null}));
+        !categories ? setError(error => ({
+            ...error,
+            categoriesErr: "categories is Required*"
+        })) : setError(error => ({...error, categoriesErr: null}));
+        !image ? setError(error => ({...error, imageErr: "image is Required*"})) : setError(error => ({
+            ...error,
+            imageErr: null
+        }));
+        !price ? setError(error => ({...error, priceErr: "price is Required*"})) : setError(error => ({
+            ...error,
+            priceErr: null
+        }));
+        !description ? setError(error => ({
+            ...error,
+            descriptionErr: "description is Required*"
+        })) : setError(error => ({...error, descriptionErr: null}));
 
         return !Object.values(error).find(x => x);
     }
 
     const updateProduct = async () => {
         let id = location.state.item._id;
-        if(validate()){
+        if (validate()) {
 
             let formData = new FormData();
 
-            formData.append("product_name",inputs.product_name);
-            formData.append("categories",inputs.categories);
-            formData.append("image", inputs.image, inputs.image.name);
-            formData.append("description",inputs.description);
-            formData.append("price",inputs.price);
-            console.log("/*-/*/*/-/", formData);
+            formData.append("product_name", inputs.product_name);
+            formData.append("categories", inputs.categories);
+            // formData.append("image", inputs.image, inputs.image.name);
+            if (inputs.image && typeof inputs.image !== 'String') {
+                formData.append("image", inputs.image);
+            }
+            formData.append("description", inputs.description);
+            formData.append("price", inputs.price);
 
             const res = await fetch(`${apiUrl}/product/${id}`, {
-                method:'PATCH',
+                method: 'PATCH',
                 headers: new Headers({
-                    "Authorization":`Bearer ${localStorage.getItem('Token')}`,
+                    "Authorization": `Bearer ${localStorage.getItem('Token')}`,
                 }),
                 body: formData
             });
 
             const data = await res.json();
 
-            if(data.error || !data){
+            if (data.error || !data) {
                 console.log(data.error);
-            }else {
+            } else {
                 console.log("success");
-
-            }}else {
+            }
+        } else {
             return;
         }
+
+        history.push('/admin_pro_list')
 
     }
 
     return (
+
         <>
 
             <div>
-                <Header />
-                <Menu />
+                <Header/>
+                <Menu/>
                 <div className="content-wrapper">
 
                     {/* Content Header (Page header) */}
                     <div className="content-header">
                         <div className="container-fluid">
                             <div className="row mb-2">
-                                <div className="d-flex justify-content-end">
-                                    <button className="btn btn-primary mt-1 mb-3">
-                                        <Link to="/main" className="text-white" rel="manifest"
-                                              style={{textDecoration: 'none'}}>
-                                            back to Home
-                                        </Link>
-                                    </button>
-                                </div>
-                                <div className="col-sm-6">
+                               <div className="col-sm-6">
                                     <h1 className="m-0 text-dark">Edit Product Here.....</h1>
                                 </div>
 
@@ -154,15 +169,17 @@ const EditProduct = () => {
                                         name="image"
                                         className="form-control"
                                         onChange={handleImage}
-                                        // multiple
                                     />
 
-                                <img src={Helper.getImageUrl(inputs.image)} height="250px" width="350px" className='mt-3'/>
-                                {error.imageErr && <span className="error">{error.imageErr}</span>}
+
+                                    <img src={Helper.getImageUrl(inputs.image)} className='mt-3 edtproduct' alt=""/>
+                                    <img id="files" alt="" className='mt-3 edtproduct' />
+
+                                    {error.imageErr && <span className="error">{error.imageErr}</span>}
 
                                 </div>
                                 <div className="mb-3">
-                                    <label className="form-label">Description <strong>:</strong> </label>
+                                    <label className="form-label">Description <strong> : </strong> </label>
                                     <textarea
                                         name="description"
                                         placeholder="Product Description"
@@ -172,6 +189,7 @@ const EditProduct = () => {
                                     />
                                     {error.descriptionErr && <span className="error">{error.descriptionErr}</span>}
                                 </div>
+
                                 <div className="mb-3">
                                     <label className="form-label">Price <strong>:</strong> </label>
                                     <input
@@ -184,18 +202,23 @@ const EditProduct = () => {
                                     />
                                     {error.priceErr && <span className="error">{error.priceErr}</span>}
                                 </div>
+
                                 <div className="mb-3">
-                                <button type={'button'}
-                                        className="btn btn-primary"
-                                        onClick={() => updateProduct()}
-                                >Update Product</button>
+                                    <button type="button"
+                                            className="btn btn-primary"
+                                            onClick={() => updateProduct()}
+                                    >Update Product
+                                    </button>
                                 </div>
 
                                 <div className="mb-3">
-                                <button type={'button'}
-                                        className="btn btn-primary"
-                                        onClick={() => history.goBack()}
-                                >Cancel</button>
+
+                                    <button type="button"
+                                            className="btn btn-primary"
+                                            onClick={() => history.goBack()}
+                                    >Cancel
+                                    </button>
+
                                 </div>
                             </div>
                             {/* /.row */}

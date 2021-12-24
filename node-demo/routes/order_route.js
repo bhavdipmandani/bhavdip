@@ -7,7 +7,7 @@ const {orderController : Controller} = require('../controllers');
 
 router.post("/", Controller.add);
 router.get("/", Controller.list);
-
+router.get('/:id', Controller.userOrder);
 // router.patch("/:_id", Controller.update);
 
 

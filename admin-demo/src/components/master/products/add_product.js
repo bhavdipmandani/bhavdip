@@ -172,7 +172,7 @@ const AddProduct = () => {
                             </div>
                             <div className="mb-3">
                                 <label className="form-label">Description <strong>:</strong> </label>
-                                <input type="text" name="description"
+                                <textarea type="text" name="description"
                                        onChange={onChange} className="form-control"/>
                                 {error.descriptionErr && <span className="error text-danger">{error.descriptionErr}</span>}
                             </div>

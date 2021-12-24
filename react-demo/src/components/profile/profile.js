@@ -1,17 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import {apiUrl} from '../../config';
 import Helper from "../../helper";
-import {Form, FormControl} from "react-bootstrap";
-
+import '../../assets/css/profile.css';
 
 const Profile = () => {
-    const [searchTerm, setSearchTerm] = useState('')
     const [order, setOrder] = useState()
-    const [address, setAddress] = useState([])
 
     let orderData = async () => {
+
+        const userId = localStorage.getItem('Id')
         try {
-            const response = await fetch(`${apiUrl}/order`, {
+            const response = await fetch(`${apiUrl}/order/${userId}`, {
                 method: "GET",
                 headers: new Headers({
                     "Authorization": `Bearer ${localStorage.getItem('Token')}`,
@@ -24,29 +23,16 @@ const Profile = () => {
         }
     }
 
-    let Data = async () => {
-
-        const response = await fetch(`${apiUrl}/address`);
-        let addressData = await response.json();
-        // console.log(addressData)
-        return addressData;
-    }
-
     useEffect(() => {
-        orderData().then(((data) => setOrder(data.data.Order)));
-        Data().then(((data) => setAddress(data.data.address)));
+        orderData().then(((data) => setOrder(data.data)));
     }, []);
 
-    const name = localStorage.getItem('Name')
+    const retailerName = localStorage.getItem('Name')
+    const retailerEmail = localStorage.getItem('Email')
+    const retailerPhone = localStorage.getItem('Phone')
+
     return (
         <div>
-
-            <div className="d-flex justify-content-end">
-                <Form className="mt-3">
-                    <FormControl type="text" placeholder="Search" className="mr-sm-2"
-                                 onChange={event => setSearchTerm(event.target.value)}/>
-                </Form>
-            </div>
             {/* /.content-header */}
             {/* Main content */}
             <div className="content">
@@ -58,74 +44,44 @@ const Profile = () => {
                         <table className="table table-border mt-3">
                             <thead>
                             <tr align="center">
-                                <th>UserName</th>
-                                <th>UserPhoneNumber</th>
+                               <th>Retailer's Name</th>
+                               <th>Retailer's Email</th>
+                               <th>Retailer's PhoneNumber</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                                        <tr align="center">
+                                            <td>{retailerName}</td>
+                                            <td>{retailerEmail}</td>
+                                            <td>{retailerPhone}</td>
+                                        </tr>
+                            </tbody>
+
+                        </table>
+
+
+                        <h1 align="center" className="mt-4 mb-4">Retailer's Order</h1>
+
+                        <table className="table table-border mt-3">
+                            <thead>
+                            <tr align="center">
+                                <th>No.</th>
+                                <th>ProductName</th>
+                                <th>ProductImages</th>
+                                <th>ProductPrice</th>
+                                <th>Quantity</th>
+                                <th>TotalPrice</th>
                                 <th>Address</th>
                             </tr>
                             </thead>
 
                             <tbody>
                             {
-                                address ?
-                                    address.filter((val) => {
-                                        if (searchTerm === "") {
-                                            return val;
-                                        } else if (val.userId.name.toLowerCase().includes(searchTerm.toLowerCase())) {
-                                            return val
-                                        }
-                                    }).map((item) =>
-                                        <tr align="center">
-                                            {
-                                                item.userId.name == name ?
-                                                    <>
-                                                        <td>{item.userId.name}</td>
-                                                        <td>{item.userId.phone}</td>
-                                                        <td>{item.street} , {item.landmark} , {item.city} {item.zip} ,
-                                                            {item.state} ,
-                                                            {item.country}
-                                                        </td>
-                                                    </>
-                                                    :
-
-                                                    null
-                                            }
-                                        </tr>
-                                    )
-                                    :
-                                    null
-                            }
-                            </tbody>
-
-                        </table>
-
-
-                        <h1 align="center" className="mt-4 mb-4">Retailer's Order Information</h1>
-
-                        <table className="table table-border mt-3">
-                            <thead>
-                            <tr align="center">
-                                <th>ProductName</th>
-                                <th>ProductImages</th>
-                                <th>ProductPrice</th>
-                                <th>Quantity</th>
-                                <th>TotalPrice</th>
-                            </tr>
-                            </thead>
-
-                            <tbody>
-                            {
                                 order ?
-                                    order.filter((val) => {
-                                        if (searchTerm === "") {
-                                            return val;
-                                        } else if (val.userId.name.toLowerCase().includes(searchTerm.toLowerCase())) {
-                                            return val
-                                        }
-                                    }).map((item) =>
+                                    order.map((item) =>
                                         <tr align="center">
-                                            {
-                                                item.userId.name == name ?
-                                                    <>
+                                            <td className="count mt-5"></td>
                                                         <td>{item.productData.map((result) => <tr><p
                                                             className="mt-3">{result.productId.product_name}</p>
                                                         </tr>)}</td>
@@ -139,12 +95,14 @@ const Profile = () => {
                                                         <td>{item.productData.map((result) => <tr><p
                                                             className="mt-3">{result.quantity}</p></tr>)}</td>
                                                         <td><p className="mt-5">{'\u20B9'} {item.totalPrice}</p></td>
-
-                                                    </>
-                                                    :
-
-                                                    null
-                                            }
+                                                        <td>{item.addressId.street} , {item.addressId.landmark} ,
+                                                            <br/>
+                                                            {item.addressId.city} {item.addressId.zip} ,
+                                                            <br/>
+                                                            {item.addressId.state} ,
+                                                            <br/>
+                                                            {item.addressId.country}
+                                                        </td>
                                         </tr>
                                     )
                                     :

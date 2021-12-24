@@ -23,7 +23,6 @@ exports.login = async (req, res) => {
             const isMacthing = await compare(password, userLogin.password);
 
             const token = await userLogin.generateAuthToken();
-            console.log(token);
 
             userLogin = userLogin.toObject();
             userLogin.authToken = token;

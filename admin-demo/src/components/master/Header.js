@@ -58,8 +58,8 @@ export default function Header() {
             </button>
 
             <ul className="dropdown-menu drpmenu" aria-labelledby="dropdownMenuButton1">
-              <li className="profile"><Link to="/profile" className="me-3 dropdown-item text-dark" style={{ textDecoration: 'none' }}><i className="fa fa-user me-2" aria-hidden="true"></i>User Profile</Link></li>
-              <li><a className="dropdown-item" href="#" onClick={logout}><i className="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+              <li className="profile"><Link to="/profile" className="me-3 dropdown-item text-dark" style={{ textDecoration: 'none' }}><i className="fa fa-user me-2" aria-hidden="true" />User Profile</Link></li>
+              <li><a className="dropdown-item" href="#" onClick={logout}><i className="fas fa-sign-out-alt me-2" />Logout</a></li>
             </ul>
           </div>
         ) : (
