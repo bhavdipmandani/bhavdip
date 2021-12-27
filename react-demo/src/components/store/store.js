@@ -49,7 +49,7 @@ const AddStore = (props) => {
                         })
                         :
                         <div>
-                            <h1 className="text-danger">There are no item in store....</h1>
+                            <h1 className="text-danger">There are no item in store.....</h1>
                         </div>
 
                 }
